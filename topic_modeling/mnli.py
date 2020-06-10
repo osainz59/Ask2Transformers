@@ -9,9 +9,11 @@ from pprint import pprint
 
 class NLITopicClassifier(TopicCLassifier):
 
-    def __init__(self, pretrained_model, topics, use_cuda=True, query_phrase="Topic or domain about"):
+    def __init__(self, pretrained_model, topics, use_cuda=True, query_phrase="Topic or domain about",
+                entailment_position=1):
         super().__init__(pretrained_model, topics, use_cuda=use_cuda)
         self.query_phrase = query_phrase
+        self.ent_pos = entailment_position
 
     def _initialize(self, pretrained_model):
         self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
@@ -23,8 +25,8 @@ class NLITopicClassifier(TopicCLassifier):
         with torch.no_grad():
             input_ids = self.tokenizer.batch_encode_plus(batch, pad_to_max_length=True)
             input_ids = torch.tensor(input_ids['input_ids']).to(self.device)
-            output = torch.softmax(self.model(input_ids)[0][:,1].view(len(batch) // len(self.topics), -1), dim=-1).detach().numpy()
-            print(output.shape)
+            output = self.model(input_ids)[0][:,self.ent_pos].view(len(batch) // len(self.topics), -1)
+            output = torch.softmax(output, dim=-1).detach().numpy()
         
         return output
 
