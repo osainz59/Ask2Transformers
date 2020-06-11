@@ -7,13 +7,13 @@ import numpy as np
 from pprint import pprint
 
 
-class NLITopicClassifier(TopicCLassifier):
+class NSPTopicClassifier(TopicCLassifier):
 
     def __init__(self, pretrained_model, topics, use_cuda=True, query_phrase="Topic or domain about",
-                entailment_position=1):
+                positive_position=1):
         super().__init__(pretrained_model, topics, use_cuda=use_cuda)
         self.query_phrase = query_phrase
-        self.ent_pos = entailment_position
+        self.cls_pos = positive_position
 
     def _initialize(self, pretrained_model):
         self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
@@ -25,7 +25,7 @@ class NLITopicClassifier(TopicCLassifier):
         with torch.no_grad():
             input_ids = self.tokenizer.batch_encode_plus(batch, pad_to_max_length=True)
             input_ids = torch.tensor(input_ids['input_ids']).to(self.device)
-            output = self.model(input_ids)[0][:,self.ent_pos].view(len(batch) // len(self.topics), -1)
+            output = self.model(input_ids)[0][:,self.cls_pos].view(len(batch) // len(self.topics), -1)
             output = torch.softmax(output, dim=-1).detach().numpy()
         
         return output
@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
     input_stream = open(sys.argv[2], 'rt') if len(sys.argv) == 3 else sys.stdin
 
-    clf = NLITopicClassifier('roberta-large-mnli', topics=topics)
+    clf = NSPTopicClassifier('bert-large-uncased', topics=topics)
 
     for line in input_stream:
         line = line.rstrip()
