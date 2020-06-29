@@ -16,7 +16,7 @@ class NLITopicClassifier(TopicCLassifier):
         self.ent_pos = entailment_position
 
     def _initialize(self, pretrained_model):
-        self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
+        self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model, use_fast=True)
         self.model = AutoModelForSequenceClassification.from_pretrained(pretrained_model)
         self.model.to(self.device)
         self.model.eval()

@@ -1,7 +1,8 @@
 from base import TopicCLassifier
 
 import sys
-from transformers import AutoModelForSequenceClassification, AutoTokenizer
+#from transformers import AutoModelForSequenceClassification, AutoTokenizer
+from transformers import BertForNextSentencePrediction, AutoTokenizer
 import torch
 import numpy as np
 from pprint import pprint
@@ -16,8 +17,8 @@ class NSPTopicClassifier(TopicCLassifier):
         self.cls_pos = positive_position
 
     def _initialize(self, pretrained_model):
-        self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
-        self.model = AutoModelForSequenceClassification.from_pretrained(pretrained_model)
+        self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model, use_fast=True)
+        self.model = BertForNextSentencePrediction.from_pretrained(pretrained_model)
         self.model.to(self.device)
         self.model.eval()
 
