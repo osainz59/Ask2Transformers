@@ -5,18 +5,19 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 import torch
 import numpy as np
 from pprint import pprint
+from tqdm import tqdm
 
 
 class NLITopicClassifier(TopicCLassifier):
 
-    def __init__(self, pretrained_model, topics, use_cuda=True, query_phrase="Topic or domain about",
-                entailment_position=1):
+    def __init__(self, pretrained_model, topics, *args, use_cuda=True, query_phrase="Topic or domain about",
+                entailment_position=1, **kwargs):
         super().__init__(pretrained_model, topics, use_cuda=use_cuda)
         self.query_phrase = query_phrase
         self.ent_pos = entailment_position
 
     def _initialize(self, pretrained_model):
-        self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model, use_fast=True)
+        self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
         self.model = AutoModelForSequenceClassification.from_pretrained(pretrained_model)
         self.model.to(self.device)
         self.model.eval()
@@ -26,7 +27,7 @@ class NLITopicClassifier(TopicCLassifier):
             input_ids = self.tokenizer.batch_encode_plus(batch, pad_to_max_length=True)
             input_ids = torch.tensor(input_ids['input_ids']).to(self.device)
             output = self.model(input_ids)[0][:,self.ent_pos].view(len(batch) // len(self.topics), -1)
-            output = torch.softmax(output, dim=-1).detach().numpy()
+            output = torch.softmax(output, dim=-1).detach().cpu().numpy()
         
         return output
 
@@ -35,7 +36,7 @@ class NLITopicClassifier(TopicCLassifier):
             contexts = [contexts]
 
         batch, outputs = [], []
-        for i, context in enumerate(contexts):
+        for i, context in tqdm(enumerate(contexts), total=len(contexts)):
             sentences = [f"{context} {self.tokenizer.sep_token} {self.query_phrase} \"{topic}\"." for topic in self.topics]
             batch.extend(sentences)
 
