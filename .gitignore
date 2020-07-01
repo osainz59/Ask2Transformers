@@ -1,3 +1,6 @@
+experiments/*.npy
+
+
 # Visual Studio Code
 .vscode
 

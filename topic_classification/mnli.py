@@ -11,7 +11,7 @@ from tqdm import tqdm
 class NLITopicClassifier(TopicCLassifier):
 
     def __init__(self, pretrained_model, topics, *args, use_cuda=True, query_phrase="Topic or domain about",
-                entailment_position=1, **kwargs):
+                entailment_position=2, **kwargs):
         super().__init__(pretrained_model, topics, use_cuda=use_cuda)
         self.query_phrase = query_phrase
         self.ent_pos = entailment_position
