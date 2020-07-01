@@ -12,7 +12,7 @@ This library contains the code for the Ask2Transformers project.
 >>> topics = ['politics', 'culture', 'economy', 'biology', 'legal', 'medicine', 'business']
 >>> context = "hospital: a health facility where patients receive treatment."
 
->>> clf = NLITopicClassifier(topics)
+>>> clf = NLITopicClassifier('roberta-large-mnli', topics)
 
 >>> predictions = clf(context)
 >>> print(sorted(list(zip(predictions, topics))), reverse=True)
