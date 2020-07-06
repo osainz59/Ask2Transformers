@@ -1,4 +1,4 @@
-experiments/*.npy
+experiments/*/*.npy
 
 
 # Visual Studio Code

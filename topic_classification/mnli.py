@@ -10,7 +10,7 @@ from tqdm import tqdm
 
 class NLITopicClassifier(TopicCLassifier):
 
-    def __init__(self, pretrained_model, topics, *args, use_cuda=True, query_phrase="Topic or domain about",
+    def __init__(self, pretrained_model, topics, *args, use_cuda=True, query_phrase="The domain of the sentence is about",
                 entailment_position=2, **kwargs):
         super().__init__(pretrained_model, topics, use_cuda=use_cuda)
         self.query_phrase = query_phrase
