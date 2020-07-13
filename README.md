@@ -68,6 +68,6 @@ Next table shows the weighted averaged Precision, Recall and F1-Score along with
 | "Subject: " | 89.83 | 60.58 | 67.65 | 60.58 | 69.74 | 74.35 |
 | "Is about " | 91.54 | 73.37 | 79.15 | 73.37 | 87.72 | 91.94 |
 | "Topic or domain about "  | 91.6 | 78.44 | 82.4 | 78.44 | 87.46 | 89.74 |
-| "The topic of the sentence is about "  | 92.02 | 80.71 | 84.79 | 80.71 | 92.92 | 92.77 |
+| "The topic of the sentence is about "  | 92.02 | 80.71 | 84.79 | 80.71 | 92.92 | 95.77 |
 | "The domain of the sentence is about "  | **92.20** | **81.62** | **85.44** | **81.62** | **93.96** | **96.42** |
 | "The topic or domain of the sentence is about "  | 91.91 | 76.62 | 82.02 | 76.62 | 88.63 | 91.23 |
