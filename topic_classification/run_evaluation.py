@@ -5,14 +5,15 @@ import numpy as np
 import os
 from sklearn.metrics import precision_recall_fscore_support
 
-from mnli import NLITopicClassifier
+from mnli import NLITopicClassifier, NLITopicClassifierWithMappingHead
 from nsp import NSPTopicClassifier
 from mlm import MLMTopicClassifier
 
 CLASSIFIERS = {
     'mnli': NLITopicClassifier,
     'nsp': NSPTopicClassifier,
-    'mlm': MLMTopicClassifier
+    'mlm': MLMTopicClassifier,
+    'mnli-mapping': NLITopicClassifierWithMappingHead
 }
 
 def top_k_accuracy(output, labels, k=5):

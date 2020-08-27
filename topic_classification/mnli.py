@@ -1,4 +1,6 @@
-from base import TopicCLassifier
+from base import TopicCLassifier, np_softmax
+from typing import Dict, List
+from collections import defaultdict
 
 import sys
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
@@ -11,8 +13,8 @@ from tqdm import tqdm
 class NLITopicClassifier(TopicCLassifier):
 
     def __init__(self, pretrained_model, topics, *args, use_cuda=True, query_phrase="The domain of the sentence is about",
-                entailment_position=2, **kwargs):
-        super().__init__(pretrained_model, topics, use_cuda=use_cuda)
+                entailment_position=2, verbose=True, **kwargs):
+        super().__init__(pretrained_model, topics, use_cuda=use_cuda, verbose=True)
         self.query_phrase = query_phrase
         self.ent_pos = entailment_position
 
@@ -52,6 +54,34 @@ class NLITopicClassifier(TopicCLassifier):
         outputs = np.vstack(outputs)
 
         return outputs
+
+
+class NLITopicClassifierWithMappingHead(NLITopicClassifier):
+
+    def __init__(self, pretrained_model: str, topics: List[str], topic_mapping: Dict[str, str], *args, **kwargs):
+        self.new_topics = list(topic_mapping.keys())
+        self.target_topics = topics
+        #self.topics2id = {t:i for i, t in enumerate(topics)}
+        self.new_topics2id = {t:i for i, t in enumerate(self.new_topics)}
+        self.mapping = defaultdict(list)
+        for key, value in topic_mapping.items():
+            self.mapping[value].append(self.new_topics2id[key])
+
+        super().__init__(pretrained_model, self.new_topics, *args, **kwargs)
+
+    def __call__(self, contexts, batch_size=1):
+        outputs = super().__call__(contexts, batch_size)
+        #for topic in self.target_topics:
+        #    print(self.mapping[topic])
+        #    print(outputs[:, self.mapping[topic]])
+        #    print(np.max( outputs[:, self.mapping[topic]], axis=-1 ))
+        outputs = np.hstack([np.max( outputs[:, self.mapping[topic]], axis=-1, keepdims=True ) for topic in self.target_topics])
+        #print(outputs, 'Before softmax')
+        outputs = np_softmax(outputs)
+        #print(outputs)
+
+        return outputs
+
 
 if __name__ == "__main__":
 
