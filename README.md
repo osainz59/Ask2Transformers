@@ -35,10 +35,11 @@ This library contains the code for the Ask2Transformers project.
 Results (Micro-average):
 | Method | Precision | Recall | F1-Score |
 |:------:|:---------:|:------:|:--------:|
-| Distributional (Camacho-Collados et al. 2016) | **84.0** | 59.8 | 69.9 |
+| Distributional (Camacho-Collados et al. 2016) | 84.0 | 59.8 | 69.9 |
 | BabelDomains (Camacho-Collados et al. 2017)   | 81.7 | 68.7 | 74.6 |
 | | | | |
-| Ask2Transformers | 81.62 | **81.62** | **81.62** |
+| Ask2Transformers | **91.68** | **91.68** | **91.68** |
+| | | | |
 
 
 ### Approach evaluation
@@ -53,6 +54,7 @@ Next table shows the weighted averaged Precision, Recall and F1-Score along with
 | NSP (bert-base-uncased) | 18.59 | 2.85 | 1.84 | 2.85 | 10.32 | 16.88 |
 | MLM (roberta-large) | 71.21 | 12.92 | 16.24 | 12.91 | 30.9 | 45.84 |
 | MLM (roberta-base)  | 67.74 | 23.7 | 32.35 | 23.7 | 46.23 | 62.53 |
+| | | | | | | |
 
 ![Top-K Accuracy curve](experiments/topk_accuracy_curve.png)
 
@@ -71,3 +73,14 @@ Next table shows the weighted averaged Precision, Recall and F1-Score along with
 | "The topic of the sentence is about "  | 92.02 | 80.71 | 84.79 | 80.71 | 92.92 | 95.77 |
 | "The domain of the sentence is about "  | **92.20** | **81.62** | **85.44** | **81.62** | **93.96** | **96.42** |
 | "The topic or domain of the sentence is about "  | 91.91 | 76.62 | 82.02 | 76.62 | 88.63 | 91.23 |
+| | | | | | | |
+
+### Label mapping
+
+Sometimes the defined labels are very general or very precise. For instance, the label "Art, architecture, and archaeology" is a composed label formed by "Art", "Architecture" and "Archeology" topics. That composition can derive in an unappropiate performance of the system when the "Art" topic appears but not the "Architecture" or "Archeology". That's why we decided to define a better set of labels for the system and map them to our actual ones. The way that we generate the new label set is the following: given a composed label, generate the new labels based on the topics that forms the label. Following that strategy and running the system again, we get the following performance:
+
+|  | Precision | Recall | F1-Score | Top-1 | Top-3 | Top-5 |
+|:-------|:---------:|:------:|:--------:|:-----:|:-----:|:-----:|
+| Without mapping | 92.20 | 81.62 | 85.44 | 81.62 | 93.96 | 96.42 |
+| Splitted labels | **96.03** | **91.68** | **93.34** | **91.68** | **98.18** | **99..02** |
+| | | | | | | |
