@@ -10,7 +10,7 @@ from pprint import pprint
 from tqdm import tqdm
 
 
-class NLITopicClassifier(TopicClassifier):
+class _NLITopicClassifier(TopicClassifier):
 
     def __init__(self, pretrained_model, topics, *args, use_cuda=True,
                  query_phrase="The domain of the sentence is about", entailment_position=2, verbose=True, **kwargs):
@@ -28,21 +28,23 @@ class NLITopicClassifier(TopicClassifier):
         with torch.no_grad():
             input_ids = self.tokenizer.batch_encode_plus(batch, pad_to_max_length=True)
             input_ids = torch.tensor(input_ids['input_ids']).to(self.device)
-            output = self.model(input_ids)[0][:,self.ent_pos].view(len(batch) // len(self.topics), -1)
-            output = torch.softmax(output, dim=-1).detach().cpu().numpy()
-        
+            output = self.model(input_ids)[0][:, self.ent_pos].view(len(batch) // len(self.topics), -1)
+            # output = torch.softmax(output, dim=-1).detach().cpu().numpy()
+            output = output.detach().cpu().numpy()
+
         return output
 
-    def __call__(self, contexts, batch_size=1):
+    def __call__(self, contexts: List[str], batch_size: int = 1):
         if not isinstance(contexts, list):
             contexts = [contexts]
 
         batch, outputs = [], []
         for i, context in tqdm(enumerate(contexts), total=len(contexts)):
-            sentences = [f"{context} {self.tokenizer.sep_token} {self.query_phrase} \"{topic}\"." for topic in self.topics]
+            sentences = [f"{context} {self.tokenizer.sep_token} {self.query_phrase} \"{topic}\"." for topic in
+                         self.topics]
             batch.extend(sentences)
 
-            if (i+1) % batch_size == 0:
+            if (i + 1) % batch_size == 0:
                 output = self._run_batch(batch)
                 outputs.append(output)
                 batch = []
@@ -56,12 +58,24 @@ class NLITopicClassifier(TopicClassifier):
         return outputs
 
 
-class NLITopicClassifierWithMappingHead(NLITopicClassifier):
+class NLITopicClassifier(_NLITopicClassifier):
+
+    def __init__(self, pretrained_model: str, topics: List[str], *args, **kwargs):
+        super(NLITopicClassifier, self).__init__(pretrained_model, topics, *args, **kwargs)
+
+    def __call__(self, contexts: List[str], batch_size: int = 1):
+        outputs = super().__call__(contexts=contexts, batch_size=batch_size)
+        outputs = np_softmax(outputs)
+
+        return outputs
+
+
+class NLITopicClassifierWithMappingHead(_NLITopicClassifier):
 
     def __init__(self, pretrained_model: str, topics: List[str], topic_mapping: Dict[str, str], *args, **kwargs):
         self.new_topics = list(topic_mapping.keys())
         self.target_topics = topics
-        self.new_topics2id = {t:i for i, t in enumerate(self.new_topics)}
+        self.new_topics2id = {t: i for i, t in enumerate(self.new_topics)}
         self.mapping = defaultdict(list)
         for key, value in topic_mapping.items():
             self.mapping[value].append(self.new_topics2id[key])
@@ -83,7 +97,7 @@ if __name__ == "__main__":
         print('Usage:\tpython3 get_topics.py topics.txt input_file.txt\n\tpython3 get_topics.py topics.txt < '
               'input_file.txt')
         exit(1)
-    
+
     with open(sys.argv[1], 'rt') as f:
         topics = [topic.rstrip().replace('_', ' ') for topic in f]
 
@@ -98,4 +112,3 @@ if __name__ == "__main__":
         print(line)
         pprint(topic_dist)
         print()
-
