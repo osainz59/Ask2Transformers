@@ -5,9 +5,9 @@ import os
 
 import numpy as np
 
-from mnli import NLITopicClassifier, NLITopicClassifierWithMappingHead
-from nsp import NSPTopicClassifier
-from mlm import MLMTopicClassifier
+from topic_classification.mnli import NLITopicClassifier, NLITopicClassifierWithMappingHead
+from topic_classification.nsp import NSPTopicClassifier
+from topic_classification.mlm import MLMTopicClassifier
 
 CLASSIFIERS = {
     'mnli': NLITopicClassifier,
