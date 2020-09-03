@@ -5,9 +5,9 @@ import numpy as np
 import os
 from sklearn.metrics import precision_recall_fscore_support
 
-from mnli import NLITopicClassifier, NLITopicClassifierWithMappingHead
-from nsp import NSPTopicClassifier
-from mlm import MLMTopicClassifier
+from topic_classification.mnli import NLITopicClassifier, NLITopicClassifierWithMappingHead
+from topic_classification.nsp import NSPTopicClassifier
+from topic_classification.mlm import MLMTopicClassifier
 
 CLASSIFIERS = {
     'mnli': NLITopicClassifier,
@@ -15,6 +15,7 @@ CLASSIFIERS = {
     'mlm': MLMTopicClassifier,
     'mnli-mapping': NLITopicClassifierWithMappingHead
 }
+
 
 def top_k_accuracy(output, labels, k=5):
     preds = np.argsort(output)[:, ::-1][:, :k]
@@ -34,7 +35,7 @@ args = parser.parse_args()
 with open(args.topics, 'rt') as f:
     topics = [topic.rstrip().replace('_', ' ') for topic in f]
 
-topic2id = {topic:i for i, topic in enumerate(topics)}
+topic2id = {topic: i for i, topic in enumerate(topics)}
 
 with open(args.dataset, 'rt') as f:
     contexts, labels = [], []

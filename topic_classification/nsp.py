@@ -1,7 +1,6 @@
-from base import TopicCLassifier
+from topic_classification.base import TopicClassifier
 
 import sys
-#from transformers import AutoModelForSequenceClassification, AutoTokenizer
 from transformers import BertForNextSentencePrediction, AutoTokenizer
 import torch
 import numpy as np
@@ -9,10 +8,10 @@ from pprint import pprint
 from tqdm import tqdm
 
 
-class NSPTopicClassifier(TopicCLassifier):
+class NSPTopicClassifier(TopicClassifier):
 
     def __init__(self, pretrained_model, topics, *args, use_cuda=True, query_phrase="Topic or domain about",
-                positive_position=1, **kwargs):
+                 positive_position=1, **kwargs):
         super().__init__(pretrained_model, topics, use_cuda=use_cuda)
         self.query_phrase = query_phrase
         self.cls_pos = positive_position
@@ -27,9 +26,9 @@ class NSPTopicClassifier(TopicCLassifier):
         with torch.no_grad():
             input_ids = self.tokenizer.batch_encode_plus(batch, pad_to_max_length=True)
             input_ids = torch.tensor(input_ids['input_ids']).to(self.device)
-            output = self.model(input_ids)[0][:,self.cls_pos].view(len(batch) // len(self.topics), -1)
+            output = self.model(input_ids)[0][:, self.cls_pos].view(len(batch) // len(self.topics), -1)
             output = torch.softmax(output, dim=-1).detach().cpu().numpy()
-        
+
         return output
 
     def __call__(self, contexts, batch_size=1):
@@ -38,10 +37,11 @@ class NSPTopicClassifier(TopicCLassifier):
 
         batch, outputs = [], []
         for i, context in tqdm(enumerate(contexts), total=len(contexts)):
-            sentences = [f"{context} {self.tokenizer.sep_token} {self.query_phrase} \"{topic}\"." for topic in self.topics]
+            sentences = [f"{context} {self.tokenizer.sep_token} {self.query_phrase} \"{topic}\"." for topic in
+                         self.topics]
             batch.extend(sentences)
 
-            if (i+1) % batch_size == 0:
+            if (i + 1) % batch_size == 0:
                 output = self._run_batch(batch)
                 outputs.append(output)
                 batch = []
@@ -54,12 +54,15 @@ class NSPTopicClassifier(TopicCLassifier):
 
         return outputs
 
+
 if __name__ == "__main__":
 
     if len(sys.argv) < 2:
-        print('Usage:\tpython3 get_topics.py topics.txt input_file.txt\n\tpython3 get_topics.py topics.txt < input_file.txt')
+        print(
+            'Usage:\tpython3 get_topics.py topics.txt input_file.txt\n\tpython3 get_topics.py topics.txt < '
+            'input_file.txt')
         exit(1)
-    
+
     with open(sys.argv[1], 'rt') as f:
         topics = [topic.rstrip().replace('_', ' ') for topic in f]
 
@@ -74,4 +77,3 @@ if __name__ == "__main__":
         print(line)
         pprint(topic_dist)
         print()
-

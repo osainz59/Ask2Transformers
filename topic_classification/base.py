@@ -1,13 +1,14 @@
 import sys, os
 import torch
-import numpy as np 
+import numpy as np
 
 
 def np_softmax(x, dim=-1):
     e = np.exp(x)
     return e / np.sum(e, axis=-1, keepdims=True)
 
-class TopicCLassifier(object):
+
+class TopicClassifier(object):
 
     def __init__(self, pretrained_model, topics, use_cuda=True, verbose=True):
         super().__init__()
@@ -22,7 +23,7 @@ class TopicCLassifier(object):
             sys.stdout = sys.__stdout__
         else:
             self._initialize(pretrained_model)
-        
+
     def _initialize(self, pretrained_model):
         raise NotImplementedError
 
