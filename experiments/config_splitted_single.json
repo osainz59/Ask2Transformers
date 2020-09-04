@@ -1,0 +1,11 @@
+[
+    {
+        "name": "splitted_topics_single",
+        "classification_model": "mnli",
+        "pretrained_model": "roberta-large-mnli",
+        "query_phrase": "The domain of the sentence is about",
+        "batch_size": 1,
+        "use_cuda": true,
+        "entailment_position": 2
+    }
+]
