@@ -10,11 +10,14 @@ def np_softmax(x, dim=-1):
 
 class TopicClassifier(object):
 
-    def __init__(self, pretrained_model, topics, use_cuda=True, verbose=True):
+    def __init__(self, pretrained_model, topics, use_cuda=True, half=False, verbose=True):
         super().__init__()
 
         self.device = torch.device("cuda" if torch.cuda.is_available() and use_cuda else "cpu")
         self.topics = topics
+        self.use_cuda = use_cuda
+        self.half = half
+        self.verbose = verbose
 
         # Supress stdout printing for model downloads
         if not verbose:
@@ -23,6 +26,11 @@ class TopicClassifier(object):
             sys.stdout = sys.__stdout__
         else:
             self._initialize(pretrained_model)
+
+        self.model.to(self.device)
+        self.model.eval()
+        if self.use_cuda and self.half:
+            self.model.half()
 
     def _initialize(self, pretrained_model):
         raise NotImplementedError

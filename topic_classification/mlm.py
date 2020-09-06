@@ -11,8 +11,8 @@ from tqdm import tqdm
 
 class MLMTopicClassifier(TopicClassifier):
 
-    def __init__(self, pretrained_model, topics, *args, use_cuda=True, **kwargs):
-        super().__init__(pretrained_model, topics, use_cuda=use_cuda)
+    def __init__(self, pretrained_model, topics, *args, use_cuda=True, half=False, **kwargs):
+        super().__init__(pretrained_model, topics, use_cuda=use_cuda, half=half)
         self.topics2mask = {topic: len(self.tokenizer.encode(topic, add_special_tokens=False)) for topic in topics}
         self.topics2id = torch.tensor([self.tokenizer.encode(topic, add_special_tokens=False)[0]
                                        for topic in topics]).to(self.device)
@@ -20,12 +20,10 @@ class MLMTopicClassifier(TopicClassifier):
     def _initialize(self, pretrained_model):
         self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
         self.model = AutoModelWithLMHead.from_pretrained(pretrained_model)
-        self.model.to(self.device)
-        self.model.eval()
 
     def _run_batch(self, batch):
         with torch.no_grad():
-            input_ids = self.tokenizer.batch_encode_plus(batch, pad_to_max_length=True)
+            input_ids = self.tokenizer.batch_encode_plus(batch, padding=True)
             input_ids = torch.tensor(input_ids['input_ids']).to(self.device)
             masked_index = torch.tensor([(input_ids[i] == self.tokenizer.mask_token_id).nonzero().view(-1)[0].item()
                                          for i in range(len(batch))]).to(self.device)

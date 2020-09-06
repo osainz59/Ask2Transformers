@@ -11,20 +11,18 @@ from tqdm import tqdm
 class NSPTopicClassifier(TopicClassifier):
 
     def __init__(self, pretrained_model, topics, *args, use_cuda=True, query_phrase="Topic or domain about",
-                 positive_position=1, **kwargs):
-        super().__init__(pretrained_model, topics, use_cuda=use_cuda)
+                 positive_position=1, half=False, **kwargs):
+        super().__init__(pretrained_model, topics, use_cuda=use_cuda, half=half)
         self.query_phrase = query_phrase
         self.cls_pos = positive_position
 
     def _initialize(self, pretrained_model):
         self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model, use_fast=True)
         self.model = BertForNextSentencePrediction.from_pretrained(pretrained_model)
-        self.model.to(self.device)
-        self.model.eval()
 
     def _run_batch(self, batch):
         with torch.no_grad():
-            input_ids = self.tokenizer.batch_encode_plus(batch, pad_to_max_length=True)
+            input_ids = self.tokenizer.batch_encode_plus(batch, padding=True)
             input_ids = torch.tensor(input_ids['input_ids']).to(self.device)
             output = self.model(input_ids)[0][:, self.cls_pos].view(len(batch) // len(self.topics), -1)
             output = torch.softmax(output, dim=-1).detach().cpu().numpy()

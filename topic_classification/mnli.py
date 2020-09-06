@@ -13,23 +13,21 @@ from tqdm import tqdm
 class _NLITopicClassifier(TopicClassifier):
 
     def __init__(self, pretrained_model, topics, *args, use_cuda=True,
-                 query_phrase="The domain of the sentence is about", entailment_position=2, verbose=True, **kwargs):
-        super().__init__(pretrained_model, topics, use_cuda=use_cuda, verbose=verbose)
+                 query_phrase="The domain of the sentence is about", entailment_position=2, 
+                 half=False, verbose=True, **kwargs):
+        super().__init__(pretrained_model, topics, use_cuda=use_cuda, verbose=verbose, half=half)
         self.query_phrase = query_phrase
         self.ent_pos = entailment_position
 
     def _initialize(self, pretrained_model):
         self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
         self.model = AutoModelForSequenceClassification.from_pretrained(pretrained_model)
-        self.model.to(self.device)
-        self.model.eval()
 
     def _run_batch(self, batch):
         with torch.no_grad():
-            input_ids = self.tokenizer.batch_encode_plus(batch, pad_to_max_length=True)
+            input_ids = self.tokenizer.batch_encode_plus(batch, padding=True)
             input_ids = torch.tensor(input_ids['input_ids']).to(self.device)
-            output = self.model(input_ids)[0][:, self.ent_pos].view(len(batch) // len(self.topics), -1)
-            # output = torch.softmax(output, dim=-1).detach().cpu().numpy()
+            output = self.model(input_ids)[0][:, self.ent_pos].view(input_ids.shape[0] // len(self.topics), -1)
             output = output.detach().cpu().numpy()
 
         return output
@@ -41,7 +39,7 @@ class _NLITopicClassifier(TopicClassifier):
         batch, outputs = [], []
         for i, context in tqdm(enumerate(contexts), total=len(contexts)):
             sentences = [f"{context} {self.tokenizer.sep_token} {self.query_phrase} \"{topic}\"." for topic in
-                         self.topics]
+                        self.topics]
             batch.extend(sentences)
 
             if (i + 1) % batch_size == 0:
