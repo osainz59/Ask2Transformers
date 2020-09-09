@@ -8,22 +8,22 @@ This library contains the code for the Ask2Transformers project.
 ## Topic classification just with non task specific pretrained models
 
 ```python
->>> from topic_classification import NLITopicClassifier
+>>> from topic_classification.mnli import NLITopicClassifier
 >>> topics = ['politics', 'culture', 'economy', 'biology', 'legal', 'medicine', 'business']
 >>> context = "hospital: a health facility where patients receive treatment."
 
 >>> clf = NLITopicClassifier('roberta-large-mnli', topics)
 
 >>> predictions = clf(context)[0]
->>> print(sorted(list(zip(predictions, topics))), reverse=True)
+>>> print(sorted(list(zip(predictions, topics)), reverse=True))
 
-[(0.32655442, 'medicine'),
- (0.19446225, 'biology'),
- (0.11796309, 'politics'),
- (0.11180526, 'culture'),
- (0.10732978, 'economy'),
- (0.07613304, 'business'),
- (0.0657522, 'legal')]
+[(0.77885467, 'medicine'),
+ (0.08395168, 'biology'),
+ (0.040319894, 'business'),
+ (0.027866213, 'economy'),
+ (0.02357693, 'politics'),
+ (0.023382403, 'legal'),
+ (0.02204825, 'culture')]
 
 ```
 
@@ -38,7 +38,7 @@ Results (Micro-average):
 | Distributional (Camacho-Collados et al. 2016) | 84.0 | 59.8 | 69.9 |
 | BabelDomains (Camacho-Collados et al. 2017)   | 81.7 | 68.7 | 74.6 |
 | | | | |
-| Ask2Transformers | **91.68** | **91.68** | **91.68** |
+| Ask2Transformers | **92.14** | **92.14** | **92.14** |
 
 
 ### Approach evaluation
@@ -79,4 +79,4 @@ Sometimes the defined labels are very general or very precise. For instance, the
 |  | Precision | Recall | F1-Score | Top-1 | Top-3 | Top-5 |
 |:-------|:---------:|:------:|:--------:|:-----:|:-----:|:-----:|
 | Without mapping | 92.20 | 81.62 | 85.44 | 81.62 | 93.96 | 96.42 |
-| Splitted labels | **96.03** | **91.68** | **93.34** | **91.68** | **98.18** | **99.02** |
+| Splitted labels | **96.51** | **92.14** | **93.88** | **92.14** | **98.18** | **99.02** |
