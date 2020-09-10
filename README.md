@@ -27,12 +27,21 @@ This library contains the code for the Ask2Transformers project.
 
 ```
 
+## Instalation
+
+By using Pip
+
+```shell script
+pip install a2t
+```
+
 ## WordNet Dataset (BabelNet Domains)
 
 - 1540 annotated glosses
 - 34 domains (classes)
 
 Results (Micro-average):
+
 | Method | Precision | Recall | F1-Score |
 |:------:|:---------:|:------:|:--------:|
 | Distributional (Camacho-Collados et al. 2016) | 84.0 | 59.8 | 69.9 |
