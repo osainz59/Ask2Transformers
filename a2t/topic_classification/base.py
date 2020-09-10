@@ -31,7 +31,7 @@ class TopicClassifier(object):
 
         self.model.to(self.device)
         self.model.eval()
-        if self.use_cuda and self.half:
+        if self.use_cuda and self.half and torch.cuda.is_available():
             self.model.half()
 
     def _initialize(self, pretrained_model):

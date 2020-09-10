@@ -1,6 +1,8 @@
 experiments/*/*.npy
 experiments/*test*
 
+onnx/
+
 
 # Visual Studio Code
 .vscode
