@@ -1,13 +1,14 @@
-import sys, json
 import argparse
-from pprint import pprint
-import numpy as np
+import json
 import os
+from pprint import pprint
+
+import numpy as np
 from sklearn.metrics import precision_recall_fscore_support
 
-from topic_classification.mnli import NLITopicClassifier, NLITopicClassifierWithMappingHead
-from topic_classification.nsp import NSPTopicClassifier
-from topic_classification.mlm import MLMTopicClassifier
+from a2t.topic_classification.mlm import MLMTopicClassifier
+from a2t.topic_classification.mnli import NLITopicClassifier, NLITopicClassifierWithMappingHead
+from a2t.topic_classification.nsp import NSPTopicClassifier
 
 CLASSIFIERS = {
     'mnli': NLITopicClassifier,

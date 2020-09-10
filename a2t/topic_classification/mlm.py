@@ -1,12 +1,12 @@
-from topic_classification.base import TopicClassifier
-
-from collections import defaultdict
 import sys
-from transformers import AutoModelWithLMHead, AutoTokenizer
-import torch
-import numpy as np
 from pprint import pprint
+
+import numpy as np
+import torch
 from tqdm import tqdm
+from transformers import AutoModelWithLMHead, AutoTokenizer
+
+from a2t.topic_classification.base import TopicClassifier
 
 
 class MLMTopicClassifier(TopicClassifier):

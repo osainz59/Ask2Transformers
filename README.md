@@ -8,7 +8,7 @@ This library contains the code for the Ask2Transformers project.
 ## Topic classification just with non task specific pretrained models
 
 ```python
->>> from topic_classification.mnli import NLITopicClassifier
+>>> from a2t.topic_classification import NLITopicClassifier
 >>> topics = ['politics', 'culture', 'economy', 'biology', 'legal', 'medicine', 'business']
 >>> context = "hospital: a health facility where patients receive treatment."
 

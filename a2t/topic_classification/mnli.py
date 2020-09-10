@@ -1,13 +1,14 @@
-from topic_classification.base import TopicClassifier, np_softmax
-from typing import Dict, List
-from collections import defaultdict
-
 import sys
-from transformers import AutoModelForSequenceClassification, AutoTokenizer
-import torch
-import numpy as np
+from collections import defaultdict
 from pprint import pprint
+from typing import Dict, List
+
+import numpy as np
+import torch
 from tqdm import tqdm
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+from a2t.topic_classification.base import TopicClassifier, np_softmax
 
 
 class _NLITopicClassifier(TopicClassifier):

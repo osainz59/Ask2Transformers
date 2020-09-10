@@ -1,11 +1,12 @@
-from topic_classification.base import TopicClassifier
-
 import sys
-from transformers import BertForNextSentencePrediction, AutoTokenizer
-import torch
-import numpy as np
 from pprint import pprint
+
+import numpy as np
+import torch
 from tqdm import tqdm
+from transformers import BertForNextSentencePrediction, AutoTokenizer
+
+from a2t.topic_classification.base import TopicClassifier
 
 
 class NSPTopicClassifier(TopicClassifier):

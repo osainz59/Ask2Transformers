@@ -7,11 +7,12 @@ Método de uso:
 
 El topics.txt debe contener los diferentes topics que se van a usar y deberan estar separados por saltos de linea.
 """
-from transformers import AutoModelWithLMHead, AutoTokenizer
-import torch
 import sys
-from pprint import pprint
 from collections import defaultdict
+from pprint import pprint
+
+import torch
+from transformers import AutoModelWithLMHead, AutoTokenizer
 
 if len(sys.argv) < 2:
     print('Usage:\tpython3 get_topics.py topics.txt input_file.txt\n\tpython3 get_topics.py topics.txt < input_file.txt')

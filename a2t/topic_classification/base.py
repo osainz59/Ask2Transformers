@@ -1,6 +1,8 @@
-import sys, os
-import torch
+import os
+import sys
+
 import numpy as np
+import torch
 
 
 def np_softmax(x, dim=-1):

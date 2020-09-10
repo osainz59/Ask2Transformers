@@ -1,13 +1,13 @@
-import gzip
-import sys, json
 import argparse
+import gzip
+import json
 import os
 
 import numpy as np
 
-from topic_classification.mnli import NLITopicClassifier, NLITopicClassifierWithMappingHead
-from topic_classification.nsp import NSPTopicClassifier
-from topic_classification.mlm import MLMTopicClassifier
+from a2t.topic_classification.mlm import MLMTopicClassifier
+from a2t.topic_classification.mnli import NLITopicClassifier, NLITopicClassifierWithMappingHead
+from a2t.topic_classification.nsp import NSPTopicClassifier
 
 CLASSIFIERS = {
     'mnli': NLITopicClassifier,

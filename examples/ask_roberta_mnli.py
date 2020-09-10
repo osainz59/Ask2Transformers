@@ -7,10 +7,11 @@ Método de uso:
 
 El topics.txt debe contener los diferentes topics que se van a usar y deberan estar separados por saltos de linea.
 """
-from transformers import AutoModelForSequenceClassification, AutoTokenizer
-import torch
 import sys
 from pprint import pprint
+
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 if len(sys.argv) < 2:
     print('Usage:\tpython3 get_topics.py topics.txt input_file.txt\n\tpython3 get_topics.py topics.txt < input_file.txt')

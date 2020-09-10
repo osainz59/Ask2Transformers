@@ -1,5 +1,5 @@
-import sys
 import gzip
+import sys
 
 if len(sys.argv) < 3:
     print("ERROR. Usage: python3 align_glosses_with_labels.py labels.txt glosses.txt")
