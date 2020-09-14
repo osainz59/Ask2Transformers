@@ -155,7 +155,6 @@ class BabelDomainsClassifier(NLITopicClassifierWithMappingHead):
             topics = self.idx2topic(topics)
         if return_confidences:
             topics = np.stack((topics, np.sort(output, -1)[:, ::-1][:, :topk]), -1).tolist()
-            # topics = [list(map(tuple, row)) for row in topics]
             topics = [[(int(label), conf) if not return_labels else (label, conf) for label, conf in row]
                       for row in topics]
         else:

@@ -42,7 +42,6 @@ with open(args.dataset, 'rt') as f:
     contexts, labels = [], []
     for line in f:
         _, label, context = line.strip().split('\t')
-        # label = label.encode('utf-8').decode('utf-8')   # To fix a encoding error, still don't know why
         contexts.append(context)
         labels.append(topic2id[label])
 
