@@ -8,15 +8,15 @@ import torch
 from tqdm import tqdm
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
-from a2t.topic_classification.base import TopicClassifier, np_softmax
+from a2t.base import Classifier, np_softmax
 
 
-class _NLITopicClassifier(TopicClassifier):
+class _NLITopicClassifier(Classifier):
 
-    def __init__(self, pretrained_model, topics, *args, use_cuda=True,
-                 query_phrase="The domain of the sentence is about", entailment_position=2, 
+    def __init__(self, labels: List[str], *args, pretrained_model: str = 'roberta-large-mnli', use_cuda=True,
+                 query_phrase="The domain of the sentence is about", entailment_position=2,
                  half=False, verbose=True, **kwargs):
-        super().__init__(pretrained_model, topics, use_cuda=use_cuda, verbose=verbose, half=half)
+        super().__init__(labels, pretrained_model, use_cuda=use_cuda, verbose=verbose, half=half)
         self.query_phrase = query_phrase
         self.ent_pos = entailment_position
 
@@ -28,7 +28,7 @@ class _NLITopicClassifier(TopicClassifier):
         with torch.no_grad():
             input_ids = self.tokenizer.batch_encode_plus(batch, padding=True)
             input_ids = torch.tensor(input_ids['input_ids']).to(self.device)
-            output = self.model(input_ids)[0][:, self.ent_pos].view(input_ids.shape[0] // len(self.topics), -1)
+            output = self.model(input_ids)[0][:, self.ent_pos].view(input_ids.shape[0] // len(self.labels), -1)
             output = output.detach().cpu().numpy()
 
         return output
@@ -40,7 +40,7 @@ class _NLITopicClassifier(TopicClassifier):
         batch, outputs = [], []
         for i, context in tqdm(enumerate(contexts), total=len(contexts)):
             sentences = [f"{context} {self.tokenizer.sep_token} {self.query_phrase} \"{topic}\"." for topic in
-                        self.topics]
+                         self.labels]
             batch.extend(sentences)
 
             if (i + 1) % batch_size == 0:
@@ -58,9 +58,36 @@ class _NLITopicClassifier(TopicClassifier):
 
 
 class NLITopicClassifier(_NLITopicClassifier):
+    """ NLITopicClassifier
 
-    def __init__(self, pretrained_model: str, topics: List[str], *args, **kwargs):
-        super(NLITopicClassifier, self).__init__(pretrained_model, topics, *args, **kwargs)
+    Zero-Shot topic classifier based on a Natural Language Inference pretrained Transformer.
+
+    Use:
+
+    ```python
+    >>> from a2t.topic_classification import NLITopicClassifier
+    
+    >>> topics = ['politics', 'culture', 'economy', 'biology', 'legal', 'medicine', 'business']
+    >>> context = "hospital: a health facility where patients receive treatment."
+
+    >>> clf = NLITopicClassifier(topics)
+
+    >>> predictions = clf(context)[0]
+    >>> print(sorted(list(zip(predictions, topics)), reverse=True))
+
+    [(0.77885467, 'medicine'),
+     (0.08395168, 'biology'),
+     (0.040319894, 'business'),
+     (0.027866213, 'economy'),
+     (0.02357693, 'politics'),
+     (0.023382403, 'legal'),
+     (0.02204825, 'culture')]
+
+    ```
+    """
+
+    def __init__(self, labels: List[str], *args, pretrained_model: str = 'roberta-large-mnli', **kwargs):
+        super(NLITopicClassifier, self).__init__(labels, pretrained_model, *args, **kwargs)
 
     def __call__(self, contexts: List[str], batch_size: int = 1):
         outputs = super().__call__(contexts=contexts, batch_size=batch_size)
@@ -71,15 +98,16 @@ class NLITopicClassifier(_NLITopicClassifier):
 
 class NLITopicClassifierWithMappingHead(_NLITopicClassifier):
 
-    def __init__(self, pretrained_model: str, topics: List[str], topic_mapping: Dict[str, str], *args, **kwargs):
+    def __init__(self, labels: List[str], topic_mapping: Dict[str, str],
+                 pretrained_model: str = 'roberta-large-mnli',  *args, **kwargs):
         self.new_topics = list(topic_mapping.keys())
-        self.target_topics = topics
+        self.target_topics = labels
         self.new_topics2id = {t: i for i, t in enumerate(self.new_topics)}
         self.mapping = defaultdict(list)
         for key, value in topic_mapping.items():
             self.mapping[value].append(self.new_topics2id[key])
 
-        super().__init__(pretrained_model, self.new_topics, *args, **kwargs)
+        super().__init__(self.new_topics, pretrained_model, *args, **kwargs)
 
     def __call__(self, contexts, batch_size=1):
         outputs = super().__call__(contexts, batch_size)
@@ -102,7 +130,7 @@ if __name__ == "__main__":
 
     input_stream = open(sys.argv[2], 'rt') if len(sys.argv) == 3 else sys.stdin
 
-    clf = NLITopicClassifier('roberta-large-mnli', topics=topics)
+    clf = NLITopicClassifier(labels=topics, pretrained_model='roberta-large-mnli')
 
     for line in input_stream:
         line = line.rstrip()

@@ -1,5 +1,6 @@
 import os
 import sys
+from typing import List
 
 import numpy as np
 import torch
@@ -10,13 +11,14 @@ def np_softmax(x, dim=-1):
     return e / np.sum(e, axis=dim, keepdims=True)
 
 
-class TopicClassifier(object):
+class Classifier(object):
 
-    def __init__(self, pretrained_model, topics, use_cuda=True, half=False, verbose=True):
+    def __init__(self, labels: List[str], pretrained_model: str = 'roberta-large-mnli',
+                 use_cuda=True, half=False, verbose=True):
         super().__init__()
 
         self.device = torch.device("cuda" if torch.cuda.is_available() and use_cuda else "cpu")
-        self.topics = topics
+        self.labels = labels
         self.use_cuda = use_cuda
         self.half = half
         self.verbose = verbose

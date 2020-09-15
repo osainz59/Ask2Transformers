@@ -225,7 +225,7 @@ class WNDomainsClassifier(NLITopicClassifierWithMappingHead):
 
     def __init__(self, **kwargs):
         super(WNDomainsClassifier, self).__init__(
-            pretrained_model='roberta-large-mnli', topics=WNDOMAINS_TOPICS, topic_mapping=WNDOMAINS_TOPIC_MAPPING,
+            pretrained_model='roberta-large-mnli', labels=WNDOMAINS_TOPICS, topic_mapping=WNDOMAINS_TOPIC_MAPPING,
             query_phrase="The domain of the sentence is about", entailment_position=2, **kwargs)
 
         def idx2topic(idx):

@@ -52,7 +52,7 @@ with open(args.config, 'rt') as f:
 
 for configuration in config:
     os.makedirs(f"experiments/{configuration['name']}", exist_ok=True)
-    classifier = CLASSIFIERS[configuration['classification_model']](topics=topics, **configuration)
+    classifier = CLASSIFIERS[configuration['classification_model']](labels=topics, **configuration)
     output = classifier(contexts, batch_size=configuration['batch_size'])
     np.save(f"experiments/{configuration['name']}/output.npy", output)
     np.save(f"experiments/{configuration['name']}/labels.npy", labels)

@@ -9,10 +9,11 @@ This library contains the code for the Ask2Transformers project.
 
 ```python
 >>> from a2t.topic_classification import NLITopicClassifier
+
 >>> topics = ['politics', 'culture', 'economy', 'biology', 'legal', 'medicine', 'business']
 >>> context = "hospital: a health facility where patients receive treatment."
 
->>> clf = NLITopicClassifier('roberta-large-mnli', topics)
+>>> clf = NLITopicClassifier(topics)
 
 >>> predictions = clf(context)[0]
 >>> print(sorted(list(zip(predictions, topics)), reverse=True))
@@ -67,9 +68,9 @@ And the configuration file should be a JSON that looks like:
         "batch_size": 1,
         "use_cuda": true,
         "entailment_position": 2,
-        ...
+
     },
-    ...
+    
 ]
 ```
 There are some examples on the `experiments/` directory.
