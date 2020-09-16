@@ -6,12 +6,16 @@ from tqdm import tqdm
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 from a2t.base import Classifier, np_softmax
+from a2t.supersense_classification.wordnet_lexnames import (
+    WORDNET_LEXNAMES_BY_POS, WORDNET_LEXNAMES_TO_DEFINITIONS, WORDNET_LEXNAMES
+)
 
 
 class _NLISuperSenseClassifier(Classifier):
 
-    def __init__(self, senses: List[str], *args, pretrained_model:str = 'roberta-large-mnli', use_cuda=True,
-                 query_phrase="The semantic field is", entailment_position=2, half=False, verbose=True, **kwargs):
+    def __init__(self, *args, senses: List[str] = WORDNET_LEXNAMES,  pretrained_model:str = 'roberta-large-mnli',
+                 use_cuda=True, query_phrase="The semantic field is", entailment_position=2, half=False,
+                 verbose=True, **kwargs):
         super().__init__(senses, pretrained_model, use_cuda=use_cuda, verbose=verbose, half=half)
         self.query_phrase = query_phrase
         self.ent_pos = entailment_position
@@ -35,7 +39,7 @@ class _NLISuperSenseClassifier(Classifier):
 
         batch, outputs = [], []
         for i, context in tqdm(enumerate(contexts), total=len(contexts)):
-            sentences = [f"{context} {self.tokenizer.sep_token} {self.query_phrase} \"{topic}\"." for topic in
+            sentences = [f"{context} {self.tokenizer.sep_token} {self.query_phrase} \"{WORDNET_LEXNAMES_TO_DEFINITIONS[lexname]}\"." for lexname in
                          self.labels]
             batch.extend(sentences)
 
@@ -55,8 +59,8 @@ class _NLISuperSenseClassifier(Classifier):
 
 class NLISuperSenseClassifier(_NLISuperSenseClassifier):
 
-    def __init__(self, senses: List[str], *args, pretrained_model: str = 'roberta-large-mnli', **kwargs):
-        super(NLISuperSenseClassifier, self).__init__(senses=senses, pretrained_model=pretrained_model,
+    def __init__(self, *args, pretrained_model: str = 'roberta-large-mnli', **kwargs):
+        super(NLISuperSenseClassifier, self).__init__(senses=WORDNET_LEXNAMES, pretrained_model=pretrained_model,
                                                       *args, **kwargs)
 
     def __call__(self, contexts: List[str], batch_size: int = 1):
@@ -75,11 +79,11 @@ class POSAwareNLISuperSenseClassifier(_NLISuperSenseClassifier):
     """
     pass
 
-    def __init__(self, senses: List[str], sense_pos_mask: Dict[str, List[str]], *args, **kwargs):
-        self.sense2id = {sense: i for i, sense in enumerate(senses)}
+    def __init__(self, **kwargs):
+        self.sense2id = {sense: i for i, sense in enumerate(WORDNET_LEXNAMES)}
         self.sense_pos_mask = {}
-        for sense, mask in sense_pos_mask.items():
-            self.sense_pos_mask[sense] = np.zeros(len(sense))
+        for sense, mask in WORDNET_LEXNAMES_BY_POS.items():
+            self.sense_pos_mask[sense] = np.zeros(len(WORDNET_LEXNAMES))
             mask = [self.sense2id[s] for s in mask]
             self.sense_pos_mask[sense][mask] = 1.
 
@@ -88,7 +92,7 @@ class POSAwareNLISuperSenseClassifier(_NLISuperSenseClassifier):
 
         self.to_np_mask = np.vectorize(to_np_mask)
 
-        super(POSAwareNLISuperSenseClassifier, self).__init__(labels=senses, *args, **kwargs)
+        super(POSAwareNLISuperSenseClassifier, self).__init__(labels=WORDNET_LEXNAMES, **kwargs)
 
     def __call__(self, contexts: List[str], pos_tags: List[str], batch_size: int = 1):
         assert len(contexts) == len(pos_tags)
