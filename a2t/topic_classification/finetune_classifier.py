@@ -1,4 +1,4 @@
-from transformers import AutoModelForSequenceClassification, AutoTokenizer
+from transformers import AutoModelForSequenceClassification, AutoTokenizer, AutoConfig
 from transformers.optimization import get_linear_schedule_with_warmup
 import argparse
 import json
@@ -112,7 +112,11 @@ def train(opt):
     # Define the model and tokenizer
     tokenizer = AutoTokenizer.from_pretrained(config['pretrained_model'])
     tokenizer.save_pretrained(config['output_path'])
-    model = AutoModelForSequenceClassification.from_pretrained(config['pretrained_model'], num_labels=len(topics))
+    config = AutoConfig.from_pretrained(config['pretrained_model'])
+    config.num_labels = len(topics)
+    config.label2id = topic2id
+    config.id2label = {str(idx): label for labe, idx in topic2id.items()}
+    model = AutoModelForSequenceClassification.from_pretrained(config['pretrained_model'], config=config)
 
     # Prepare data for training
     train_dataset = tokenizer(train_glosses, padding=True, truncation=True, max_length=config['max_length'])
