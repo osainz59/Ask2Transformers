@@ -1,5 +1,6 @@
 experiments/*/*.npy
 experiments/*test*
+models/
 
 onnx/
 
