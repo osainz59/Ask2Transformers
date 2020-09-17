@@ -112,11 +112,11 @@ def train(opt):
     # Define the model and tokenizer
     tokenizer = AutoTokenizer.from_pretrained(config['pretrained_model'])
     tokenizer.save_pretrained(config['output_path'])
-    config = AutoConfig.from_pretrained(config['pretrained_model'])
-    config.num_labels = len(topics)
-    config.label2id = topic2id
-    config.id2label = {str(idx): label for labe, idx in topic2id.items()}
-    model = AutoModelForSequenceClassification.from_pretrained(config['pretrained_model'], config=config)
+    cfg = AutoConfig.from_pretrained(config['pretrained_model'])
+    cfg.num_labels = len(topics)
+    cfg.label2id = topic2id
+    cfg.id2label = {str(idx): label for labe, idx in topic2id.items()}
+    model = AutoModelForSequenceClassification.from_pretrained(config['pretrained_model'], config=cfg)
 
     # Prepare data for training
     train_dataset = tokenizer(train_glosses, padding=True, truncation=True, max_length=config['max_length'])
