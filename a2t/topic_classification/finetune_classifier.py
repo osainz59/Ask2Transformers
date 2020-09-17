@@ -6,11 +6,16 @@ import gzip
 import torch
 from torch.utils.data import TensorDataset, DataLoader
 from torch.optim import SGD, AdamW, Adam
-from apex import amp
+#from apex import amp
 from tqdm import tqdm
 import numpy as np
 from pprint import pprint
 import os
+
+try:
+    from apex import amp
+except:
+    pass
 
 class EarlyStopping(object):
     """ Simple implementation of Early Stopping concept based on the validation loss.
