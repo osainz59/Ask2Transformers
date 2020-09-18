@@ -156,7 +156,7 @@ def train(opt):
 
         return optimizer_grouped_parameters
 
-    optimizer = SGD(get_parameters(model, config['freeze']), lr=config['learning_rate'])
+    optimizer = AdamW(get_parameters(model, config['freeze']), lr=config['learning_rate'])
 
     model.cuda()
     if config['half']:
