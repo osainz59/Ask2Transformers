@@ -10,7 +10,7 @@
     "half": false,
     "epochs": 20,
     "warmup_steps": 3,
-    "learning_rate": 1e-5,
+    "learning_rate": 1e-3,
     "patience": 2,
     "max_length": 128,
     "freeze": false,

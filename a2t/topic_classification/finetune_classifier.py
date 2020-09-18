@@ -165,9 +165,11 @@ def train(opt):
     def save_checkpoint_fn(model, output_path, **kwargs):
         model.save_pretrained(output_path)
 
+    config['training_log'] = {}
 
     early_stopping = EarlyStopping(patience=config['patience'], save_checkpoint_fn=save_checkpoint_fn)
     for epoch in range(config['epochs']):
+        config['training_log'][f'epoch_{epoch}'] = {}
         model.train()
         total_loss, accuracy =  .0, .0
         correct, total = 0, 0
@@ -197,6 +199,11 @@ def train(opt):
 
             progress.set_description(f"Epoch: {epoch} - Loss: {total_loss/(i+1):.3f} - Accuracy: {accuracy:.3f}")
 
+        config['training_log'][f'epoch_{epoch}'] = {
+            'train_loss': total_loss / (i+1),
+            'train_accuracy': correct / total
+        }
+
         model.eval()
         with torch.no_grad():
             total_loss, accuracy =  .0, .0
@@ -218,9 +225,17 @@ def train(opt):
 
                 progress.set_description(f"Epoch: {epoch} - Loss: {total_loss/(i+1):.3f} - Accuracy: {accuracy:.3f}")
 
+        config['training_log'][f'epoch_{epoch}'] = {
+            'eval_loss': total_loss / (i+1),
+            'eval_accuracy': correct / total
+        }
+
         if early_stopping(total_loss / (i+1), model, output_path=config['output_path']):
             break
 
+    # Save the new config file
+    with open(opt.config, 'wt') as f:
+        json.dump(config, f, indent=4)
 
 
 if __name__ == "__main__":
