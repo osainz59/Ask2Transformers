@@ -120,7 +120,7 @@ def train(opt):
     cfg = AutoConfig.from_pretrained(config['pretrained_model'])
     cfg.num_labels = len(topics)
     cfg.label2id = topic2id
-    cfg.id2label = {str(idx): label for labe, idx in topic2id.items()}
+    cfg.id2label = {str(idx): label for label, idx in topic2id.items()}
     model = AutoModelForSequenceClassification.from_pretrained(config['pretrained_model'], config=cfg)
 
     # Prepare data for training
