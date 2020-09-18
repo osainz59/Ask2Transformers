@@ -199,10 +199,8 @@ def train(opt):
 
             progress.set_description(f"Epoch: {epoch} - Loss: {total_loss/(i+1):.3f} - Accuracy: {accuracy:.3f}")
 
-        config['training_log'][f'epoch_{epoch}'] = {
-            'train_loss': total_loss / (i+1),
-            'train_accuracy': correct / total
-        }
+        config['training_log'][f'epoch_{epoch}']['train_loss'] = total_loss / (i+1)
+        config['training_log'][f'epoch_{epoch}']['train_accuracy'] = correct / total
 
         model.eval()
         with torch.no_grad():
@@ -225,10 +223,8 @@ def train(opt):
 
                 progress.set_description(f"Epoch: {epoch} - Loss: {total_loss/(i+1):.3f} - Accuracy: {accuracy:.3f}")
 
-        config['training_log'][f'epoch_{epoch}'] = {
-            'eval_loss': total_loss / (i+1),
-            'eval_accuracy': correct / total
-        }
+        config['training_log'][f'epoch_{epoch}']['eval_loss'] = total_loss / (i+1)
+        config['training_log'][f'epoch_{epoch}']['eval_accuracy'] = correct / total
 
         if early_stopping(total_loss / (i+1), model, output_path=config['output_path']):
             break
