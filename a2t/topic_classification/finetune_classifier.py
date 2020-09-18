@@ -188,6 +188,7 @@ def train(opt):
                 loss.backward()
 
             optimizer.step()
+            optimizer.zero_grad()
 
             total_loss += loss.item()
             correct += sum(np.argmax(logits.detach().cpu().numpy(), -1) == labels.numpy())
