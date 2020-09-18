@@ -1,0 +1,44 @@
+{
+    "glosses": "data/all.definitions.gz",
+    "train_data": "experiments/splitted_topics/wordnet.annotations.tsv.gz",
+    "eval_data": "data/babeldomains.domain.gloss.tsv",
+    "topics": "data/babel_topics.txt",
+    "minimum_confidence": 0.1,
+    "pretrained_model": "distilbert-base-uncased",
+    "batch_size": 64,
+    "eval_batch_size": 128,
+    "half": false,
+    "epochs": 20,
+    "warmup_steps": 3,
+    "learning_rate": 1e-05,
+    "patience": 2,
+    "max_length": 128,
+    "freeze": false,
+    "output_path": "models/topic_classifier_small/",
+    "training_log": {
+        "epoch_0": {
+            "eval_loss": 0.7601392292059385,
+            "eval_accuracy": 0.8168831168831169
+        },
+        "epoch_1": {
+            "eval_loss": 0.41678160429000854,
+            "eval_accuracy": 0.9077922077922078
+        },
+        "epoch_2": {
+            "eval_loss": 0.36823732463213116,
+            "eval_accuracy": 0.9084415584415585
+        },
+        "epoch_3": {
+            "eval_loss": 0.33870008473212904,
+            "eval_accuracy": 0.9142857142857143
+        },
+        "epoch_4": {
+            "eval_loss": 0.3388093297298138,
+            "eval_accuracy": 0.9123376623376623
+        },
+        "epoch_5": {
+            "eval_loss": 0.3994076607319025,
+            "eval_accuracy": 0.9032467532467533
+        }
+    }
+}
