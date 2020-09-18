@@ -3,16 +3,34 @@
     "train_data": "experiments/splitted_topics/wordnet.annotations.tsv.gz",
     "eval_data": "data/babeldomains.domain.gloss.tsv",
     "topics": "data/babel_topics.txt",
-    "minimum_confidence": 0.10,
+    "minimum_confidence": 0.1,
     "pretrained_model": "xlm-roberta-base",
-    "batch_size": 8,
+    "batch_size": 32,
     "eval_batch_size": 32,
     "half": false,
     "epochs": 20,
     "warmup_steps": 3,
-    "learning_rate": 1e-3,
+    "learning_rate": 1e-05,
     "patience": 2,
     "max_length": 128,
     "freeze": false,
-    "output_path": "models/topic_classifier"
+    "output_path": "models/topic_classifier",
+    "training_log": {
+        "epoch_0": {
+            "eval_loss": 0.5406535955107942,
+            "eval_accuracy": 0.8720779220779221
+        },
+        "epoch_1": {
+            "eval_loss": 0.3610735052094168,
+            "eval_accuracy": 0.9058441558441559
+        },
+        "epoch_2": {
+            "eval_loss": 0.4190294788200028,
+            "eval_accuracy": 0.8961038961038961
+        },
+        "epoch_3": {
+            "eval_loss": 0.4445507885241995,
+            "eval_accuracy": 0.874025974025974
+        }
+    }
 }
