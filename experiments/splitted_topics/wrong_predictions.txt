@@ -1,0 +1,1210 @@
+Sense-id:	00221343-n
+Gloss:		chance-medley: an unpremeditated killing of a human being in self defense
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.4365	Warfare and defense
+   0.1427	Law and crime
+   0.0315	Media
+   0.0295	Heraldry, honors, and vexillology
+   0.0242	History
+
+Sense-id:	00227595-n
+Gloss:		ritual killing, sacrifice: the act of killing (an animal or person) in order to propitiate a deity
+Correct label:	Animals
+Top-5 Predictions:
+   0.2509	Royalty and nobility
+   0.2293	Religion, mysticism and mythology
+   0.1058	Animals
+   0.0698	Politics and government
+   0.0539	Heraldry, honors, and vexillology
+
+Sense-id:	00260881-n
+Gloss:		land reform: a redistribution of agricultural land (especially by government action)
+Correct label:	Politics and government
+Top-5 Predictions:
+   0.3164	Farming
+   0.2102	Food and drink
+   0.1429	Politics and government
+   0.0430	Business, economics, and finance
+   0.0415	Geography and places
+
+Sense-id:	00456199-n
+Gloss:		game: a single play of a sport or other contest; "the game lasted two hours"
+Correct label:	Games and video games
+Top-5 Predictions:
+   0.4247	Sport and recreation
+   0.3585	Games and video games
+   0.0143	Warfare and defense
+   0.0122	Heraldry, honors, and vexillology
+   0.0122	Royalty and nobility
+
+Sense-id:	00765343-n
+Gloss:		barratry: the offense of vexatiously persisting in inciting lawsuits and quarrels
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.2081	Heraldry, honors, and vexillology
+   0.1750	Law and crime
+   0.1013	Warfare and defense
+   0.0449	Business, economics, and finance
+   0.0342	Culture and society
+
+Sense-id:	00765791-n
+Gloss:		criminal maintenance, maintenance: the unauthorized interference in a legal action by a person having no interest in it (as by helping one party with money or otherwise to continue the action) so as to obstruct justice or promote unnecessary litigation or unsettle the peace of the community; "unlike champerty, criminal maintenance does not necessarily involve personal profit"
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.3327	Culture and society
+   0.3154	Law and crime
+   0.0476	Royalty and nobility
+   0.0276	Warfare and defense
+   0.0237	Language and linguistics
+
+Sense-id:	00772813-n
+Gloss:		sedition: an illegal action inciting resistance to lawful authority and tending to cause the disruption or overthrow of the government
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.4415	Politics and government
+   0.1614	Law and crime
+   0.0470	Culture and society
+   0.0393	Heraldry, honors, and vexillology
+   0.0287	Warfare and defense
+
+Sense-id:	01070708-n
+Gloss:		price-fixing: control (by agreement among producers or by government) of the price of a commodity in interstate commerce
+Correct label:	Politics and government
+Top-5 Predictions:
+   0.2353	Business, economics, and finance
+   0.1749	Politics and government
+   0.0712	Law and crime
+   0.0566	Culture and society
+   0.0354	Transport and travel
+
+Sense-id:	01178415-n
+Gloss:		boston tea party: demonstration (1773) by citizens of Boston who (disguised as Indians) raided three British ships in Boston harbor and dumped hundreds of chests of tea into the harbor; organized as a protest against taxes on tea
+Correct label:	History
+Top-5 Predictions:
+   0.2510	Food and drink
+   0.0917	Sport and recreation
+   0.0750	Culture and society
+   0.0743	Transport and travel
+   0.0651	Law and crime
+
+Sense-id:	01190364-n
+Gloss:		judgement on the merits, judgment on the merits: judgment rendered through analysis and adjudication of the factual issues presented
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.1056	Heraldry, honors, and vexillology
+   0.0642	Law and crime
+   0.0470	Warfare and defense
+   0.0456	Geography and places
+   0.0437	Royalty and nobility
+
+Sense-id:	01191364-n
+Gloss:		bakke decision: a ruling by the Supreme Court on affirmative action; the Court ruled in 1978 that medical schools are entitled to consider race as a factor in their admission policy
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.2285	Health and medicine
+   0.0910	Law and crime
+   0.0830	Education
+   0.0620	Culture and society
+   0.0491	History
+
+Sense-id:	01193176-n
+Gloss:		general verdict: an ordinary verdict declaring which party prevails without any special findings of fact
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.1732	Politics and government
+   0.1418	Law and crime
+   0.0380	Heraldry, honors, and vexillology
+   0.0359	Warfare and defense
+   0.0352	History
+
+Sense-id:	01194711-n
+Gloss:		actual eviction: the physical ouster of a tenant from the leased premises; the tenant is relieved of any further duty to pay rent
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.4130	Geography and places
+   0.0614	Law and crime
+   0.0593	Business, economics, and finance
+   0.0507	Politics and government
+   0.0309	Royalty and nobility
+
+Sense-id:	01194904-n
+Gloss:		constructive eviction, eviction: action by a landlord that compels a tenant to leave the premises (as by rendering the premises unfit for occupancy); no physical expulsion or legal process is involved
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.3774	Geography and places
+   0.2291	Politics and government
+   0.0534	Law and crime
+   0.0375	Business, economics, and finance
+   0.0236	Royalty and nobility
+
+Sense-id:	01195584-n
+Gloss:		legitimation: the act of rendering a person legitimate; "he has filial rights because he obtained letters of legitimation from the king"; "his parents' subsequent marriage resulted in his legitimation"
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.4143	Royalty and nobility
+   0.0878	Law and crime
+   0.0619	History
+   0.0447	Heraldry, honors, and vexillology
+   0.0381	Politics and government
+
+Sense-id:	01198750-n
+Gloss:		defence, defense, demurrer, denial: a defendant's answer or plea denying the truth of the charges against him; "he gave evidence for the defense"
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.5726	Warfare and defense
+   0.1883	Law and crime
+   0.0216	Heraldry, honors, and vexillology
+   0.0145	History
+   0.0137	Media
+
+Sense-id:	01199035-n
+Gloss:		entrapment: a defense that claims the defendant would not have broken the law if not tricked into doing it by law enforcement officials
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.3855	Warfare and defense
+   0.2531	Law and crime
+   0.0205	History
+   0.0178	Royalty and nobility
+   0.0166	Politics and government
+
+Sense-id:	01213702-n
+Gloss:		traditionalism: adherence to tradition (especially in cultural or religious matters)
+Correct label:	Religion, mysticism and mythology
+Top-5 Predictions:
+   0.3039	Culture and society
+   0.2906	Religion, mysticism and mythology
+   0.0308	History
+   0.0265	Politics and government
+   0.0239	Geography and places
+
+Sense-id:	01249315-n
+Gloss:		amnesty, free pardon, pardon: the formal act of liberating someone
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.1307	Heraldry, honors, and vexillology
+   0.1077	Warfare and defense
+   0.0989	Royalty and nobility
+   0.0847	Law and crime
+   0.0460	Sport and recreation
+
+Sense-id:	01259034-n
+Gloss:		reprieve, respite: the act of reprieving; postponing or remitting punishment
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.3203	Sport and recreation
+   0.0767	Warfare and defense
+   0.0709	Law and crime
+   0.0542	Heraldry, honors, and vexillology
+   0.0328	Transport and travel
+
+Sense-id:	01375204-n
+Gloss:		actinomycete: any bacteria (some of which are pathogenic for humans and animals) belonging to the order Actinomycetales
+Correct label:	Animals
+Top-5 Predictions:
+   0.2122	Biology
+   0.1289	Health and medicine
+   0.0876	Animals
+   0.0380	Royalty and nobility
+   0.0337	Sport and recreation
+
+Sense-id:	02757061-n
+Gloss:		audio cd, audio compact disc: compact discs used to reproduce sound (voice and music)
+Correct label:	Music
+Top-5 Predictions:
+   0.1991	Media
+   0.1650	Music
+   0.1388	Sport and recreation
+   0.0324	Language and linguistics
+   0.0300	Warfare and defense
+
+Sense-id:	03058726-n
+Gloss:		arms, blazon, blazonry, coat of arms: the official symbols of a family, state, etc.
+Correct label:	Heraldry, honors, and vexillology
+Top-5 Predictions:
+   0.2700	Royalty and nobility
+   0.1182	Politics and government
+   0.0846	Heraldry, honors, and vexillology
+   0.0424	Culture and society
+   0.0304	History
+
+Sense-id:	03537085-n
+Gloss:		horn: a noisemaker (as at parties or games) that makes a loud noise when you blow through it
+Correct label:	Games and video games
+Top-5 Predictions:
+   0.2227	Sport and recreation
+   0.1487	Music
+   0.1075	Games and video games
+   0.0387	Language and linguistics
+   0.0295	Media
+
+Sense-id:	04539053-n
+Gloss:		vdu, visual display unit: (British) British term for video display
+Correct label:	Computing
+Top-5 Predictions:
+   0.1030	Engineering and technology
+   0.0801	Media
+   0.0677	Games and video games
+   0.0427	Business, economics, and finance
+   0.0417	Language and linguistics
+
+Sense-id:	04738995-n
+Gloss:		invariance: the nature of a quantity or property or function that remains unchanged when a given transformation is applied to it; "the invariance of the configuration under translation"
+Correct label:	Mathematics
+Top-5 Predictions:
+   0.1720	Transport and travel
+   0.0945	Heraldry, honors, and vexillology
+   0.0596	Language and linguistics
+   0.0469	Law and crime
+   0.0410	Mathematics
+
+Sense-id:	04932278-n
+Gloss:		architecture, computer architecture: (computer science) the structure and organization of a computer's hardware or system software; "the architecture of a computer's system software"
+Correct label:	Computing
+Top-5 Predictions:
+   0.5123	Art, architecture, and archaeology
+   0.3145	Computing
+   0.0753	Engineering and technology
+   0.0068	Media
+   0.0050	Heraldry, honors, and vexillology
+
+Sense-id:	04959061-n
+Gloss:		achromia: an absence of normal pigmentation especially in the skin (as in albinism) or in red blood cells
+Correct label:	Health and medicine
+Top-5 Predictions:
+   0.0720	Geography and places
+   0.0718	Biology
+   0.0600	Health and medicine
+   0.0417	Religion, mysticism and mythology
+   0.0399	Royalty and nobility
+
+Sense-id:	04978561-n
+Gloss:		dithered color, dithered colour, nonsolid color, nonsolid colour: a color produced by a pattern of differently colored dots that together simulate the desired color
+Correct label:	Computing
+Top-5 Predictions:
+   0.0601	Geography and places
+   0.0480	Geology and geophysics
+   0.0476	Chemistry and mineralogy
+   0.0466	Language and linguistics
+   0.0450	Media
+
+Sense-id:	05017757-n
+Gloss:		visual range: distance at which a given standard object can be seen with the unaided eye
+Correct label:	Meteorology
+Top-5 Predictions:
+   0.0512	Royalty and nobility
+   0.0464	Law and crime
+   0.0456	Geography and places
+   0.0451	Warfare and defense
+   0.0428	Religion, mysticism and mythology
+
+Sense-id:	05076709-n
+Gloss:		fenestration: the arrangement of windows in a building
+Correct label:	Art, architecture, and archaeology
+Top-5 Predictions:
+   0.1310	Geography and places
+   0.0948	Art, architecture, and archaeology
+   0.0647	Business, economics, and finance
+   0.0607	Sport and recreation
+   0.0349	Royalty and nobility
+
+Sense-id:	05089048-n
+Gloss:		bits per inch, bpi: a measure of how densely information is packed on a storage medium
+Correct label:	Computing
+Top-5 Predictions:
+   0.1087	Media
+   0.0520	Computing
+   0.0467	Engineering and technology
+   0.0351	Royalty and nobility
+   0.0339	Business, economics, and finance
+
+Sense-id:	05183624-n
+Gloss:		freedom of religion: a civil right guaranteed by the First Amendment to the US Constitution
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.4487	Religion, mysticism and mythology
+   0.0423	Law and crime
+   0.0313	Culture and society
+   0.0313	Geography and places
+   0.0306	Warfare and defense
+
+Sense-id:	05183779-n
+Gloss:		freedom of speech: a civil right guaranteed by the First Amendment to the US Constitution
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.0906	Language and linguistics
+   0.0584	Law and crime
+   0.0460	Culture and society
+   0.0389	Geography and places
+   0.0362	Religion, mysticism and mythology
+
+Sense-id:	05183932-n
+Gloss:		freedom of the press: a right guaranteed by the First Amendment to the US Constitution
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.2467	Media
+   0.1011	Law and crime
+   0.0429	Culture and society
+   0.0402	Literature and theatre
+   0.0385	Politics and government
+
+Sense-id:	05184082-n
+Gloss:		freedom of assembly: the right to peaceably assemble and to petition the government for redress of grievances; guaranteed by the First Amendment to the US Constitution
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.2984	Politics and government
+   0.1257	Culture and society
+   0.0942	Law and crime
+   0.0341	Warfare and defense
+   0.0272	Geography and places
+
+Sense-id:	05184313-n
+Gloss:		freedom to bear arms: a right guaranteed by the 2nd amendment to the US Constitution
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.1592	Warfare and defense
+   0.1553	Law and crime
+   0.0389	Geography and places
+   0.0352	Politics and government
+   0.0347	Culture and society
+
+Sense-id:	05184810-n
+Gloss:		freedom from self-incrimination, privilege against self incrimination: the civil right (guaranteed by the Fifth Amendment to the United States Constitution) to refuse to answer questions or otherwise give testimony against yourself
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.2265	Warfare and defense
+   0.1427	Law and crime
+   0.0662	Heraldry, honors, and vexillology
+   0.0407	Royalty and nobility
+   0.0304	Geography and places
+
+Sense-id:	05186998-n
+Gloss:		equal opportunity: the right to equivalent opportunities for employment regardless of race or color or sex or national origin
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.1620	Culture and society
+   0.1189	Law and crime
+   0.0542	Business, economics, and finance
+   0.0351	Geography and places
+   0.0341	Politics and government
+
+Sense-id:	05187446-n
+Gloss:		enfranchisement, franchise: a statutory right or privilege granted to a person or group by a government (especially the rights of citizenship and the right to vote)
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.3799	Politics and government
+   0.3200	Law and crime
+   0.0692	Culture and society
+   0.0240	History
+   0.0118	Warfare and defense
+
+Sense-id:	05823747-n
+Gloss:		descriptor: a piece of stored information that is used to identify an item in an information storage and retrieval system
+Correct label:	Computing
+Top-5 Predictions:
+   0.0742	Media
+   0.0443	Engineering and technology
+   0.0440	Royalty and nobility
+   0.0418	Law and crime
+   0.0401	Warfare and defense
+
+Sense-id:	05850432-n
+Gloss:		invariant: a feature (quantity or property or function) that remains unchanged when a particular transformation is applied to it
+Correct label:	Mathematics
+Top-5 Predictions:
+   0.0419	Religion, mysticism and mythology
+   0.0409	Heraldry, honors, and vexillology
+   0.0390	Language and linguistics
+   0.0388	Business, economics, and finance
+   0.0385	Politics and government
+
+Sense-id:	05880854-n
+Gloss:		law of constant proportion, law of definite proportions: (chemistry) law stating that every pure substance always contains the same elements combined in the same proportions by weight
+Correct label:	Chemistry and mineralogy
+Top-5 Predictions:
+   0.4004	Law and crime
+   0.3117	Chemistry and mineralogy
+   0.0226	Health and medicine
+   0.0194	Mathematics
+   0.0175	Engineering and technology
+
+Sense-id:	05882537-n
+Gloss:		law of mass action: (chemistry) the law that states the following principle: the rate of a chemical reaction is directly proportional to the molecular concentrations of the reacting substances
+Correct label:	Chemistry and mineralogy
+Top-5 Predictions:
+   0.4585	Law and crime
+   0.3274	Chemistry and mineralogy
+   0.0129	Transport and travel
+   0.0123	Health and medicine
+   0.0116	Physics and astronomy
+
+Sense-id:	05956906-n
+Gloss:		jus sanguinis: the principle that a person's nationality at birth is the same as that of his natural parents
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.0685	Royalty and nobility
+   0.0678	Culture and society
+   0.0668	Warfare and defense
+   0.0650	Law and crime
+   0.0458	History
+
+Sense-id:	05957078-n
+Gloss:		jus soli: the principle that a person's nationality at birth is determined by the place of birth
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.2905	Geography and places
+   0.0572	Philosophy and psychology
+   0.0535	Culture and society
+   0.0514	Law and crime
+   0.0448	Royalty and nobility
+
+Sense-id:	05985126-n
+Gloss:		meme: a cultural unit (an idea or value or pattern of behavior) that is passed from one person to another by non-genetic means (as by imitation); "memes are the cultural counterpart of genes"
+Correct label:	Biology
+Top-5 Predictions:
+   0.6560	Culture and society
+   0.0417	Biology
+   0.0334	Media
+   0.0205	Politics and government
+   0.0202	Transport and travel
+
+Sense-id:	06012108-n
+Gloss:		plane geometry: the geometry of 2-dimensional figures
+Correct label:	Mathematics
+Top-5 Predictions:
+   0.0672	Physics and astronomy
+   0.0577	Transport and travel
+   0.0505	Mathematics
+   0.0501	Royalty and nobility
+   0.0406	Warfare and defense
+
+Sense-id:	06012225-n
+Gloss:		solid geometry: the geometry of 3-dimensional space
+Correct label:	Mathematics
+Top-5 Predictions:
+   0.0924	Geography and places
+   0.0897	Physics and astronomy
+   0.0484	Royalty and nobility
+   0.0471	Geology and geophysics
+   0.0380	Mathematics
+
+Sense-id:	06012340-n
+Gloss:		descriptive geometry, projective geometry: the geometry of properties that remain invariant under projection
+Correct label:	Mathematics
+Top-5 Predictions:
+   0.1495	Geography and places
+   0.0558	Physics and astronomy
+   0.0350	Media
+   0.0337	Royalty and nobility
+   0.0328	Politics and government
+
+Sense-id:	06278830-n
+Gloss:		data communication, digital communication: electronic transmission of information that has been encoded digitally (as for storage and processing by computers)
+Correct label:	Computing
+Top-5 Predictions:
+   0.1886	Engineering and technology
+   0.1502	Computing
+   0.0962	Media
+   0.0382	Royalty and nobility
+   0.0295	Culture and society
+
+Sense-id:	06392001-n
+Gloss:		section, subdivision: a self-contained part of a larger composition (written or musical); "he always turns first to the business section"; "the history of this work is discussed in the next section"
+Correct label:	Music
+Top-5 Predictions:
+   0.3643	Business, economics, and finance
+   0.2203	History
+   0.0673	Music
+   0.0651	Politics and government
+   0.0223	Culture and society
+
+Sense-id:	06480506-n
+Gloss:		derivative, derivative instrument: a financial instrument whose value is based on another security
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.3890	Business, economics, and finance
+   0.0538	Sport and recreation
+   0.0265	Politics and government
+   0.0259	Numismatics and currencies
+   0.0256	Law and crime
+
+Sense-id:	06481156-n
+Gloss:		negotiable instrument: an unconditional order or promise to pay an amount of money
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.1575	Music
+   0.0588	Business, economics, and finance
+   0.0443	Law and crime
+   0.0405	Politics and government
+   0.0400	Numismatics and currencies
+
+Sense-id:	06493721-n
+Gloss:		cascading menu, hierarchical menu, submenu: a secondary menu that appears while you are holding the cursor over an item on the primary menu
+Correct label:	Computing
+Top-5 Predictions:
+   0.0760	Food and drink
+   0.0407	Geography and places
+   0.0385	Religion, mysticism and mythology
+   0.0366	Literature and theatre
+   0.0364	Politics and government
+
+Sense-id:	06500937-n
+Gloss:		passport: a document issued by a country to a citizen allowing that person to travel abroad and re-enter the home country
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.2940	Transport and travel
+   0.0537	Law and crime
+   0.0467	Geography and places
+   0.0369	Culture and society
+   0.0328	Religion, mysticism and mythology
+
+Sense-id:	06501748-n
+Gloss:		ship's papers: official papers which a ship is legally required to have; related to ownership, cargo, etc.
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.3090	Transport and travel
+   0.1728	Law and crime
+   0.0718	Politics and government
+   0.0360	Business, economics, and finance
+   0.0236	Royalty and nobility
+
+Sense-id:	06501918-n
+Gloss:		manifest: a customs document listing the contents put on a ship or plane
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.2589	Transport and travel
+   0.0386	Geography and places
+   0.0370	Business, economics, and finance
+   0.0338	Religion, mysticism and mythology
+   0.0294	Law and crime
+
+Sense-id:	06526004-n
+Gloss:		debenture: a certificate or voucher acknowledging a debt
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.0705	Politics and government
+   0.0667	Business, economics, and finance
+   0.0392	Culture and society
+   0.0373	Sport and recreation
+   0.0350	Law and crime
+
+Sense-id:	06534132-n
+Gloss:		constitution, constitution of the united states, united states constitution, u.s. constitution, us constitution: the constitution written at the Constitutional Convention in Philadelphia in 1787 and subsequently ratified by the original thirteen states
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.2990	Politics and government
+   0.2815	Law and crime
+   0.1022	Culture and society
+   0.0821	History
+   0.0222	Geography and places
+
+Sense-id:	06537701-n
+Gloss:		farm bill: a statute that would regulate farm production and prices
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.3050	Farming
+   0.1565	Law and crime
+   0.1448	Food and drink
+   0.1386	Business, economics, and finance
+   0.0538	Politics and government
+
+Sense-id:	06540284-n
+Gloss:		consent decree: an agreement between two parties that is sanctioned by the court; for example, a company might agree to stop certain questionable practices without admitting guilt
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.2037	Business, economics, and finance
+   0.1391	Law and crime
+   0.0697	Warfare and defense
+   0.0658	Politics and government
+   0.0378	Royalty and nobility
+
+Sense-id:	06545960-n
+Gloss:		enfeoffment: under the feudal system, the deed by which a person was given land in exchange for a pledge of service
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.1966	Politics and government
+   0.1279	Royalty and nobility
+   0.0785	Chemistry and mineralogy
+   0.0526	History
+   0.0513	Geography and places
+
+Sense-id:	06546157-n
+Gloss:		mortgage deed: deed embodying a mortgage
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.1885	Business, economics, and finance
+   0.1092	Politics and government
+   0.0743	Law and crime
+   0.0327	Geography and places
+   0.0299	Sport and recreation
+
+Sense-id:	06547321-n
+Gloss:		search warrant: a warrant authorizing law enforcement officials to search for objects or people involved in the commission of a crime and to produce them in court; the warrant describes the locations where the officials may search
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.4429	Geography and places
+   0.2676	Law and crime
+   0.0489	Warfare and defense
+   0.0145	Royalty and nobility
+   0.0138	Politics and government
+
+Sense-id:	06548110-n
+Gloss:		cachet, lettre de cachet: a warrant formerly issued by a French king who could warrant imprisonment or death in a signed letter under his seal
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.1401	Royalty and nobility
+   0.1157	Law and crime
+   0.0813	Textile and clothing
+   0.0811	Language and linguistics
+   0.0523	Literature and theatre
+
+Sense-id:	06553472-n
+Gloss:		assize: an ancient writ issued by a court of assize to the sheriff for the recovery of property
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.2049	Sport and recreation
+   0.1310	Law and crime
+   0.0446	Politics and government
+   0.0437	Geography and places
+   0.0417	Royalty and nobility
+
+Sense-id:	06557585-n
+Gloss:		gag order: a court order restricting information or comment by the participants involved in a lawsuit; "imposing a gag order on members of the press violates the First Amendment"
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.3415	Media
+   0.1935	Law and crime
+   0.0594	Politics and government
+   0.0474	Language and linguistics
+   0.0395	Warfare and defense
+
+Sense-id:	06558678-n
+Gloss:		ticket: a summons issued to an offender (especially to someone who violates a traffic regulation)
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.3312	Transport and travel
+   0.2485	Law and crime
+   0.0258	Warfare and defense
+   0.0201	Geography and places
+   0.0190	Royalty and nobility
+
+Sense-id:	06559832-n
+Gloss:		affirmative pleading: any defensive pleading that affirms facts rather than merely denying the facts alleged by the plaintiff
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.3263	Warfare and defense
+   0.0915	Law and crime
+   0.0320	Computing
+   0.0316	Geography and places
+   0.0304	History
+
+Sense-id:	06565788-n
+Gloss:		ordinance: a statute enacted by a city government
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.2226	Business, economics, and finance
+   0.1420	Law and crime
+   0.1183	Politics and government
+   0.0354	Culture and society
+   0.0322	Geography and places
+
+Sense-id:	06572204-n
+Gloss:		disambiguator: (computer science) a natural language processing application that tries to determine the intended meaning of a word or phrase by examining the linguistic context in which it is used
+Correct label:	Computing
+Top-5 Predictions:
+   0.2483	Language and linguistics
+   0.1015	Computing
+   0.0345	Politics and government
+   0.0301	Literature and theatre
+   0.0301	Royalty and nobility
+
+Sense-id:	06575932-n
+Gloss:		interpreter, interpretive program: (computer science) a program that translates and executes source language statements one line at a time
+Correct label:	Computing
+Top-5 Predictions:
+   0.2876	Language and linguistics
+   0.2220	Computing
+   0.0865	Engineering and technology
+   0.0438	Literature and theatre
+   0.0197	Geography and places
+
+Sense-id:	06665370-n
+Gloss:		file transfer protocol, ftp: protocol that allows users to copy files between their local system and any system they can reach on the network
+Correct label:	Computing
+Top-5 Predictions:
+   0.1686	Transport and travel
+   0.1090	Engineering and technology
+   0.0967	Media
+   0.0823	Computing
+   0.0344	Royalty and nobility
+
+Sense-id:	06668432-n
+Gloss:		building code: set of standards established and enforced by local government for the structural safety of buildings
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.1520	Geography and places
+   0.1393	Politics and government
+   0.0862	Art, architecture, and archaeology
+   0.0661	Business, economics, and finance
+   0.0644	Warfare and defense
+
+Sense-id:	06668813-n
+Gloss:		fire code: set of standards established and enforced by government for fire prevention and safety in case of fire as in fire escapes etc
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.2666	Politics and government
+   0.1570	Warfare and defense
+   0.0882	Law and crime
+   0.0551	Culture and society
+   0.0372	Geography and places
+
+Sense-id:	06669193-n
+Gloss:		health code, sanitary code: set of standards established and enforced by government for health requirements as in plumbing etc
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.5828	Health and medicine
+   0.1210	Politics and government
+   0.0443	Culture and society
+   0.0308	Geography and places
+   0.0289	Biology
+
+Sense-id:	06728034-n
+Gloss:		first amendment: an amendment to the Constitution of the United States guaranteeing the right of free expression; includes freedom of assembly and freedom of the press and freedom of religion and freedom of speech
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.1659	Culture and society
+   0.1509	Religion, mysticism and mythology
+   0.1144	Language and linguistics
+   0.0835	Media
+   0.0629	Literature and theatre
+
+Sense-id:	06728726-n
+Gloss:		fourteenth amendment: an amendment to the Constitution of the United States adopted in 1868; extends the guarantees of the Bill of Rights to the states as well as to the federal government
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.1998	Politics and government
+   0.1769	Law and crime
+   0.0688	History
+   0.0598	Culture and society
+   0.0352	Warfare and defense
+
+Sense-id:	06728998-n
+Gloss:		eighteenth amendment: an amendment to the Constitution of the United States adopted in 1920; prohibited the manufacture and sale of alcoholic beverages; repealed in 1932
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.1166	Food and drink
+   0.0796	Politics and government
+   0.0784	Law and crime
+   0.0511	History
+   0.0446	Culture and society
+
+Sense-id:	06729251-n
+Gloss:		nineteenth amendment: an amendment to the Constitution of the United States adopted in 1920; guarantees that no state can deny the right to vote on the basis of sex
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.1584	Politics and government
+   0.1187	Law and crime
+   0.0737	History
+   0.0696	Culture and society
+   0.0442	Warfare and defense
+
+Sense-id:	06735261-n
+Gloss:		res gestae: rule of evidence that covers words that are so closely associated with an occurrence that the words are considered part of the occurrence and as such their report does not violate the hearsay rule
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.1409	Language and linguistics
+   0.0796	Law and crime
+   0.0488	Warfare and defense
+   0.0422	Royalty and nobility
+   0.0413	Geography and places
+
+Sense-id:	06735533-n
+Gloss:		circumstantial evidence, indirect evidence: evidence providing only a basis for inference about the fact in dispute
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.0611	Warfare and defense
+   0.0522	Law and crime
+   0.0428	Royalty and nobility
+   0.0397	Geography and places
+   0.0389	Computing
+
+Sense-id:	07216761-n
+Gloss:		judicial admission, stipulation: (law) an agreement or concession made by parties in a judicial proceeding (or by their attorneys) relating to the business before the court; must be in writing unless they are part of the court record; "a stipulation of fact was made in order to avoid delay"
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.4703	Business, economics, and finance
+   0.4612	Law and crime
+   0.0059	Warfare and defense
+   0.0040	Royalty and nobility
+   0.0033	Heraldry, honors, and vexillology
+
+Sense-id:	07299965-n
+Gloss:		disk error: error resulting from malfunction of a magnetic disk
+Correct label:	Computing
+Top-5 Predictions:
+   0.1166	Media
+   0.1036	Computing
+   0.0552	Engineering and technology
+   0.0384	Sport and recreation
+   0.0376	Royalty and nobility
+
+Sense-id:	07300316-n
+Gloss:		run-time error, runtime error, semantic error: an error in logic or arithmetic that must be detected at run time
+Correct label:	Computing
+Top-5 Predictions:
+   0.1031	Mathematics
+   0.0746	Numismatics and currencies
+   0.0619	Language and linguistics
+   0.0378	Computing
+   0.0372	Geography and places
+
+Sense-id:	07300494-n
+Gloss:		syntax error: an error of language resulting from code that does not conform to the syntax of the programming language; "syntax errors can be recognized at compilation time"; "a common syntax error is to omit a parenthesis"
+Correct label:	Computing
+Top-5 Predictions:
+   0.4185	Language and linguistics
+   0.1136	Computing
+   0.0268	Business, economics, and finance
+   0.0235	Food and drink
+   0.0202	Sport and recreation
+
+Sense-id:	07332313-n
+Gloss:		invasion: (pathology) the spread of pathogenic microorganisms or malignant cells to new sites in the body; "the tumor's invasion of surrounding structures"
+Correct label:	Health and medicine
+Top-5 Predictions:
+   0.3760	Geography and places
+   0.0803	Heraldry, honors, and vexillology
+   0.0768	Biology
+   0.0415	Art, architecture, and archaeology
+   0.0398	Health and medicine
+
+Sense-id:	07350893-n
+Gloss:		seek: the movement of a read/write head to a specific data track on a disk
+Correct label:	Computing
+Top-5 Predictions:
+   0.1005	Media
+   0.0725	Computing
+   0.0444	Engineering and technology
+   0.0399	Religion, mysticism and mythology
+   0.0362	Royalty and nobility
+
+Sense-id:	07560903-n
+Gloss:		diet: the usual food and drink consumed by an organism (person or animal)
+Correct label:	Animals
+Top-5 Predictions:
+   0.6300	Food and drink
+   0.0811	Animals
+   0.0515	Health and medicine
+   0.0466	Biology
+   0.0172	Politics and government
+
+Sense-id:	07964495-n
+Gloss:		combination: an alliance of people or corporations or countries for a special purpose (formerly to achieve some antisocial end but now for general political or economic purposes)
+Correct label:	Politics and government
+Top-5 Predictions:
+   0.3300	Business, economics, and finance
+   0.2511	Politics and government
+   0.0789	Culture and society
+   0.0201	Numismatics and currencies
+   0.0192	Warfare and defense
+
+Sense-id:	08081403-n
+Gloss:		defence, defending team, defense: (sports) the team that is trying to prevent the other team from scoring; "his teams are always good on defense"
+Correct label:	Sport and recreation
+Top-5 Predictions:
+   0.4177	Warfare and defense
+   0.3744	Sport and recreation
+   0.0752	Games and video games
+   0.0248	Heraldry, honors, and vexillology
+   0.0072	Royalty and nobility
+
+Sense-id:	08111783-n
+Gloss:		civilisation, civilization: a society in an advanced state of social development (e.g., with complex legal and political and religious organizations); "the people slowly progressed from barbarism to civilization"
+Correct label:	Politics and government
+Top-5 Predictions:
+   0.6734	Culture and society
+   0.1130	Royalty and nobility
+   0.0880	Politics and government
+   0.0237	Law and crime
+   0.0156	Religion, mysticism and mythology
+
+Sense-id:	08336355-n
+Gloss:		traffic court: a court that has power to prosecute for traffic offenses
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.3072	Transport and travel
+   0.1733	Law and crime
+   0.0330	Geography and places
+   0.0284	Religion, mysticism and mythology
+   0.0243	Royalty and nobility
+
+Sense-id:	09357080-n
+Gloss:		moho, mohorovicic discontinuity: the boundary between the Earth's crust and the underlying mantle; "the Mohorovicic discontinuity averages 5 miles down under oceans and 20 miles down under continents"
+Correct label:	Geology and geophysics
+Top-5 Predictions:
+   0.2499	Geography and places
+   0.1767	Geology and geophysics
+   0.0699	Physics and astronomy
+   0.0483	Heraldry, honors, and vexillology
+   0.0323	History
+
+Sense-id:	09388653-n
+Gloss:		peneplain, peneplane: a more or less level land surface representing an advanced stage of erosion undisturbed by crustal movements
+Correct label:	Geology and geophysics
+Top-5 Predictions:
+   0.2335	Politics and government
+   0.1263	Geography and places
+   0.0796	Geology and geophysics
+   0.0362	History
+   0.0313	Heraldry, honors, and vexillology
+
+Sense-id:	09813696-n
+Gloss:		assassin, assassinator, bravo: a murderer (especially one who kills a prominent political figure) who kills by a surprise attack and often is hired to do the deed; "his assassins were hunted down like animals"; "assassinators of kings and emperors"
+Correct label:	Politics and government
+Top-5 Predictions:
+   0.3250	Royalty and nobility
+   0.2715	Politics and government
+   0.1813	Law and crime
+   0.0395	Heraldry, honors, and vexillology
+   0.0293	Warfare and defense
+
+Sense-id:	09962612-n
+Gloss:		conveyancer: a lawyer who specializes in the business of conveying properties
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.2967	Business, economics, and finance
+   0.2068	Law and crime
+   0.1030	Geography and places
+   0.0661	Transport and travel
+   0.0265	Politics and government
+
+Sense-id:	10000158-n
+Gloss:		defense attorney, defense lawyer: the lawyer representing the defendant
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.2229	Warfare and defense
+   0.0990	Law and crime
+   0.0330	Royalty and nobility
+   0.0316	Religion, mysticism and mythology
+   0.0316	Geography and places
+
+Sense-id:	10490557-n
+Gloss:		public defender: a lawyer who represents indigent defendants at public expense
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.2441	Warfare and defense
+   0.1236	Law and crime
+   0.0435	Culture and society
+   0.0327	Politics and government
+   0.0324	Sport and recreation
+
+Sense-id:	11524662-n
+Gloss:		atmospheric condition, conditions, weather, weather condition: the atmospheric conditions that comprise the state of the atmosphere in terms of temperature and wind and clouds and precipitation; "they were hoping for good weather"; "every day we have weather conditions and yesterday was no exception"; "the conditions were too rainy for playing in the snow"
+Correct label:	Meteorology
+Top-5 Predictions:
+   0.2133	Politics and government
+   0.1381	Meteorology
+   0.1054	Sport and recreation
+   0.0387	Games and video games
+   0.0328	Geography and places
+
+Sense-id:	13262913-n
+Gloss:		heritage, inheritance: that which is inherited; a title or property or estate that passes by law to the heir on the death of the owner
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.3806	Politics and government
+   0.2049	Law and crime
+   0.0887	Heraldry, honors, and vexillology
+   0.0594	Royalty and nobility
+   0.0317	History
+
+Sense-id:	13272059-n
+Gloss:		bounty, premium: payment or reward (especially from a government) for acts such as catching criminals or killing predatory animals or enlisting in the military
+Correct label:	Politics and government
+Top-5 Predictions:
+   0.2698	Law and crime
+   0.1834	Warfare and defense
+   0.1819	Politics and government
+   0.1297	Animals
+   0.0284	Heraldry, honors, and vexillology
+
+Sense-id:	13322113-n
+Gloss:		license fee, license tax, licensing fee: a fee paid to the government for the privilege of being licensed to do something (as selling liquor or practicing medicine)
+Correct label:	Health and medicine
+Top-5 Predictions:
+   0.2353	Politics and government
+   0.2306	Health and medicine
+   0.1073	Food and drink
+   0.0728	Business, economics, and finance
+   0.0517	Law and crime
+
+Sense-id:	13360254-n
+Gloss:		war chest: a fund accumulated to finance a war (or a political campaign)
+Correct label:	Politics and government
+Top-5 Predictions:
+   0.3591	Warfare and defense
+   0.2859	Politics and government
+   0.1352	Business, economics, and finance
+   0.0205	Law and crime
+   0.0152	Culture and society
+
+Sense-id:	13550318-n
+Gloss:		reproduction: the process of generating offspring
+Correct label:	Biology
+Top-5 Predictions:
+   0.0963	Sport and recreation
+   0.0536	Biology
+   0.0521	Geography and places
+   0.0429	Business, economics, and finance
+   0.0408	Royalty and nobility
+
+Sense-id:	13550940-n
+Gloss:		retrieval: (computer science) the operation of accessing information from the computer's memory
+Correct label:	Computing
+Top-5 Predictions:
+   0.2427	Engineering and technology
+   0.2172	Computing
+   0.0885	Media
+   0.0565	Sport and recreation
+   0.0257	Warfare and defense
+
+Sense-id:	13562133-n
+Gloss:		storage: (computer science) the process of storing information in a computer memory or on a magnetic tape or disk
+Correct label:	Computing
+Top-5 Predictions:
+   0.2947	Engineering and technology
+   0.2121	Computing
+   0.1318	Media
+   0.0209	Warfare and defense
+   0.0207	Royalty and nobility
+
+Sense-id:	13838766-n
+Gloss:		bank-depositor relation: the responsibility of a bank to act in the best interests of the depositors
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.1839	Business, economics, and finance
+   0.0604	Law and crime
+   0.0520	Geography and places
+   0.0394	Politics and government
+   0.0381	Royalty and nobility
+
+Sense-id:	13838930-n
+Gloss:		confidential adviser-advisee relation: the responsibility of a confidential adviser to act in the best interest of the advisee
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.0593	Religion, mysticism and mythology
+   0.0524	Geography and places
+   0.0433	Warfare and defense
+   0.0428	Business, economics, and finance
+   0.0423	Royalty and nobility
+
+Sense-id:	13839120-n
+Gloss:		conservator-ward relation: the responsibility of a conservator to act in the best interests of the ward
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.0681	Politics and government
+   0.0674	Warfare and defense
+   0.0543	Religion, mysticism and mythology
+   0.0538	Geography and places
+   0.0422	Royalty and nobility
+
+Sense-id:	13839287-n
+Gloss:		director-stockholder relation: the responsibility of corporate directors to act in the best interests of stockholders
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.2020	Business, economics, and finance
+   0.0947	Law and crime
+   0.0851	Politics and government
+   0.0465	Geography and places
+   0.0409	Royalty and nobility
+
+Sense-id:	13839888-n
+Gloss:		partner relation: the responsibility of partners to act in one another's best interests
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.0518	Heraldry, honors, and vexillology
+   0.0487	Politics and government
+   0.0487	Warfare and defense
+   0.0419	Royalty and nobility
+   0.0392	Sport and recreation
+
+Sense-id:	13851426-n
+Gloss:		mercalli scale: a scale formerly used to describe the magnitude of an earthquake; an earthquake detected only by seismographs is a I and an earthquake that destroys all buildings is a XII
+Correct label:	Geology and geophysics
+Top-5 Predictions:
+   0.0855	Art, architecture, and archaeology
+   0.0567	Geology and geophysics
+   0.0513	Physics and astronomy
+   0.0485	Geography and places
+   0.0481	Numismatics and currencies
+
+Sense-id:	13851865-n
+Gloss:		richter scale: a logarithmic scale of 1 to 10 formerly used to express the magnitude of an earthquake on the basis of the size of seismograph oscillations
+Correct label:	Geology and geophysics
+Top-5 Predictions:
+   0.0673	Numismatics and currencies
+   0.0581	Geology and geophysics
+   0.0526	Physics and astronomy
+   0.0500	Mathematics
+   0.0440	Geography and places
+
+Sense-id:	13952792-n
+Gloss:		civil death: the legal status of a person who is alive but who has been deprived of the rights and privileges of a citizen or a member of society; the legal status of one sentenced to life imprisonment
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.4319	Culture and society
+   0.1789	Law and crime
+   0.0567	Royalty and nobility
+   0.0391	Politics and government
+   0.0254	Warfare and defense
+
+Sense-id:	13963757-n
+Gloss:		marital status: the condition of being married or unmarried
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.0475	Royalty and nobility
+   0.0458	Law and crime
+   0.0420	Warfare and defense
+   0.0403	Culture and society
+   0.0391	Business, economics, and finance
+
+Sense-id:	13963970-n
+Gloss:		marriage, matrimony, spousal relationship, union, wedlock: the state of being a married couple voluntarily joined for life (or until divorce); "a long and happy marriage"; "God bless this union"
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.3066	Religion, mysticism and mythology
+   0.1539	Politics and government
+   0.1135	Heraldry, honors, and vexillology
+   0.0603	Law and crime
+   0.0245	History
+
+Sense-id:	13964466-n
+Gloss:		bigamy: having two spouses at the same time
+Correct label:	Law and crime
+Top-5 Predictions:
+   0.0640	Sport and recreation
+   0.0568	Law and crime
+   0.0490	Geography and places
+   0.0474	Royalty and nobility
+   0.0432	Culture and society
+
+Sense-id:	13979173-n
+Gloss:		sturm und drang, turbulence, upheaval: a state of violent disturbance and disorder (as in politics or social conditions generally); "the industrial revolution was a period of great turbulence"
+Correct label:	Politics and government
+Top-5 Predictions:
+   0.4346	Culture and society
+   0.2146	Politics and government
+   0.0588	Engineering and technology
+   0.0513	Heraldry, honors, and vexillology
+   0.0411	History
+
+Sense-id:	15256915-n
+Gloss:		period of play, play, playing period: (in games or plays or other performances) the time during which play proceeds; "rain stopped play in the 4th inning"
+Correct label:	Games and video games
+Top-5 Predictions:
+   0.4020	Sport and recreation
+   0.3027	Games and video games
+   0.0918	Literature and theatre
+   0.0173	Music
+   0.0139	Media
+
