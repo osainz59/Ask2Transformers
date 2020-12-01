@@ -1,17 +1,10 @@
 # Ask2Transformers - Zero Shot Domain Labelling with Pretrained Transformers
 
-This repository contains the code for the work Ask2Transformers - Zero Shot Domain Labelling with Pretrained Transformers accepted on [GWC2020](http://globalwordnet.org/global-wordnet-conferences-2/).
+This repository contains the code for the work Ask2Transformers - Zero Shot Domain Labelling with Pretrained Transformers accepted in [GWC2020](http://globalwordnet.org/global-wordnet-conferences-2/).
 
-The Ask2Transformers work aims to automatically annotate textual data without any supervision. Given a 
-particular set of labels (BabelDomains, WNDomains, ...), the system have to classify the data without 
-previous examples. This work is based on Transformers library and it's pretrained LMs. For this 
-particular resource we evaluated the systems on BabelDomains dataset (Camacho-Collados and Navigli, 
-2017) achieving 92.14 of accuracy on domain labelling.
+The Ask2Transformers work aims to automatically annotate textual data without any supervision. Given a particular set of labels (BabelDomains, WNDomains, ...), the system has to classify the data without previous examples. This work uses the Transformers library and its pretrained LMs. We evaluate the systems on BabelDomains dataset (Camacho-Collados and Navigli, 2017) achieving 92.14% accuracy on domain labelling.
 
-A2T Domains (A2TD) is a resource generated as part of the Ask2Transformers work. It consists of WordNet 
-synsets automatically annotated with domain information, such us BabelDomains labels. You can find the 
-publicly available annotations [here](https://adimen.si.ehu.es/web/A2TD) as long as some pretrained models.
-
+A2T Domains (A2TD) is a resource generated as part of the Ask2Transformers work. It consists of WordNet synsets automatically annotated with domain information, such as BabelDomains labels. You can find the publicly available annotations and pre-trained models  [here](https://adimen.si.ehu.es/web/A2TD).
 
 ## Topic classification just with non task specific pretrained models
 
