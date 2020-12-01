@@ -1,5 +1,7 @@
 # Ask2Transformers - Zero Shot Domain Labelling with Pretrained Transformers
 
+This repository contains the code for the work Ask2Transformers - Zero Shot Domain Labelling with Pretrained Transformers accepted on [GWC2020](http://globalwordnet.org/global-wordnet-conferences-2/).
+
 The Ask2Transformers work aims to automatically annotate textual data without any supervision. Given a 
 particular set of labels (BabelDomains, WNDomains, ...), the system have to classify the data without 
 previous examples. This work is based on Transformers library and it's pretrained LMs. For this 
