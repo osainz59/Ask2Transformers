@@ -1,6 +1,6 @@
 # Ask2Transformers - Zero Shot Domain Labelling with Pretrained Transformers
 
-This repository contains the code for the work Ask2Transformers - Zero Shot Domain Labelling with Pretrained Transformers accepted in [GWC2021](http://globalwordnet.org/global-wordnet-conferences-2/).
+This repository contains the code for the work [Ask2Transformers - Zero Shot Domain Labelling with Pretrained Transformers](https://arxiv.org/abs/2101.02661) accepted in [GWC2021](http://globalwordnet.org/global-wordnet-conferences-2/).
 
 The Ask2Transformers work aims to automatically annotate textual data without any supervision. Given a particular set of labels (BabelDomains, WNDomains, ...), the system has to classify the data without previous examples. This work uses the Transformers library and its pretrained LMs. We evaluate the systems on BabelDomains dataset (Camacho-Collados and Navigli, 2017) achieving 92.14% accuracy on domain labelling.
 
@@ -90,4 +90,15 @@ Results (Micro-average):
 | BabelDomains (Camacho-Collados et al. 2017)   | 81.7 | 68.7 | 74.6 |
 | | | | |
 | Ask2Transformers | **92.14** | **92.14** | **92.14** |
+
+## Citation
+
+```bibtex
+@inproceedings{sainz2021ask2transformers,
+  title={Ask2Transformers: Zero-Shot Domain labelling with Pre-trained Language Models},
+  author={Sainz, Oscar and Rigau, German},
+  booktitle={Proceedings of the 11th Global WordNet Conference (GWC 2021). Pretoria, South Africa},
+  year={2021}
+}
+```
 
