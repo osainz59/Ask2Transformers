@@ -6,7 +6,7 @@ This repository contains the code for the work [Ask2Transformers - Zero Shot Dom
 
 The Ask2Transformers work aims to automatically annotate textual data without any supervision. Given a particular set of labels (BabelDomains, WNDomains, ...), the system has to classify the data without previous examples. This work uses the Transformers library and its pretrained LMs. We evaluate the systems on BabelDomains dataset (Camacho-Collados and Navigli, 2017) achieving 92.14% accuracy on domain labelling.
 
-A2T Domains (A2TD) is a resource generated as part of the Ask2Transformers work. It consists of WordNet synsets automatically annotated with domain information, such as BabelDomains labels. You can find the publicly available annotations and pre-trained models  [here](https://adimen.si.ehu.es/web/A2TD).
+A2T Domains (A2TD) is a resource generated as part of the Ask2Transformers work. It consists of WordNet synsets automatically annotated with domain information, such as BabelDomains labels. You can find the publicly available annotations and pre-trained models  [here](https://adimen.si.ehu.es/web/A2TDomains).
 
 ## Topic classification just with non task specific pretrained models
 
