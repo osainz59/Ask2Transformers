@@ -52,6 +52,8 @@ for configuration in config:
     labels = [topics[i] for i in np.argmax(output, -1)]
     confidences = [x for x in np.max(output, -1)]
 
-    with gzip.open(f"experiments/{configuration['name']}/wordnet.annotations.tsv.gz", 'wt') as out_f:
+    output_name = os.path.basename(args.dataset).replace('list', 'annotations')
+
+    with gzip.open(f"experiments/{configuration['name']}/{output_name}", 'wt') as out_f:
         for sense, label, confidence in zip(senses, labels, confidences):
             out_f.write(f"{sense}\t{label}\t{confidence}\n")

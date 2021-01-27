@@ -1,9 +1,11 @@
 experiments/*/*.npy
 experiments/*test*
 models/
+data/
 
 onnx/
 
+.ignore/
 
 # Visual Studio Code
 .vscode
