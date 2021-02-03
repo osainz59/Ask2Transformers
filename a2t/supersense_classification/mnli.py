@@ -39,7 +39,7 @@ class _NLISuperSenseClassifier(Classifier):
 
         batch, outputs = [], []
         for i, context in tqdm(enumerate(contexts), total=len(contexts)):
-            sentences = [f"{context} {self.tokenizer.sep_token} {self.query_phrase} \"{WORDNET_LEXNAMES_TO_DEFINITIONS[lexname]}\"." for lexname in
+            sentences = [f"{context} {self.tokenizer.sep_token} {self.query_phrase} {WORDNET_LEXNAMES_TO_DEFINITIONS[lexname]}." for lexname in
                          self.labels]
             batch.extend(sentences)
 

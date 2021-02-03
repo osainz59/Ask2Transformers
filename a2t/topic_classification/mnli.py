@@ -39,7 +39,7 @@ class _NLITopicClassifier(Classifier):
 
         batch, outputs = [], []
         for i, context in tqdm(enumerate(contexts), total=len(contexts)):
-            sentences = [f"{context} {self.tokenizer.sep_token} {self.query_phrase} \"{topic}\"." for topic in
+            sentences = [f"{context} {self.tokenizer.sep_token} {self.query_phrase} {topic}." for topic in
                          self.labels]
             batch.extend(sentences)
 

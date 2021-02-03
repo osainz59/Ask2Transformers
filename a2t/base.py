@@ -5,6 +5,12 @@ from typing import List
 import numpy as np
 import torch
 
+try:
+    import transformers
+    transformers.logging.set_verbosity_error()
+except:
+    pass
+
 
 def np_softmax(x, dim=-1):
     e = np.exp(x)
