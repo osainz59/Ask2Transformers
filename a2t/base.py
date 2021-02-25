@@ -17,6 +17,10 @@ def np_softmax(x, dim=-1):
     return e / np.sum(e, axis=dim, keepdims=True)
 
 
+def np_sigmoid(x, dim=-1):
+    return 1 / (1 + np.exp(-x)) 
+
+
 class Classifier(object):
 
     def __init__(self, labels: List[str], pretrained_model: str = 'roberta-large-mnli',
