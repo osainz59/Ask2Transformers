@@ -17,7 +17,7 @@ CLASSIFIERS = {
 
 def top_k_accuracy(output, labels, k=5):
     preds = np.argsort(output)[:, ::-1][:, :k]
-    return sum(l in p for l, p in zip(labels, preds)) / len(labels)
+    return sum(l in p and l > 0 for l, p in zip(labels, preds)) / (labels > 0).sum()
 
 
 parser = argparse.ArgumentParser(prog='run_evaluation', description="Run a evaluation for each configuration.")
@@ -65,13 +65,16 @@ with open(args.input_file, 'rt') as f:
             "org:member_of",
             "org:members",
             "org:number_of_employees/members",
+            "per:schools_attended",
             "per:siblings",
             "per:religion",
             "per:date_of_death",
             "per:city_of_death",
             "per:country_of_death",
             "per:spouse",
-            "per:title"]:
+            "per:parents",
+            "per:title",
+            "no_relation"]:
             continue
         features.append(REInputFeatures(
             subj=" ".join(line['token'][line['subj_start']:line['subj_end']+1]).replace('-LRB-', '(').replace('-RRB-', ')').replace('-LSB-', '[').replace('-RSB-', ']'),
@@ -80,9 +83,9 @@ with open(args.input_file, 'rt') as f:
             label=line['relation']
         ))
         labels.append(labels2id[line['relation']])
-        if line['relation'] == 'per:title':
-            pprint(features[-1])
-            print()
+        # if line['relation'] == 'per:parents':
+        #     pprint(features[-1])
+        #     print()
 
 labels = np.array(labels)
 

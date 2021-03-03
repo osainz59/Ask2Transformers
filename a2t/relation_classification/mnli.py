@@ -42,7 +42,7 @@ class _NLIRelationClassifier(Classifier):
             output = self.model(input_ids)[0].detach().cpu().numpy()
             if multiclass:
                 #print(torch.exp(output).shape, torch.exp(output[:, [self.cont_pos, self.ent_pos]]).sum(-1).view(-1, 1).shape)
-                output = np.exp(output) / np.exp(output[..., [self.cont_pos, self.ent_pos]]).sum(-1, keepdims=True)
+                output = np.exp(output) / np.exp(output).sum(-1, keepdims=True) # np.exp(output[..., [self.cont_pos, self.ent_pos]]).sum(-1, keepdims=True)
             output = output[..., self.ent_pos].reshape(input_ids.shape[0] // len(self.labels), -1)
             #output = output.detach().cpu().numpy()
 
