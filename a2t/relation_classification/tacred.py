@@ -49,6 +49,65 @@ TACRED_LABELS = [
     'per:title'
 ]
 
+TACRED_BASIC_LABELS = [
+    'no_relation', 
+    'org:dissolved', 
+    'org:founded', 
+    'org:founded_by', 
+    'org:member_of', 
+    'org:members', 
+    'org:number_of_employees/members', 
+    'org:parents', 
+    'org:political/religious_affiliation', 
+    'org:shareholders', 
+    'org:subsidiaries', 
+    'org:top_members/employees', 
+    'org:website', 
+    'per:age', 
+    'per:cause_of_death', 
+    'per:charges', 
+    'per:children', 
+    'per:date_of_birth', 
+    'per:date_of_death', 
+    'per:employee_of', 
+    'per:other_family', 
+    'per:parents', 
+    'per:religion', 
+    'per:schools_attended', 
+    'per:siblings', 
+    'per:spouse', 
+    'per:title',
+    'per:place_of_birth',
+    'per:place_of_death',
+    'per:place_of_residence',
+    'org:place_of_headquarters',
+    'both:alternate_names'
+]
+
+TACRED_BASIC_LABELS_MAPPING = {
+    # Place of birth
+    'per:city_of_birth': 'per:place_of_birth',
+    'per:country_of_birth': 'per:place_of_birth',
+    'per:stateorprovince_of_birth': 'per:place_of_birth',
+    # Origin can be see as a country/place of birth
+    'per:origin': 'per:place_of_birth',
+    # Place of death
+    'per:city_of_death': 'per:place_of_death',
+    'per:country_of_death': 'per:place_of_death',
+    'per:stateorprovince_of_death': 'per:place_of_death',
+    # Place of residence
+    'per:cities_of_residence': 'per:place_of_residence',
+    'per:countries_of_residence': 'per:place_of_residence',
+    'per:stateorprovinces_of_residence': 'per:place_of_residence',
+    # Place of headquarters
+    'org:city_of_headquarters': 'org:place_of_headquarters',
+    'org:country_of_headquarters': 'org:place_of_headquarters',
+    'org:stateorprovince_of_headquarters': 'org:place_of_headquarters',
+    # Alternative names
+    'per:alternate_names': 'both:alternate_names',
+    'org:alternate_names': 'both:alternate_names',
+}
+
 TACRED_LABEL_TEMPLATES = {
     '{subj} has die in {obj}': 'per:city_of_death',
     '{subj} is founded by {obj}': 'org:founded_by'
