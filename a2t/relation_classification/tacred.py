@@ -113,19 +113,25 @@ TACRED_LABEL_TEMPLATES = {
     '{subj} is founded by {obj}': 'org:founded_by'
 }
 
+TACRED_VALID_CONDITIONS = {
+    "per:alternate_names": [
+        "PERSON:PERSON"
+    ]
+}
+
 
 class TACREDClassifier(NLIRelationClassifierWithMappingHead):
 
     def __init__(self, **kwargs):
         super(TACREDClassifier, self).__init__(
-            pretrained_model='roberta-large-mnli', labels=WNDOMAINS_TOPICS, topic_mapping=WNDOMAINS_TOPIC_MAPPING,
-            query_phrase="The domain of the sentence is about", entailment_position=2, **kwargs)
+            pretrained_model='roberta-large-mnli', labels=TACRED_LABELS, template_mapping=TACRED_LABEL_TEMPLATES,
+            entailment_position=2, **kwargs)
 
         def idx2topic(idx):
-            return WNDOMAINS_TOPICS[idx]
+            return TACRED_LABELS[idx]
 
         self.idx2topic = np.vectorize(idx2topic)
-
+        
     def predict_topics(self, contexts: List[str], batch_size: int = 1, return_labels: bool = True,
                        return_confidences: bool = False, topk: int = 1):
         output = self(contexts, batch_size)

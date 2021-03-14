@@ -31,64 +31,18 @@ args = parser.parse_args()
 
 labels2id = {label: i for i, label in enumerate(TACRED_LABELS)} if not args.basic else {label: i for i, label in enumerate(TACRED_BASIC_LABELS)}
 
-# """
-#             "{subj} is also known as {obj}": "org:alternate_names",
-#             "{subj} has a headquarter in {obj} city": "org:city_of_headquarters",
-#             "{subj} has a headquarter in {obj} country": "org:country_of_headquarters",
-#             "{subj} was dissolved by {obj}": "org:dissolved",
-#             "{subj} founded {obj}": "org:founded",
-#             "{subj} is member of {obj}": "org:member_of",
-#             "{subj} is form by {obj}": "org:members",
-#             "{subj} has {obj} members": "org:number_of_employees/members",
-
-            # "{subj} has die in {obj} year": "per:date_of_death",
-            # "{subj} died in {obj} year": "per:date_of_death",
-            # "{subj} has passed away in {obj} year": "per:date_of_death"
-
-
-            #             "{obj} was where {subj} died": "per:city_of_death",
-            # "{subj} has die in {obj} city": "per:city_of_death",
-            # "{subj} died in {obj} city": "per:city_of_death",
-            # "{subj} has passed away in {obj} city": "per:city_of_death",
-# """
-
 with open(args.input_file, 'rt') as f:
     features, labels = [], []
     for line in json.load(f):
-        # if line['relation'] not in [
-        #     "org:alternate_names",
-        #     "org:parents",
-        #     # "org:city_of_headquarters",
-        #     # "org:country_of_headquarters",
-        #     "org:dissolved",
-        #     "org:founded",
-        #     "org:founded_by",
-        #     "org:member_of",
-        #     "org:members",
-        #     "org:number_of_employees/members",
-        #     "per:schools_attended",
-        #     "per:siblings",
-        #     "per:religion",
-        #     "per:date_of_death",
-        #     "per:city_of_death",
-        #     "per:country_of_death",
-        #     "per:spouse",
-        #     "per:parents",
-        #     "per:title"]:
-        #     continue
-        # if line['relation'] in ['no_relation']:
-        #     continue
         line['relation'] = line['relation'] if not args.basic else TACRED_BASIC_LABELS_MAPPING.get(line['relation'], line['relation'])
         features.append(REInputFeatures(
             subj=" ".join(line['token'][line['subj_start']:line['subj_end']+1]).replace('-LRB-', '(').replace('-RRB-', ')').replace('-LSB-', '[').replace('-RSB-', ']'),
             obj=" ".join(line['token'][line['obj_start']:line['obj_end']+1]).replace('-LRB-', '(').replace('-RRB-', ')').replace('-LSB-', '[').replace('-RSB-', ']'),
+            pair_type=f"{line['subj_type']}:{line['obj_type']}",
             context= " ".join(line['token']).replace('-LRB-', '(').replace('-RRB-', ')').replace('-LSB-', '[').replace('-RSB-', ']'),
             label=line['relation']
         ))
         labels.append(labels2id[line['relation']])
-        # if line['relation'] == 'per:origin':
-        #     pprint(features[-1])
-        #     print()
 
 labels = np.array(labels)
 
