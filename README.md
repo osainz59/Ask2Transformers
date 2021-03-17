@@ -31,6 +31,14 @@ A2T Domains (A2TD) is a resource generated as part of the Ask2Transformers work.
 
 ```
 
+## Available models
+By default, `roberta-large-mnli` checkpoint is used to perform the inference. You can try different models to perform the zero-shot classification, but they need to be finetuned on a NLI task and be compatible with the `AutoModelForSequenceClassification` class from Transformers. For example:
+
+* `roberta-large-mnli`
+* `joeddav/xlm-roberta-large-xnli`
+* `facebook/bart-large-mnli`
+* `microsoft/deberta-v2-xlarge-mnli` (You will need to update your Transformers version to `master` to use this model)
+
 ## Instalation
 
 By using Pip (check the last release)
