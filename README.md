@@ -10,6 +10,8 @@ A2T Domains (A2TD) is a resource generated as part of the Ask2Transformers work.
 
 ## Topic classification just with non task specific pretrained models
 
+**Important**: [Transformers](https://github.com/huggingface/transformers) library actually supports the same method implemented in `ZeroShotClassificationPipeline`.
+
 ```python
 >>> from a2t.topic_classification import NLITopicClassifier
 
