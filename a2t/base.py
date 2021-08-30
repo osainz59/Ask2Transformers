@@ -1,5 +1,4 @@
-import os
-import sys
+import os, sys, gc
 from typing import List
 
 import numpy as np
@@ -41,13 +40,19 @@ class Classifier(object):
         else:
             self._initialize(pretrained_model)
 
-        self.model.to(self.device)
-        self.model.eval()
+        self.model = self.model.to(self.device)
+        self.model = self.model.eval()
         if self.use_cuda and self.half and torch.cuda.is_available():
-            self.model.half()
+            self.model = self.model.half()
 
     def _initialize(self, pretrained_model):
         raise NotImplementedError
 
     def __call__(self, context, batch_size=1):
         raise NotImplementedError
+
+    def clear_gpu_memory(self):
+        self.model.cpu()
+        del self.model
+        gc.collect()
+        torch.cuda.empty_cache()

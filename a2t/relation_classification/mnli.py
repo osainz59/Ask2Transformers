@@ -8,7 +8,12 @@ from pprint import pprint
 import numpy as np
 import torch
 from tqdm import tqdm
-from transformers import AutoModelForSequenceClassification, AutoTokenizer
+from transformers import (
+    AutoModelForSequenceClassification, 
+    AutoTokenizer, 
+    AutoConfig,
+    T5ForConditionalGeneration
+)
 
 from a2t.base import Classifier, np_softmax, np_sigmoid
 
@@ -24,29 +29,29 @@ class REInputFeatures:
 class _NLIRelationClassifier(Classifier):
 
     def __init__(self, labels: List[str], *args, pretrained_model: str = 'roberta-large-mnli', use_cuda=True,
-                 entailment_position=2, half=False, verbose=True, negative_threshold=.95, negative_idx=0, max_activations=np.inf, 
+                 half=False, verbose=True, negative_threshold=.95, negative_idx=0, max_activations=np.inf, 
                  valid_conditions = None, **kwargs):
         super().__init__(labels, pretrained_model=pretrained_model, use_cuda=use_cuda, verbose=verbose, half=half)
-        self.ent_pos = entailment_position
-        self.cont_pos = -1 if self.ent_pos == 0 else 0
+        # self.ent_pos = entailment_position
+        # self.cont_pos = -1 if self.ent_pos == 0 else 0
         self.negative_threshold = negative_threshold
         self.negative_idx = negative_idx
         self.max_activations = max_activations
-        for label in labels:
-            if not ('{subj}' in label and '{obj}' in label):
-                print(label)
-            assert '{subj}' in label and '{obj}' in label
+        self.n_rel = len(labels)
+        # for label in labels:
+        #     assert '{subj}' in label and '{obj}' in label
 
         if valid_conditions:
             self.valid_conditions = {}
-            n_rel = len(labels)
             rel2id = {r:i for i, r in enumerate(labels)}
+            self.n_rel = len(rel2id)
             for relation, conditions in valid_conditions.items():
                 if relation not in rel2id:
                     continue
                 for condition in conditions:
                     if condition not in self.valid_conditions:
-                        self.valid_conditions[condition] = np.zeros(n_rel)
+                        self.valid_conditions[condition] = np.zeros(self.n_rel)
+                        self.valid_conditions[condition][rel2id['no_relation']] = 1.
                     self.valid_conditions[condition][rel2id[relation]] = 1.
 
         else:
@@ -55,10 +60,20 @@ class _NLIRelationClassifier(Classifier):
     def _initialize(self, pretrained_model):
         self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
         self.model = AutoModelForSequenceClassification.from_pretrained(pretrained_model)
+        self.config = AutoConfig.from_pretrained(pretrained_model)
+        self.ent_pos = self.config.label2id.get(
+            "ENTAILMENT", self.config.label2id.get(
+                "entailment", None
+            )
+        )
+        if self.ent_pos == None:
+            raise ValueError("The model config must contain ENTAILMENT label in the label2id dict.")
+        else:
+            self.ent_pos = int(self.ent_pos)
 
     def _run_batch(self, batch, multiclass=False):
         with torch.no_grad():
-            input_ids = self.tokenizer.batch_encode_plus(batch, padding=True)
+            input_ids = self.tokenizer.batch_encode_plus(batch, padding=True, truncation=True)
             input_ids = torch.tensor(input_ids['input_ids']).to(self.device)
             output = self.model(input_ids)[0].detach().cpu().numpy()
             if multiclass:
@@ -98,12 +113,59 @@ class _NLIRelationClassifier(Classifier):
 
     def _apply_valid_conditions(self, probs, features: List[REInputFeatures]):
         mask_matrix = np.stack([
-            self.valid_conditions[feature.pair_type] for feature in features
+            self.valid_conditions.get(feature.pair_type, np.zeros(self.n_rel)) for feature in features
         ], axis=0)
-        print(mask_matrix.sum(-1))
         probs = probs * mask_matrix
 
         return probs
+
+class _GenerativeNLIRelationClassifier(_NLIRelationClassifier):
+    """ _GenerativeNLIRelationClassifier
+
+    This class is intended to be use with T5 like NLI models.
+
+    TODO: Test
+    """
+
+    def _initialize(self, pretrained_model):
+
+        if not 't5' in pretrained_model:
+            raise NotImplementedError(
+                f"This implementation is not available for {pretrained_model} yet. "
+                "Use a t5-[small-base-large] model instead."
+            )
+
+        self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
+        self.model = T5ForConditionalGeneration.from_pretrained(pretrained_model)
+        self.config = AutoConfig.from_pretrained(pretrained_model)
+        self._get_entailment_neutral_contradiction_token_id()
+
+    def _run_batch(self, batch, multiclass=False):
+        with torch.no_grad():
+            input_ids = self.tokenizer.batch_encode_plus(batch, padding=True, truncation=True)
+            input_ids = torch.tensor(input_ids['input_ids']).to(self.device)
+            decoder_input_ids = self.tokenizer.batch_encode_plus(len(batch) * ['<pad>'], padding=True, truncation=True)
+            decoder_input_ids = torch.tensor(decoder_input_ids['input_ids']).to(self.device)
+            output = self.model(input_ids, decoder_input_ids=decoder_input_ids)[0].detach().cpu().numpy()
+            output = self._vocab_to_class_logits(output)
+            if multiclass:
+                output = np.exp(output) / np.exp(output).sum(-1, keepdims=True) # np.exp(output[..., [self.cont_pos, self.ent_pos]]).sum(-1, keepdims=True)
+            output = output[..., 0].reshape(input_ids.shape[0] // len(self.labels), -1)
+
+        return output
+
+    def _get_entailment_neutral_contradiction_token_id(self):
+        class_ids = self.tokenizer(["entailment", "neutral", "contradiction"]).input_ids
+        self.entailment_token_id, self.neutral_token_id, self.contradiction_token_id = [ids[0] for ids in class_ids]
+        assert (
+            (self.entailment_token_id != self.neutral_token_id)
+            and (self.entailment_token_id != self.contradiction_token_id)
+            and (self.neutral_token_id != self.contradiction_token_id)
+        )
+
+    def _vocab_to_class_logits(self, outputs):
+        class_logits = outputs[:, 0, [self.entailment_token_id, self.neutral_token_id, self.contradiction_token_id]]
+        return class_logits
 
 
 class NLIRelationClassifier(_NLIRelationClassifier):
@@ -142,14 +204,15 @@ class NLIRelationClassifierWithMappingHead(_NLIRelationClassifier):
 
         if valid_conditions:
             self.valid_conditions = {}
-            n_rel = len(labels)
             rel2id = {r:i for i, r in enumerate(labels)}
+            self.n_rel = len(rel2id)
             for relation, conditions in valid_conditions.items():
                 if relation not in rel2id:
                     continue
                 for condition in conditions:
                     if condition not in self.valid_conditions:
-                        self.valid_conditions[condition] = np.zeros(n_rel)
+                        self.valid_conditions[condition] = np.zeros(self.n_rel)
+                        self.valid_conditions[condition][rel2id['no_relation']] = 1.
                     self.valid_conditions[condition][rel2id[relation]] = 1.
 
         else:
@@ -168,6 +231,14 @@ class NLIRelationClassifierWithMappingHead(_NLIRelationClassifier):
         outputs = self._apply_negative_threshold(outputs)
 
         return outputs
+
+class GenerativeNLIRelationClassifier(_GenerativeNLIRelationClassifier, NLIRelationClassifier):
+    pass
+
+class GenerativeNLIRelationClassifierWithMappingHead(
+    _GenerativeNLIRelationClassifier, NLIRelationClassifierWithMappingHead
+):
+    pass
 
 
 if __name__ == "__main__":
