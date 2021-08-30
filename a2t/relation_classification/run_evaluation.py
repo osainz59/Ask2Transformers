@@ -1,0 +1,75 @@
+import argparse
+import json
+import os
+from pprint import pprint
+from collections import Counter
+
+import numpy as np
+from sklearn.metrics import precision_recall_fscore_support, confusion_matrix
+
+from .mnli import NLIRelationClassifierWithMappingHead, REInputFeatures
+from .tacred import *
+
+CLASSIFIERS = {
+    'mnli-mapping': NLIRelationClassifierWithMappingHead
+}
+
+
+def top_k_accuracy(output, labels, k=5):
+    preds = np.argsort(output)[:, ::-1][:, :k]
+    return sum(l in p and l > 0 for l, p in zip(labels, preds)) / (labels > 0).sum()
+
+
+parser = argparse.ArgumentParser(prog='run_evaluation', description="Run a evaluation for each configuration.")
+parser.add_argument('input_file', type=str, default='data/tacred/dev.json',
+                    help="Dataset file.")
+parser.add_argument('--config', type=str, dest='config',
+                    help='Configuration file for the experiment.')
+parser.add_argument('--basic', action='store_true', default=False)
+
+args = parser.parse_args()
+
+labels2id = {label: i for i, label in enumerate(TACRED_LABELS)} if not args.basic else {label: i for i, label in enumerate(TACRED_BASIC_LABELS)}
+
+with open(args.input_file, 'rt') as f:
+    features, labels = [], []
+    for line in json.load(f):
+        line['relation'] = line['relation'] if not args.basic else TACRED_BASIC_LABELS_MAPPING.get(line['relation'], line['relation'])
+        features.append(REInputFeatures(
+            subj=" ".join(line['token'][line['subj_start']:line['subj_end']+1]).replace('-LRB-', '(').replace('-RRB-', ')').replace('-LSB-', '[').replace('-RSB-', ']'),
+            obj=" ".join(line['token'][line['obj_start']:line['obj_end']+1]).replace('-LRB-', '(').replace('-RRB-', ')').replace('-LSB-', '[').replace('-RSB-', ']'),
+            pair_type=f"{line['subj_type']}:{line['obj_type']}",
+            context= " ".join(line['token']).replace('-LRB-', '(').replace('-RRB-', ')').replace('-LSB-', '[').replace('-RSB-', ']'),
+            label=line['relation']
+        ))
+        labels.append(labels2id[line['relation']])
+
+labels = np.array(labels)
+
+with open(args.config, 'rt') as f:
+    config = json.load(f)
+
+LABEL_LIST = TACRED_BASIC_LABELS if args.basic else TACRED_LABELS
+
+for configuration in config:
+    n_labels = len(LABEL_LIST)
+    os.makedirs(f"experiments/{configuration['name']}", exist_ok=True)
+    classifier = CLASSIFIERS[configuration['classification_model']](**configuration)
+    output = classifier(features, batch_size=configuration['batch_size'], multiclass=configuration['multiclass'])
+    np.save(f"experiments/{configuration['name']}/output.npy", output)
+    np.save(f"experiments/{configuration['name']}/labels.npy", labels)
+    pre, rec, f1, _ = precision_recall_fscore_support(labels, np.argmax(output, -1), average='micro', labels=list(range(1, n_labels)))
+    cm = confusion_matrix(labels, np.argmax(output, -1))
+    configuration['precision'] = pre
+    configuration['recall'] = rec
+    configuration['f1-score'] = f1
+    configuration['top-1'] = top_k_accuracy(output, labels, k=1)
+    configuration['top-3'] = top_k_accuracy(output, labels, k=3)
+    configuration['top-5'] = top_k_accuracy(output, labels, k=5)
+    configuration['topk-curve'] = [top_k_accuracy(output, labels, k=i) for i in range(1, n_labels+1)]
+    configuration['confusion_matrix'] = cm.tolist()
+    configuration['indices'] = { LABEL_LIST[key]: int(key) for key, value in Counter(labels).items()}
+    pprint(configuration)
+
+with open(args.config, 'wt') as f:
+    json.dump(config, f, indent=4)

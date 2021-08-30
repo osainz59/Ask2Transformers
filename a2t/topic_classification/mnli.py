@@ -16,7 +16,7 @@ class _NLITopicClassifier(Classifier):
     def __init__(self, labels: List[str], *args, pretrained_model: str = 'roberta-large-mnli', use_cuda=True,
                  query_phrase="The domain of the sentence is about", entailment_position=2,
                  half=False, verbose=True, **kwargs):
-        super().__init__(labels, pretrained_model, use_cuda=use_cuda, verbose=verbose, half=half)
+        super().__init__(labels, pretrained_model=pretrained_model, use_cuda=use_cuda, verbose=verbose, half=half)
         self.query_phrase = query_phrase
         self.ent_pos = entailment_position
 
@@ -87,7 +87,8 @@ class NLITopicClassifier(_NLITopicClassifier):
     """
 
     def __init__(self, labels: List[str], *args, pretrained_model: str = 'roberta-large-mnli', **kwargs):
-        super(NLITopicClassifier, self).__init__(labels=labels, pretrained_model=pretrained_model, *args, **kwargs)
+        super(NLITopicClassifier, self).__init__(labels, *args, pretrained_model=pretrained_model, **kwargs)
+
 
     def __call__(self, contexts: List[str], batch_size: int = 1):
         outputs = super().__call__(contexts=contexts, batch_size=batch_size)
@@ -107,7 +108,7 @@ class NLITopicClassifierWithMappingHead(_NLITopicClassifier):
         for key, value in topic_mapping.items():
             self.mapping[value].append(self.new_topics2id[key])
 
-        super().__init__(labels=self.new_topics, pretrained_model=pretrained_model, *args, **kwargs)
+        super().__init__(self.new_topics, *args, pretrained_model=pretrained_model, **kwargs)
 
     def __call__(self, contexts, batch_size=1):
         outputs = super().__call__(contexts, batch_size)
