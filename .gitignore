@@ -1,7 +1,7 @@
-experiments/*/*.npy
-experiments/*test*
+experiments/*
 models/
-data/
+data/*
+examples/*
 
 onnx/
 
