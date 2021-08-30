@@ -89,6 +89,7 @@ class NLITopicClassifier(_NLITopicClassifier):
     def __init__(self, labels: List[str], *args, pretrained_model: str = 'roberta-large-mnli', **kwargs):
         super(NLITopicClassifier, self).__init__(labels, *args, pretrained_model=pretrained_model, **kwargs)
 
+
     def __call__(self, contexts: List[str], batch_size: int = 1):
         outputs = super().__call__(contexts=contexts, batch_size=batch_size)
         outputs = np_softmax(outputs)

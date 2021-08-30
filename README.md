@@ -10,6 +10,8 @@ A2T Domains (A2TD) is a resource generated as part of the Ask2Transformers work.
 
 ## Topic classification just with non task specific pretrained models
 
+**Important**: [Transformers](https://github.com/huggingface/transformers) library actually supports the same method implemented in `ZeroShotClassificationPipeline`.
+
 ```python
 >>> from a2t.topic_classification import NLITopicClassifier
 
@@ -30,6 +32,14 @@ A2T Domains (A2TD) is a resource generated as part of the Ask2Transformers work.
  (0.02204825, 'culture')]
 
 ```
+
+## Available models
+By default, `roberta-large-mnli` checkpoint is used to perform the inference. You can try different models to perform the zero-shot classification, but they need to be finetuned on a NLI task and be compatible with the `AutoModelForSequenceClassification` class from Transformers. For example:
+
+* `roberta-large-mnli`
+* `joeddav/xlm-roberta-large-xnli`
+* `facebook/bart-large-mnli`
+* `microsoft/deberta-v2-xlarge-mnli` 
 
 ## Instalation
 
@@ -96,11 +106,18 @@ Results (Micro-average):
 ## Citation
 
 ```bibtex
-@inproceedings{sainz2021ask2transformers,
-  title={Ask2Transformers: Zero-Shot Domain labelling with Pre-trained Language Models},
-  author={Sainz, Oscar and Rigau, German},
-  booktitle={Proceedings of the 11th Global WordNet Conference (GWC 2021). Pretoria, South Africa},
-  year={2021}
+@inproceedings{sainz-rigau-2021-ask2transformers,
+    title = "{A}sk2{T}ransformers: Zero-Shot Domain labelling with Pretrained Language Models",
+    author = "Sainz, Oscar  and
+      Rigau, German",
+    booktitle = "Proceedings of the 11th Global Wordnet Conference",
+    month = jan,
+    year = "2021",
+    address = "University of South Africa (UNISA)",
+    publisher = "Global Wordnet Association",
+    url = "https://www.aclweb.org/anthology/2021.gwc-1.6",
+    pages = "44--52",
+    abstract = "In this paper we present a system that exploits different pre-trained Language Models for assigning domain labels to WordNet synsets without any kind of supervision. Furthermore, the system is not restricted to use a particular set of domain labels. We exploit the knowledge encoded within different off-the-shelf pre-trained Language Models and task formulations to infer the domain label of a particular WordNet definition. The proposed zero-shot system achieves a new state-of-the-art on the English dataset used in the evaluation.",
 }
 ```
 
