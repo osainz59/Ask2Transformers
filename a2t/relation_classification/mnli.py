@@ -57,6 +57,11 @@ class _NLIRelationClassifier(Classifier):
         else:
             self.valid_conditions = None
 
+        def idx2label(idx):
+            return self.labels[idx]
+
+        self.idx2label = np.vectorize(idx2label)
+
     def _initialize(self, pretrained_model):
         self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
         self.model = AutoModelForSequenceClassification.from_pretrained(pretrained_model)
@@ -118,6 +123,23 @@ class _NLIRelationClassifier(Classifier):
         probs = probs * mask_matrix
 
         return probs
+
+    def predict(self, contexts: List[str], batch_size: int = 1, return_labels: bool = True,
+                return_confidences: bool = False, topk: int = 1):
+        output = self(contexts, batch_size)
+        topics = np.argsort(output, -1)[:, ::-1][:, :topk]
+        if return_labels:
+            topics = self.idx2label(topics)
+        if return_confidences:
+            topics = np.stack((topics, np.sort(output, -1)[:, ::-1][:, :topk]), -1).tolist()
+            topics = [[(int(label), float(conf)) if not return_labels else (label, float(conf)) for label, conf in row]
+                      for row in topics]
+        else:
+            topics = topics.tolist()
+        if topk == 1:
+            topics = [row[0] for row in topics]
+
+        return topics
 
 class _GenerativeNLIRelationClassifier(_NLIRelationClassifier):
     """ _GenerativeNLIRelationClassifier
@@ -217,6 +239,11 @@ class NLIRelationClassifierWithMappingHead(_NLIRelationClassifier):
 
         else:
             self.valid_conditions = None
+
+        def idx2label(idx):
+            return self.target_labels[idx]
+
+        self.idx2label = np.vectorize(idx2label)
 
     def __call__(self, features: List[REInputFeatures], batch_size=1, multiclass=True):
         outputs = super().__call__(features, batch_size, multiclass)

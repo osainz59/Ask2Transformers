@@ -435,24 +435,3 @@ class TACREDClassifier(NLIRelationClassifierWithMappingHead):
             pretrained_model='roberta-large-mnli', labels=TACRED_LABELS, template_mapping=TACRED_LABEL_TEMPLATES,
             valid_conditions=TACRED_VALID_CONDITIONS, entailment_position=2, **kwargs)
 
-        def idx2topic(idx):
-            return TACRED_LABELS[idx]
-
-        self.idx2topic = np.vectorize(idx2topic)
-        
-    def predict(self, contexts: List[str], batch_size: int = 1, return_labels: bool = True,
-                return_confidences: bool = False, topk: int = 1):
-        output = self(contexts, batch_size)
-        topics = np.argsort(output, -1)[:, ::-1][:, :topk]
-        if return_labels:
-            topics = self.idx2topic(topics)
-        if return_confidences:
-            topics = np.stack((topics, np.sort(output, -1)[:, ::-1][:, :topk]), -1).tolist()
-            topics = [[(int(label), conf) if not return_labels else (label, conf) for label, conf in row]
-                      for row in topics]
-        else:
-            topics = topics.tolist()
-        if topk == 1:
-            topics = [row[0] for row in topics]
-
-        return topics

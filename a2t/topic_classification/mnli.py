@@ -20,6 +20,11 @@ class _NLITopicClassifier(Classifier):
         self.query_phrase = query_phrase
         self.ent_pos = entailment_position
 
+        def idx2topic(idx):
+            return self.labels[idx]
+
+        self.idx2topic = np.vectorize(idx2topic)
+
     def _initialize(self, pretrained_model):
         self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
         self.model = AutoModelForSequenceClassification.from_pretrained(pretrained_model)
@@ -55,6 +60,23 @@ class _NLITopicClassifier(Classifier):
         outputs = np.vstack(outputs)
 
         return outputs
+
+    def predict(self, contexts: List[str], batch_size: int = 1, return_labels: bool = True,
+                       return_confidences: bool = False, topk: int = 1):
+        output = self(contexts, batch_size)
+        topics = np.argsort(output, -1)[:, ::-1][:, :topk]
+        if return_labels:
+            topics = self.idx2topic(topics)
+        if return_confidences:
+            topics = np.stack((topics, np.sort(output, -1)[:, ::-1][:, :topk]), -1).tolist()
+            topics = [[(int(label), float(conf)) if not return_labels else (label, float(conf)) for label, conf in row]
+                      for row in topics]
+        else:
+            topics = topics.tolist()
+        if topk == 1:
+            topics = [row[0] for row in topics]
+
+        return topics
 
 
 class NLITopicClassifier(_NLITopicClassifier):
@@ -108,6 +130,11 @@ class NLITopicClassifierWithMappingHead(_NLITopicClassifier):
             self.mapping[value].append(self.new_topics2id[key])
 
         super().__init__(self.new_topics, *args, pretrained_model=pretrained_model, **kwargs)
+
+        def idx2topic(idx):
+            return self.target_topics[idx]
+
+        self.idx2topic = np.vectorize(idx2topic)
 
     def __call__(self, contexts, batch_size=1):
         outputs = super().__call__(contexts, batch_size)
