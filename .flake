@@ -1,0 +1,6 @@
+[flake8]
+# line length is intentionally set to 80 here because black uses Bugbear
+# See https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html#line-length for more details
+max-line-length = 88
+select = C,E,F,W,B,B950
+extend-ignore = E203, E501

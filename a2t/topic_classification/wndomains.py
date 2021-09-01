@@ -52,7 +52,7 @@ WNDOMAINS_TOPICS = [
     "publishing",
     "artisanship",
     "sociology",
-    "economy"
+    "economy",
 ]
 
 WNDOMAINS_TOPIC_MAPPING = {
@@ -213,17 +213,22 @@ WNDOMAINS_TOPIC_MAPPING = {
     "volleyball": "sport",
     "wrestling": "sport",
     "zoology": "biology",
-    "zootechnics": "veterinary"
+    "zootechnics": "veterinary",
 }
 
 
 class WNDomainsClassifier(NLITopicClassifierWithMappingHead):
-    """ WNDomainsClassifier
+    """WNDomainsClassifier
 
     Specific class for topic classification using WNDomains topic set.
     """
 
     def __init__(self, **kwargs):
         super(WNDomainsClassifier, self).__init__(
-            pretrained_model='roberta-large-mnli', labels=WNDOMAINS_TOPICS, topic_mapping=WNDOMAINS_TOPIC_MAPPING,
-            query_phrase="The domain of the sentence is about", entailment_position=2, **kwargs)
+            pretrained_model="roberta-large-mnli",
+            labels=WNDOMAINS_TOPICS,
+            topic_mapping=WNDOMAINS_TOPIC_MAPPING,
+            query_phrase="The domain of the sentence is about",
+            entailment_position=2,
+            **kwargs
+        )

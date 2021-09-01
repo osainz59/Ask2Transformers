@@ -11,13 +11,33 @@ from a2t.base import Classifier
 
 
 class MLMTopicClassifier(Classifier):
-
-    def __init__(self, labels: List[str], *args, pretrained_model: str = 'roberta-large',
-                 use_cuda=True, half=False, **kwargs):
-        super().__init__(labels, pretrained_model, use_cuda=use_cuda, half=half, *args, **kwargs)
-        self.topics2mask = {topic: len(self.tokenizer.encode(topic, add_special_tokens=False)) for topic in labels}
-        self.topics2id = torch.tensor([self.tokenizer.encode(topic, add_special_tokens=False)[0]
-                                       for topic in labels]).to(self.device)
+    def __init__(
+        self,
+        labels: List[str],
+        *args,
+        pretrained_model: str = "roberta-large",
+        use_cuda=True,
+        half=False,
+        **kwargs,
+    ):
+        super().__init__(
+            labels,
+            pretrained_model,
+            use_cuda=use_cuda,
+            half=half,
+            *args,
+            **kwargs,
+        )
+        self.topics2mask = {
+            topic: len(self.tokenizer.encode(topic, add_special_tokens=False))
+            for topic in labels
+        }
+        self.topics2id = torch.tensor(
+            [
+                self.tokenizer.encode(topic, add_special_tokens=False)[0]
+                for topic in labels
+            ]
+        ).to(self.device)
 
     def _initialize(self, pretrained_model):
         self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
@@ -26,9 +46,16 @@ class MLMTopicClassifier(Classifier):
     def _run_batch(self, batch):
         with torch.no_grad():
             input_ids = self.tokenizer.batch_encode_plus(batch, padding=True)
-            input_ids = torch.tensor(input_ids['input_ids']).to(self.device)
-            masked_index = torch.tensor([(input_ids[i] == self.tokenizer.mask_token_id).nonzero().view(-1)[0].item()
-                                         for i in range(len(batch))]).to(self.device)
+            input_ids = torch.tensor(input_ids["input_ids"]).to(self.device)
+            masked_index = torch.tensor(
+                [
+                    (input_ids[i] == self.tokenizer.mask_token_id)
+                    .nonzero()
+                    .view(-1)[0]
+                    .item()
+                    for i in range(len(batch))
+                ]
+            ).to(self.device)
 
             outputs = self.model(input_ids)[0]
             new_shape = (len(batch) // len(self.labels), -1) + outputs.shape[-2:]
@@ -47,8 +74,10 @@ class MLMTopicClassifier(Classifier):
 
         batch, outputs = [], []
         for i, context in tqdm(enumerate(contexts), total=len(contexts)):
-            sentences = [f"Context: {context.replace(':', ' ')} Topic: {' '.join([self.tokenizer.mask_token] * self.topics2mask[topic])} "
-                         for topic in self.labels]
+            sentences = [
+                f"Context: {context.replace(':', ' ')} Topic: {' '.join([self.tokenizer.mask_token] * self.topics2mask[topic])} "
+                for topic in self.labels
+            ]
 
             batch.extend(sentences)
 
@@ -69,16 +98,18 @@ class MLMTopicClassifier(Classifier):
 if __name__ == "__main__":
 
     if len(sys.argv) < 2:
-        print('Usage:\tpython3 get_topics.py topics.txt input_file.txt\n\tpython3 get_topics.py topics.txt < '
-              'input_file.txt')
+        print(
+            "Usage:\tpython3 get_topics.py topics.txt input_file.txt\n\tpython3 get_topics.py topics.txt < "
+            "input_file.txt"
+        )
         exit(1)
 
-    with open(sys.argv[1], 'rt') as f:
-        topics = [topic.rstrip().replace('_', ' ') for topic in f]
+    with open(sys.argv[1], "rt") as f:
+        topics = [topic.rstrip().replace("_", " ") for topic in f]
 
-    input_stream = open(sys.argv[2], 'rt') if len(sys.argv) == 3 else sys.stdin
+    input_stream = open(sys.argv[2], "rt") if len(sys.argv) == 3 else sys.stdin
 
-    clf = MLMTopicClassifier('roberta-large', topics=topics)
+    clf = MLMTopicClassifier("roberta-large", topics=topics)
 
     for line in input_stream:
         line = line.rstrip()

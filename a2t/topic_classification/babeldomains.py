@@ -1,7 +1,3 @@
-from typing import List
-
-import numpy as np
-
 from . import NLITopicClassifierWithMappingHead
 
 BABELDOMAINS_TOPICS = [
@@ -38,7 +34,7 @@ BABELDOMAINS_TOPICS = [
     "Sport and recreation",
     "Textile and clothing",
     "Transport and travel",
-    "Warfare and defense"
+    "Warfare and defense",
 ]
 
 BABELDOMAINS_TOPIC_MAPPING = {
@@ -127,17 +123,22 @@ BABELDOMAINS_TOPIC_MAPPING = {
     "Transport and travel": "Transport and travel",
     "Warfare": "Warfare and defense",
     "Defense": "Warfare and defense",
-    "Warfare and defense": "Warfare and defense"
+    "Warfare and defense": "Warfare and defense",
 }
 
 
 class BabelDomainsClassifier(NLITopicClassifierWithMappingHead):
-    """ BabelDomainsClassifier
+    """BabelDomainsClassifier
 
     Specific class for topic classification using BabelDomains topic set.
     """
 
     def __init__(self, **kwargs):
         super(BabelDomainsClassifier, self).__init__(
-            pretrained_model='roberta-large-mnli', labels=BABELDOMAINS_TOPICS, topic_mapping=BABELDOMAINS_TOPIC_MAPPING,
-            query_phrase="The domain of the sentence is about", entailment_position=2, **kwargs)
+            pretrained_model="roberta-large-mnli",
+            labels=BABELDOMAINS_TOPICS,
+            topic_mapping=BABELDOMAINS_TOPIC_MAPPING,
+            query_phrase="The domain of the sentence is about",
+            entailment_position=2,
+            **kwargs
+        )

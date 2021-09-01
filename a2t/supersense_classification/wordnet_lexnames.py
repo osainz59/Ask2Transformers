@@ -1,4 +1,3 @@
-
 WORDNET_LEXNAMES_TO_DEFINITIONS = {
     "adj.all": "all adjective clusters",
     "adj.pert": "relational adjectives (pertainyms)",
@@ -44,14 +43,12 @@ WORDNET_LEXNAMES_TO_DEFINITIONS = {
     "verb.social": "verbs of political and social activities and events",
     "verb.stative": "verbs of being, having, spatial relations",
     "verb.weather": "verbs of raining, snowing, thawing, thundering",
-    "adj.ppl": "participial adjectives"
+    "adj.ppl": "participial adjectives",
 }
 
 WORDNET_LEXNAMES = list(WORDNET_LEXNAMES_TO_DEFINITIONS.keys())
 
-WORDNET_LEXNAMES_BY_POS = {
-    'adj': [], 'adv': [], 'noun': [], 'verb': []
-}
+WORDNET_LEXNAMES_BY_POS = {"adj": [], "adv": [], "noun": [], "verb": []}
 
 for lexname in WORDNET_LEXNAMES:
-    WORDNET_LEXNAMES_BY_POS[lexname.split('.')[0]].append(lexname)
+    WORDNET_LEXNAMES_BY_POS[lexname.split(".")[0]].append(lexname)

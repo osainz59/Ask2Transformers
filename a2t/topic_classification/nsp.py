@@ -11,10 +11,25 @@ from a2t.base import Classifier
 
 
 class NSPTopicClassifier(Classifier):
-
-    def __init__(self, labels: List[str], *args, pretrained_model: str = 'bert-large-uncased', use_cuda=True,
-                 query_phrase="Topic or domain about", positive_position=1, half=False, **kwargs):
-        super().__init__(labels, pretrained_model, use_cuda=use_cuda, half=half, *args, **kwargs)
+    def __init__(
+        self,
+        labels: List[str],
+        *args,
+        pretrained_model: str = "bert-large-uncased",
+        use_cuda=True,
+        query_phrase="Topic or domain about",
+        positive_position=1,
+        half=False,
+        **kwargs,
+    ):
+        super().__init__(
+            labels,
+            pretrained_model,
+            use_cuda=use_cuda,
+            half=half,
+            *args,
+            **kwargs,
+        )
         self.query_phrase = query_phrase
         self.cls_pos = positive_position
 
@@ -25,8 +40,10 @@ class NSPTopicClassifier(Classifier):
     def _run_batch(self, batch):
         with torch.no_grad():
             input_ids = self.tokenizer.batch_encode_plus(batch, padding=True)
-            input_ids = torch.tensor(input_ids['input_ids']).to(self.device)
-            output = self.model(input_ids)[0][:, self.cls_pos].view(len(batch) // len(self.labels), -1)
+            input_ids = torch.tensor(input_ids["input_ids"]).to(self.device)
+            output = self.model(input_ids)[0][:, self.cls_pos].view(
+                len(batch) // len(self.labels), -1
+            )
             output = torch.softmax(output, dim=-1).detach().cpu().numpy()
 
         return output
@@ -37,8 +54,10 @@ class NSPTopicClassifier(Classifier):
 
         batch, outputs = [], []
         for i, context in tqdm(enumerate(contexts), total=len(contexts)):
-            sentences = [f"{context} {self.tokenizer.sep_token} {self.query_phrase} \"{topic}\"." for topic in
-                         self.labels]
+            sentences = [
+                f'{context} {self.tokenizer.sep_token} {self.query_phrase} "{topic}".'
+                for topic in self.labels
+            ]
             batch.extend(sentences)
 
             if (i + 1) % batch_size == 0:
@@ -59,16 +78,17 @@ if __name__ == "__main__":
 
     if len(sys.argv) < 2:
         print(
-            'Usage:\tpython3 get_topics.py topics.txt input_file.txt\n\tpython3 get_topics.py topics.txt < '
-            'input_file.txt')
+            "Usage:\tpython3 get_topics.py topics.txt input_file.txt\n\tpython3 get_topics.py topics.txt < "
+            "input_file.txt"
+        )
         exit(1)
 
-    with open(sys.argv[1], 'rt') as f:
-        topics = [topic.rstrip().replace('_', ' ') for topic in f]
+    with open(sys.argv[1], "rt") as f:
+        topics = [topic.rstrip().replace("_", " ") for topic in f]
 
-    input_stream = open(sys.argv[2], 'rt') if len(sys.argv) == 3 else sys.stdin
+    input_stream = open(sys.argv[2], "rt") if len(sys.argv) == 3 else sys.stdin
 
-    clf = NSPTopicClassifier('bert-large-uncased', labels=topics)
+    clf = NSPTopicClassifier("bert-large-uncased", labels=topics)
 
     for line in input_stream:
         line = line.rstrip()

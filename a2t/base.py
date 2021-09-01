@@ -1,4 +1,6 @@
-import os, sys, gc
+import os
+import sys
+import gc
 from typing import List
 
 import numpy as np
@@ -6,8 +8,9 @@ import torch
 
 try:
     import transformers
+
     transformers.logging.set_verbosity_error()
-except:
+except ImportError:
     pass
 
 
@@ -17,16 +20,23 @@ def np_softmax(x, dim=-1):
 
 
 def np_sigmoid(x, dim=-1):
-    return 1 / (1 + np.exp(-x)) 
+    return 1 / (1 + np.exp(-x))
 
 
 class Classifier(object):
-
-    def __init__(self, labels: List[str], pretrained_model: str = 'roberta-large-mnli',
-                 use_cuda=True, half=False, verbose=True):
+    def __init__(
+        self,
+        labels: List[str],
+        pretrained_model: str = "roberta-large-mnli",
+        use_cuda=True,
+        half=False,
+        verbose=True,
+    ):
         super().__init__()
 
-        self.device = torch.device("cuda" if torch.cuda.is_available() and use_cuda else "cpu")
+        self.device = torch.device(
+            "cuda" if torch.cuda.is_available() and use_cuda else "cpu"
+        )
         self.labels = labels
         self.use_cuda = use_cuda
         self.half = half
@@ -34,7 +44,7 @@ class Classifier(object):
 
         # Supress stdout printing for model downloads
         if not verbose:
-            sys.stdout = open(os.devnull, 'w')
+            sys.stdout = open(os.devnull, "w")
             self._initialize(pretrained_model)
             sys.stdout = sys.__stdout__
         else:
