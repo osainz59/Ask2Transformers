@@ -1,6 +1,6 @@
 # Label verbalizations for Relation Classification
 
-<img src="../../imgs/RE_NLI.svg" style="background-color: white; border-radius: 15px">
+<img src="../../imgs/RE_NLI_white_bg.svg" style="border-radius: 15px">
 
 This repository contains the code for the work [Label Verbalization and Entailment for Effective Zero- and Few-Shot Relation Extraction]() accepted in [EMNLP2021](https://2021.emnlp.org/).
 
