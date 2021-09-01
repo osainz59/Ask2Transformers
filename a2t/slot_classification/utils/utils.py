@@ -14,9 +14,7 @@ def individual_f1_score_(labels, preds, n_labels=None):
 
 def precision_recall_fscore_(labels, preds):
     n_labels = max(labels) + 1 if n_labels is None else n_labels
-    p, r, f, _ = precision_recall_fscore_support(
-        labels, preds, labels=list(range(1, n_labels)), average="micro"
-    )
+    p, r, f, _ = precision_recall_fscore_support(labels, preds, labels=list(range(1, n_labels)), average="micro")
     return p, r, f
 
 
@@ -44,9 +42,7 @@ def apply_individual_threshold(output, thresholds, ignore_negative_prediction=Tr
     return output_.argmax(-1)
 
 
-def find_optimal_threshold(
-    labels, output, granularity=1000, metric=f1_score_, n_labels=None
-):
+def find_optimal_threshold(labels, output, granularity=1000, metric=f1_score_, n_labels=None):
     thresholds = np.linspace(0, 1, granularity)
     values = []
     for t in thresholds:
@@ -83,6 +79,4 @@ def find_optimal_individual_threshold(
             if i not in np.unique(labels):
                 best_threshold[i] = default
 
-    return best_threshold, metric(
-        labels, apply_individual_threshold(output, thresholds=best_threshold)
-    )
+    return best_threshold, metric(labels, apply_individual_threshold(output, thresholds=best_threshold))

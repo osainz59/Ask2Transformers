@@ -28,9 +28,7 @@ class MNLIInputFeatures:
 parser = ArgumentParser()
 
 parser.add_argument("--input_file", type=str, default="data/wikievents/dev.jsonl")
-parser.add_argument(
-    "--config_file", type=str, default="experiments/slot_classification/config.json"
-)
+parser.add_argument("--config_file", type=str, default="experiments/slot_classification/config.json")
 parser.add_argument("--output_file", type=str, default="data/wikievents/dev.mnli.jsonl")
 parser.add_argument("--model_name_or_path", type=str, default=None)
 parser.add_argument("--negn", type=int, default=1)
@@ -139,15 +137,9 @@ def to_nli(
     label2id=None,
 ):
     nli_examples = [
-        *generate_positive_example(
-            instance, templates, type2role, n=posn, label2id=label2id
-        ),
-        *generate_neutral_example(
-            instance, templates, type2role, n=negn, label2id=label2id
-        ),
-        *generate_negative_example(
-            instance, templates, type2role, n=negn, label2id=label2id
-        ),
+        *generate_positive_example(instance, templates, type2role, n=posn, label2id=label2id),
+        *generate_neutral_example(instance, templates, type2role, n=negn, label2id=label2id),
+        *generate_negative_example(instance, templates, type2role, n=negn, label2id=label2id),
     ]
 
     return nli_examples

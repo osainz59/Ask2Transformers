@@ -18,9 +18,7 @@ parser.add_argument(
     default="experiments/splitted_topics/labels.npy",
     help="Labels.",
 )
-parser.add_argument(
-    "--label_names", type=str, default="data/babel_topics.txt", help="Domain labels."
-)
+parser.add_argument("--label_names", type=str, default="data/babel_topics.txt", help="Domain labels.")
 parser.add_argument(
     "--glosses",
     type=str,

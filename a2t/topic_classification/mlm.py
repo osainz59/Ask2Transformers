@@ -28,15 +28,9 @@ class MLMTopicClassifier(Classifier):
             *args,
             **kwargs,
         )
-        self.topics2mask = {
-            topic: len(self.tokenizer.encode(topic, add_special_tokens=False))
-            for topic in labels
-        }
+        self.topics2mask = {topic: len(self.tokenizer.encode(topic, add_special_tokens=False)) for topic in labels}
         self.topics2id = torch.tensor(
-            [
-                self.tokenizer.encode(topic, add_special_tokens=False)[0]
-                for topic in labels
-            ]
+            [self.tokenizer.encode(topic, add_special_tokens=False)[0] for topic in labels]
         ).to(self.device)
 
     def _initialize(self, pretrained_model):
@@ -49,10 +43,7 @@ class MLMTopicClassifier(Classifier):
             input_ids = torch.tensor(input_ids["input_ids"]).to(self.device)
             masked_index = torch.tensor(
                 [
-                    (input_ids[i] == self.tokenizer.mask_token_id)
-                    .nonzero()
-                    .view(-1)[0]
-                    .item()
+                    (input_ids[i] == self.tokenizer.mask_token_id).nonzero().view(-1)[0].item()
                     for i in range(len(batch))
                 ]
             ).to(self.device)

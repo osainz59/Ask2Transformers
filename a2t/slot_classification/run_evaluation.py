@@ -105,23 +105,17 @@ for configuration in config:
         )
 
         positive_mask = np.logical_and(dev_labels > 0, dev_labels < label2id["OOR"])
-        positive_acc = accuracy_score(
-            dev_labels[positive_mask] - 1, output[positive_mask, 1:].argmax(-1)
-        )
+        positive_acc = accuracy_score(dev_labels[positive_mask] - 1, output[positive_mask, 1:].argmax(-1))
 
         # Individual threshold
-        optimal_indv_threshold, _ = find_optimal_individual_threshold(
-            dev_labels, output, n_labels=n_labels
-        )
+        optimal_indv_threshold, _ = find_optimal_individual_threshold(dev_labels, output, n_labels=n_labels)
         output_ = apply_individual_threshold(output, optimal_indv_threshold)
 
         with open(
             f"experiments/{configuration['name']}/{pretrained_model}/dev/predictions.indv.jsonl",
             "wt",
         ) as f:
-            for inst in dev_dataset.to_dict(
-                [configuration["labels"][o] for o in output_]
-            ):
+            for inst in dev_dataset.to_dict([configuration["labels"][o] for o in output_]):
                 f.write(f"{json.dumps(inst)}\n")
 
         pre_indv, rec_indv, f1_indv, _ = precision_recall_fscore_support(
@@ -139,9 +133,7 @@ for configuration in config:
             f"experiments/{configuration['name']}/{pretrained_model}/dev/predictions.global.jsonl",
             "wt",
         ) as f:
-            for inst in dev_dataset.to_dict(
-                [configuration["labels"][o] for o in output_]
-            ):
+            for inst in dev_dataset.to_dict([configuration["labels"][o] for o in output_]):
                 f.write(f"{json.dumps(inst)}\n")
 
         pre_global, rec_global, f1_global, _ = precision_recall_fscore_support(
@@ -189,9 +181,7 @@ for configuration in config:
                 test_labels,
             )
 
-            positive_mask = np.logical_and(
-                test_labels > 0, test_labels < label2id["OOR"]
-            )
+            positive_mask = np.logical_and(test_labels > 0, test_labels < label2id["OOR"])
             positive_acc = accuracy_score(
                 test_labels[positive_mask] - 1,
                 output[positive_mask, 1:].argmax(-1),
@@ -204,9 +194,7 @@ for configuration in config:
                 f"experiments/{configuration['name']}/{pretrained_model}/test/predictions.indv.jsonl",
                 "wt",
             ) as f:
-                for inst in test_dataset.to_dict(
-                    [configuration["labels"][o] for o in output_]
-                ):
+                for inst in test_dataset.to_dict([configuration["labels"][o] for o in output_]):
                     f.write(f"{json.dumps(inst)}\n")
 
             pre_indv, rec_indv, f1_indv, _ = precision_recall_fscore_support(
@@ -223,9 +211,7 @@ for configuration in config:
                 f"experiments/{configuration['name']}/{pretrained_model}/test/predictions.global.jsonl",
                 "wt",
             ) as f:
-                for inst in test_dataset.to_dict(
-                    [configuration["labels"][o] for o in output_]
-                ):
+                for inst in test_dataset.to_dict([configuration["labels"][o] for o in output_]):
                     f.write(f"{json.dumps(inst)}\n")
 
             (pre_global, rec_global, f1_global, _,) = precision_recall_fscore_support(

@@ -25,21 +25,9 @@ def main(opt):
         ):
 
             if instance["subj_start"] < instance["obj_start"]:
-                pattern = (
-                    ["{subj}"]
-                    + instance["token"][
-                        instance["subj_end"] + 1 : instance["obj_start"]
-                    ]
-                    + ["{obj}"]
-                )
+                pattern = ["{subj}"] + instance["token"][instance["subj_end"] + 1 : instance["obj_start"]] + ["{obj}"]
             else:
-                pattern = (
-                    ["{obj}"]
-                    + instance["token"][
-                        instance["obj_end"] + 1 : instance["subj_start"]
-                    ]
-                    + ["{subj}"]
-                )
+                pattern = ["{obj}"] + instance["token"][instance["obj_end"] + 1 : instance["subj_start"]] + ["{subj}"]
             patterns[instance["relation"]].append(" ".join(pattern))
 
     with open(opt.output_file, "wt", encoding="utf-8") as f:

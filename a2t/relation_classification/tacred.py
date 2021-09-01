@@ -302,9 +302,7 @@ TACRED_VALID_CONDITIONS = {
 
 class TACREDClassifier(NLIRelationClassifierWithMappingHead):
     def __init__(self, **kwargs):
-        pretrained_model = kwargs.pop(
-            "pretrained_model", "microsoft/deberta-v2-xlarge-mnli"
-        )
+        pretrained_model = kwargs.pop("pretrained_model", "microsoft/deberta-v2-xlarge-mnli")
         super(TACREDClassifier, self).__init__(
             pretrained_model=pretrained_model,
             labels=TACRED_LABELS,

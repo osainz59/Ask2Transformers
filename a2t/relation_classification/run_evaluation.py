@@ -50,9 +50,7 @@ with open(args.input_file, "rt") as f:
     features, labels = [], []
     for line in json.load(f):
         line["relation"] = (
-            line["relation"]
-            if not args.basic
-            else TACRED_BASIC_LABELS_MAPPING.get(line["relation"], line["relation"])
+            line["relation"] if not args.basic else TACRED_BASIC_LABELS_MAPPING.get(line["relation"], line["relation"])
         )
         features.append(
             REInputFeatures(
@@ -88,9 +86,7 @@ for configuration in config:
     n_labels = len(LABEL_LIST)
     os.makedirs(f"experiments/{configuration['name']}", exist_ok=True)
     _ = configuration.pop("negative_threshold", None)
-    classifier = CLASSIFIERS[configuration["classification_model"]](
-        negative_threshold=0.0, **configuration
-    )
+    classifier = CLASSIFIERS[configuration["classification_model"]](negative_threshold=0.0, **configuration)
     output = classifier(
         features,
         batch_size=configuration["batch_size"],
@@ -113,9 +109,7 @@ for configuration in config:
     configuration["top-1"] = top_k_accuracy(output, labels, k=1)
     configuration["top-3"] = top_k_accuracy(output, labels, k=3)
     configuration["top-5"] = top_k_accuracy(output, labels, k=5)
-    configuration["topk-curve"] = [
-        top_k_accuracy(output, labels, k=i) for i in range(1, n_labels + 1)
-    ]
+    configuration["topk-curve"] = [top_k_accuracy(output, labels, k=i) for i in range(1, n_labels + 1)]
     _ = configuration.pop("topk-curve", None)
     configuration["negative_threshold"] = optimal_threshold
 

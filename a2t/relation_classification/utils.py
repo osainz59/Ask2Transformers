@@ -7,9 +7,7 @@ def f1_score_(labels, preds, n_labels=42):
 
 
 def precision_recall_fscore_(labels, preds, n_labels=42):
-    p, r, f, _ = precision_recall_fscore_support(
-        labels, preds, labels=list(range(1, n_labels)), average="micro"
-    )
+    p, r, f, _ = precision_recall_fscore_support(labels, preds, labels=list(range(1, n_labels)), average="micro")
     return p, r, f
 
 

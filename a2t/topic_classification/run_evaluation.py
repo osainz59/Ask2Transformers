@@ -60,24 +60,18 @@ with open(args.config, "rt") as f:
 
 for configuration in config:
     os.makedirs(f"experiments/{configuration['name']}", exist_ok=True)
-    classifier = CLASSIFIERS[configuration["classification_model"]](
-        labels=topics, **configuration
-    )
+    classifier = CLASSIFIERS[configuration["classification_model"]](labels=topics, **configuration)
     output = classifier(contexts, batch_size=configuration["batch_size"])
     np.save(f"experiments/{configuration['name']}/output.npy", output)
     np.save(f"experiments/{configuration['name']}/labels.npy", labels)
-    pre, rec, f1, _ = precision_recall_fscore_support(
-        labels, np.argmax(output, -1), average="weighted"
-    )
+    pre, rec, f1, _ = precision_recall_fscore_support(labels, np.argmax(output, -1), average="weighted")
     configuration["precision"] = pre
     configuration["recall"] = rec
     configuration["f1-score"] = f1
     configuration["top-1"] = top_k_accuracy(output, labels, k=1)
     configuration["top-3"] = top_k_accuracy(output, labels, k=3)
     configuration["top-5"] = top_k_accuracy(output, labels, k=5)
-    configuration["topk-curve"] = [
-        top_k_accuracy(output, labels, k=i) for i in range(len(topics))
-    ]
+    configuration["topk-curve"] = [top_k_accuracy(output, labels, k=i) for i in range(len(topics))]
     pprint(configuration)
 
 with open(args.config, "wt") as f:

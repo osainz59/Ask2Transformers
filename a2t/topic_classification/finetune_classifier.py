@@ -74,9 +74,7 @@ def parse_args():
         "finetune_classifier",
         usage="finetune_classifier train_data eval_data --config config.json",
     )
-    parser.add_argument(
-        "--config", type=str, dest="config", help="Training configuration"
-    )
+    parser.add_argument("--config", type=str, dest="config", help="Training configuration")
 
     args = parser.parse_args()
 
@@ -115,11 +113,7 @@ def train(opt):
     with gzip.open(config["train_data"], "rt") as f:
         for line in f:
             row = line.strip().split("\t")
-            if (
-                row[0] in glosses
-                and float(row[-1]) > config["minimum_confidence"]
-                and row[0] not in eval_data
-            ):
+            if row[0] in glosses and float(row[-1]) > config["minimum_confidence"] and row[0] not in eval_data:
                 train_data.append(row[0])
                 train_labels.append(topic2id[row[1]])
 
@@ -134,9 +128,7 @@ def train(opt):
     cfg.num_labels = len(topics)
     cfg.label2id = topic2id
     cfg.id2label = {str(idx): label for label, idx in topic2id.items()}
-    model = AutoModelForSequenceClassification.from_pretrained(
-        config["pretrained_model"], config=cfg
-    )
+    model = AutoModelForSequenceClassification.from_pretrained(config["pretrained_model"], config=cfg)
 
     # Prepare data for training
     train_dataset = tokenizer(
@@ -163,9 +155,7 @@ def train(opt):
         torch.tensor(eval_labels),
     )
 
-    train_dataloader = DataLoader(
-        train_dataset, batch_size=config["batch_size"], shuffle=True
-    )
+    train_dataloader = DataLoader(train_dataset, batch_size=config["batch_size"], shuffle=True)
     eval_dataloader = DataLoader(eval_dataset, batch_size=config["eval_batch_size"])
 
     def get_parameters(model, freeze=False):
@@ -177,39 +167,29 @@ def train(opt):
         no_decay = ["bias", "LayerNorm.bias", "LayerNorm.weight"]
         optimizer_grouped_parameters = [
             {
-                "params": [
-                    p for n, p in param_optimizer if not any(nd in n for nd in no_decay)
-                ],
+                "params": [p for n, p in param_optimizer if not any(nd in n for nd in no_decay)],
                 "weight_decay": 0.01,
             },
             {
-                "params": [
-                    p for n, p in param_optimizer if any(nd in n for nd in no_decay)
-                ],
+                "params": [p for n, p in param_optimizer if any(nd in n for nd in no_decay)],
                 "weight_decay": 0.0,
             },
         ]
 
         return optimizer_grouped_parameters
 
-    optimizer = AdamW(
-        get_parameters(model, config["freeze"]), lr=config["learning_rate"]
-    )
+    optimizer = AdamW(get_parameters(model, config["freeze"]), lr=config["learning_rate"])
 
     model.cuda()
     if config["half"]:
-        model, optimizer = amp.initialize(
-            model, optimizer, opt_level="O2", keep_batchnorm_fp32=True
-        )
+        model, optimizer = amp.initialize(model, optimizer, opt_level="O2", keep_batchnorm_fp32=True)
 
     def save_checkpoint_fn(model, output_path, **kwargs):
         model.save_pretrained(output_path)
 
     config["training_log"] = {}
 
-    early_stopping = EarlyStopping(
-        patience=config["patience"], save_checkpoint_fn=save_checkpoint_fn
-    )
+    early_stopping = EarlyStopping(patience=config["patience"], save_checkpoint_fn=save_checkpoint_fn)
     for epoch in range(config["epochs"]):
         config["training_log"][f"epoch_{epoch}"] = {}
         model.train()
@@ -240,15 +220,11 @@ def train(opt):
             optimizer.zero_grad()
 
             total_loss += loss.item()
-            correct += sum(
-                np.argmax(logits.detach().cpu().numpy(), -1) == labels.numpy()
-            )
+            correct += sum(np.argmax(logits.detach().cpu().numpy(), -1) == labels.numpy())
             total += input_ids.shape[0]
             accuracy = correct / total
 
-            progress.set_description(
-                f"Epoch: {epoch} - Loss: {total_loss/(i+1):.3f} - Accuracy: {accuracy:.3f}"
-            )
+            progress.set_description(f"Epoch: {epoch} - Loss: {total_loss/(i+1):.3f} - Accuracy: {accuracy:.3f}")
 
         config["training_log"][f"epoch_{epoch}"]["train_loss"] = total_loss / (i + 1)
         config["training_log"][f"epoch_{epoch}"]["train_accuracy"] = correct / total
@@ -273,22 +249,16 @@ def train(opt):
                 )
 
                 total_loss += loss.item()
-                correct += sum(
-                    np.argmax(logits.detach().cpu().numpy(), -1) == labels.numpy()
-                )
+                correct += sum(np.argmax(logits.detach().cpu().numpy(), -1) == labels.numpy())
                 total += input_ids.shape[0]
                 accuracy = correct / total
 
-                progress.set_description(
-                    f"Epoch: {epoch} - Loss: {total_loss/(i+1):.3f} - Accuracy: {accuracy:.3f}"
-                )
+                progress.set_description(f"Epoch: {epoch} - Loss: {total_loss/(i+1):.3f} - Accuracy: {accuracy:.3f}")
 
         config["training_log"][f"epoch_{epoch}"]["eval_loss"] = total_loss / (i + 1)
         config["training_log"][f"epoch_{epoch}"]["eval_accuracy"] = correct / total
 
-        if early_stopping(
-            total_loss / (i + 1), model, output_path=config["output_path"]
-        ):
+        if early_stopping(total_loss / (i + 1), model, output_path=config["output_path"]):
             break
 
     # Save the new config file

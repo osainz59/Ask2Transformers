@@ -41,17 +41,13 @@ class _NLITopicClassifier(Classifier):
 
     def _initialize(self, pretrained_model):
         self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
-        self.model = AutoModelForSequenceClassification.from_pretrained(
-            pretrained_model
-        )
+        self.model = AutoModelForSequenceClassification.from_pretrained(pretrained_model)
 
     def _run_batch(self, batch):
         with torch.no_grad():
             input_ids = self.tokenizer.batch_encode_plus(batch, padding=True)
             input_ids = torch.tensor(input_ids["input_ids"]).to(self.device)
-            output = self.model(input_ids)[0][:, self.ent_pos].view(
-                input_ids.shape[0] // len(self.labels), -1
-            )
+            output = self.model(input_ids)[0][:, self.ent_pos].view(input_ids.shape[0] // len(self.labels), -1)
             output = output.detach().cpu().numpy()
 
         return output
@@ -62,10 +58,7 @@ class _NLITopicClassifier(Classifier):
 
         batch, outputs = [], []
         for i, context in tqdm(enumerate(contexts), total=len(contexts)):
-            sentences = [
-                f"{context} {self.tokenizer.sep_token} {self.query_phrase} {topic}."
-                for topic in self.labels
-            ]
+            sentences = [f"{context} {self.tokenizer.sep_token} {self.query_phrase} {topic}." for topic in self.labels]
             batch.extend(sentences)
 
             if (i + 1) % batch_size == 0:
@@ -94,16 +87,9 @@ class _NLITopicClassifier(Classifier):
         if return_labels:
             topics = self.idx2topic(topics)
         if return_confidences:
-            topics = np.stack(
-                (topics, np.sort(output, -1)[:, ::-1][:, :topk]), -1
-            ).tolist()
+            topics = np.stack((topics, np.sort(output, -1)[:, ::-1][:, :topk]), -1).tolist()
             topics = [
-                [
-                    (int(label), float(conf))
-                    if not return_labels
-                    else (label, float(conf))
-                    for label, conf in row
-                ]
+                [(int(label), float(conf)) if not return_labels else (label, float(conf)) for label, conf in row]
                 for row in topics
             ]
         else:
@@ -150,9 +136,7 @@ class NLITopicClassifier(_NLITopicClassifier):
         pretrained_model: str = "roberta-large-mnli",
         **kwargs,
     ):
-        super(NLITopicClassifier, self).__init__(
-            labels, *args, pretrained_model=pretrained_model, **kwargs
-        )
+        super(NLITopicClassifier, self).__init__(labels, *args, pretrained_model=pretrained_model, **kwargs)
 
     def __call__(self, contexts: List[str], batch_size: int = 1):
         outputs = super().__call__(contexts=contexts, batch_size=batch_size)
@@ -177,9 +161,7 @@ class NLITopicClassifierWithMappingHead(_NLITopicClassifier):
         for key, value in topic_mapping.items():
             self.mapping[value].append(self.new_topics2id[key])
 
-        super().__init__(
-            self.new_topics, *args, pretrained_model=pretrained_model, **kwargs
-        )
+        super().__init__(self.new_topics, *args, pretrained_model=pretrained_model, **kwargs)
 
         def idx2topic(idx):
             return self.target_topics[idx]
@@ -189,10 +171,7 @@ class NLITopicClassifierWithMappingHead(_NLITopicClassifier):
     def __call__(self, contexts, batch_size=1):
         outputs = super().__call__(contexts, batch_size)
         outputs = np.hstack(
-            [
-                np.max(outputs[:, self.mapping[topic]], axis=-1, keepdims=True)
-                for topic in self.target_topics
-            ]
+            [np.max(outputs[:, self.mapping[topic]], axis=-1, keepdims=True) for topic in self.target_topics]
         )
         outputs = np_softmax(outputs)
 

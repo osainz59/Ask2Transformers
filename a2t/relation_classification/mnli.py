@@ -79,34 +79,24 @@ class _NLIRelationClassifier(Classifier):
 
     def _initialize(self, pretrained_model):
         self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
-        self.model = AutoModelForSequenceClassification.from_pretrained(
-            pretrained_model
-        )
+        self.model = AutoModelForSequenceClassification.from_pretrained(pretrained_model)
         self.config = AutoConfig.from_pretrained(pretrained_model)
-        self.ent_pos = self.config.label2id.get(
-            "ENTAILMENT", self.config.label2id.get("entailment", None)
-        )
+        self.ent_pos = self.config.label2id.get("ENTAILMENT", self.config.label2id.get("entailment", None))
         if self.ent_pos is None:
-            raise ValueError(
-                "The model config must contain ENTAILMENT label in the label2id dict."
-            )
+            raise ValueError("The model config must contain ENTAILMENT label in the label2id dict.")
         else:
             self.ent_pos = int(self.ent_pos)
 
     def _run_batch(self, batch, multiclass=False):
         with torch.no_grad():
-            input_ids = self.tokenizer.batch_encode_plus(
-                batch, padding=True, truncation=True
-            )
+            input_ids = self.tokenizer.batch_encode_plus(batch, padding=True, truncation=True)
             input_ids = torch.tensor(input_ids["input_ids"]).to(self.device)
             output = self.model(input_ids)[0].detach().cpu().numpy()
             if multiclass:
                 output = np.exp(output) / np.exp(output).sum(
                     -1, keepdims=True
                 )  # np.exp(output[..., [self.cont_pos, self.ent_pos]]).sum(-1, keepdims=True)
-            output = output[..., self.ent_pos].reshape(
-                input_ids.shape[0] // len(self.labels), -1
-            )
+            output = output[..., self.ent_pos].reshape(input_ids.shape[0] // len(self.labels), -1)
 
         return output
 
@@ -150,10 +140,7 @@ class _NLIRelationClassifier(Classifier):
 
     def _apply_valid_conditions(self, probs, features: List[REInputFeatures]):
         mask_matrix = np.stack(
-            [
-                self.valid_conditions.get(feature.pair_type, np.zeros(self.n_rel))
-                for feature in features
-            ],
+            [self.valid_conditions.get(feature.pair_type, np.zeros(self.n_rel)) for feature in features],
             axis=0,
         )
         probs = probs * mask_matrix
@@ -173,16 +160,9 @@ class _NLIRelationClassifier(Classifier):
         if return_labels:
             topics = self.idx2label(topics)
         if return_confidences:
-            topics = np.stack(
-                (topics, np.sort(output, -1)[:, ::-1][:, :topk]), -1
-            ).tolist()
+            topics = np.stack((topics, np.sort(output, -1)[:, ::-1][:, :topk]), -1).tolist()
             topics = [
-                [
-                    (int(label), float(conf))
-                    if not return_labels
-                    else (label, float(conf))
-                    for label, conf in row
-                ]
+                [(int(label), float(conf)) if not return_labels else (label, float(conf)) for label, conf in row]
                 for row in topics
             ]
         else:
@@ -216,22 +196,11 @@ class _GenerativeNLIRelationClassifier(_NLIRelationClassifier):
 
     def _run_batch(self, batch, multiclass=False):
         with torch.no_grad():
-            input_ids = self.tokenizer.batch_encode_plus(
-                batch, padding=True, truncation=True
-            )
+            input_ids = self.tokenizer.batch_encode_plus(batch, padding=True, truncation=True)
             input_ids = torch.tensor(input_ids["input_ids"]).to(self.device)
-            decoder_input_ids = self.tokenizer.batch_encode_plus(
-                len(batch) * ["<pad>"], padding=True, truncation=True
-            )
-            decoder_input_ids = torch.tensor(decoder_input_ids["input_ids"]).to(
-                self.device
-            )
-            output = (
-                self.model(input_ids, decoder_input_ids=decoder_input_ids)[0]
-                .detach()
-                .cpu()
-                .numpy()
-            )
+            decoder_input_ids = self.tokenizer.batch_encode_plus(len(batch) * ["<pad>"], padding=True, truncation=True)
+            decoder_input_ids = torch.tensor(decoder_input_ids["input_ids"]).to(self.device)
+            output = self.model(input_ids, decoder_input_ids=decoder_input_ids)[0].detach().cpu().numpy()
             output = self._vocab_to_class_logits(output)
             if multiclass:
                 output = np.exp(output) / np.exp(output).sum(
@@ -283,9 +252,7 @@ class NLIRelationClassifier(_NLIRelationClassifier):
         batch_size: int = 1,
         multiclass=True,
     ):
-        outputs = super().__call__(
-            features=features, batch_size=batch_size, multiclass=multiclass
-        )
+        outputs = super().__call__(features=features, batch_size=batch_size, multiclass=multiclass)
         outputs = np_softmax(outputs) if not multiclass else outputs
         outputs = self._apply_negative_threshold(outputs)
 
@@ -364,9 +331,7 @@ class NLIRelationClassifierWithMappingHead(_NLIRelationClassifier):
         return outputs
 
 
-class GenerativeNLIRelationClassifier(
-    _GenerativeNLIRelationClassifier, NLIRelationClassifier
-):
+class GenerativeNLIRelationClassifier(_GenerativeNLIRelationClassifier, NLIRelationClassifier):
     pass
 
 

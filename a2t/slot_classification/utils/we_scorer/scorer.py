@@ -54,22 +54,16 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    coref_mapping = defaultdict(
-        dict
-    )  # span to canonical entity_id mapping for each doc
+    coref_mapping = defaultdict(dict)  # span to canonical entity_id mapping for each doc
     if args.coref:
         if args.dataset == "KAIROS" and args.coref_file:
-            with open(args.coref_file, "r") as f, open(
-                args.test_file, "r"
-            ) as test_reader:
+            with open(args.coref_file, "r") as f, open(args.test_file, "r") as test_reader:
                 for line, test_line in zip(f, test_reader):
                     coref_ex = json.loads(line)
                     ex = json.loads(test_line)
                     doc_id = coref_ex["doc_key"]
 
-                    for cluster, name in zip(
-                        coref_ex["clusters"], coref_ex["informative_mentions"]
-                    ):
+                    for cluster, name in zip(coref_ex["clusters"], coref_ex["informative_mentions"]):
                         canonical = cluster[0]
                         for ent_id in cluster:
                             ent_span = get_entity_span(ex, ent_id)
@@ -97,9 +91,7 @@ if __name__ == "__main__":
     arg_idn_coref_num = 0
     arg_class_coref_num = 0
 
-    with open(args.gen_file, "r") as pred_reader, open(
-        args.test_file, "r"
-    ) as test_reader:
+    with open(args.gen_file, "r") as pred_reader, open(args.test_file, "r") as test_reader:
         for pred, gold in zip(pred_reader, test_reader):
 
             pred = json.loads(pred)
@@ -109,9 +101,7 @@ if __name__ == "__main__":
             if args.head_only:
                 doc = nlp(" ".join(pred["tokens"]))
 
-            for pred_event, gold_event in zip(
-                pred["event_mentions"], gold["event_mentions"]
-            ):
+            for pred_event, gold_event in zip(pred["event_mentions"], gold["event_mentions"]):
                 assert (
                     pred_event["id"] == gold_event["id"]
                 ), f"Predicted event and gold events must match. {pred_event['id']} - {gold_event['id']}"
@@ -136,9 +126,7 @@ if __name__ == "__main__":
 
                 # get gold spans
                 gold_set = set()
-                gold_canonical_set = (
-                    set()
-                )  # set of canonical mention ids, singleton mentions will not be here
+                gold_canonical_set = set()  # set of canonical mention ids, singleton mentions will not be here
                 for arg in gold_event["arguments"]:
                     argname = arg["role"]
                     entity_id = arg["entity_id"]
@@ -169,9 +157,7 @@ if __name__ == "__main__":
                     gold_idn = {
                         item
                         for item in gold_set
-                        if item[0] == arg_start
-                        and item[1] == arg_end
-                        and item[2] == event_type
+                        if item[0] == arg_start and item[1] == arg_end and item[2] == event_type
                     }
                     if gold_idn:
                         arg_idn_num += 1
@@ -190,18 +176,14 @@ if __name__ == "__main__":
                             }
                             if gold_idn_coref:
                                 arg_idn_coref_num += 1
-                                gold_class_coref = {
-                                    item for item in gold_idn_coref if item[2] == role
-                                }
+                                gold_class_coref = {item for item in gold_idn_coref if item[2] == role}
                                 if gold_class_coref:
                                     arg_class_coref_num += 1
 
     if args.head_only:
         print("Evaluation by matching head words only....")
 
-    role_id_prec, role_id_rec, role_id_f = compute_f1(
-        pred_arg_num, gold_arg_num, arg_idn_num
-    )
+    role_id_prec, role_id_rec, role_id_f = compute_f1(pred_arg_num, gold_arg_num, arg_idn_num)
     role_prec, role_rec, role_f = compute_f1(pred_arg_num, gold_arg_num, arg_class_num)
 
     print(
@@ -209,19 +191,11 @@ if __name__ == "__main__":
             role_id_prec * 100.0, role_id_rec * 100.0, role_id_f * 100.0
         )
     )
-    print(
-        "Role: P: {:.2f}, R: {:.2f}, F: {:.2f}".format(
-            role_prec * 100.0, role_rec * 100.0, role_f * 100.0
-        )
-    )
+    print("Role: P: {:.2f}, R: {:.2f}, F: {:.2f}".format(role_prec * 100.0, role_rec * 100.0, role_f * 100.0))
 
     if args.coref:
-        role_id_prec, role_id_rec, role_id_f = compute_f1(
-            pred_arg_num, gold_arg_num, arg_idn_num + arg_idn_coref_num
-        )
-        role_prec, role_rec, role_f = compute_f1(
-            pred_arg_num, gold_arg_num, arg_class_num + arg_class_coref_num
-        )
+        role_id_prec, role_id_rec, role_id_f = compute_f1(pred_arg_num, gold_arg_num, arg_idn_num + arg_idn_coref_num)
+        role_prec, role_rec, role_f = compute_f1(pred_arg_num, gold_arg_num, arg_class_num + arg_class_coref_num)
 
         print(
             "Coref Role identification: P: {:.2f}, R: {:.2f}, F: {:.2f}".format(
@@ -229,7 +203,5 @@ if __name__ == "__main__":
             )
         )
         print(
-            "Coref Role: P: {:.2f}, R: {:.2f}, F: {:.2f}".format(
-                role_prec * 100.0, role_rec * 100.0, role_f * 100.0
-            )
+            "Coref Role: P: {:.2f}, R: {:.2f}, F: {:.2f}".format(role_prec * 100.0, role_rec * 100.0, role_f * 100.0)
         )

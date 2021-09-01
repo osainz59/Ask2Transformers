@@ -34,9 +34,7 @@ class Classifier(object):
     ):
         super().__init__()
 
-        self.device = torch.device(
-            "cuda" if torch.cuda.is_available() and use_cuda else "cpu"
-        )
+        self.device = torch.device("cuda" if torch.cuda.is_available() and use_cuda else "cpu")
         self.labels = labels
         self.use_cuda = use_cuda
         self.half = half

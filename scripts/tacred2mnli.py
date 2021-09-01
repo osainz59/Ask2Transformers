@@ -173,9 +173,7 @@ def tacred2mnli_with_negative_pattern(
             MNLIInputFeatures(
                 premise=instance.context,
                 hypothesis=f"{t.format(subj=instance.subj, obj=instance.obj)}.",
-                label=labels2id["neutral"]
-                if instance.label != "no_relation"
-                else labels2id["contradiction"],
+                label=labels2id["neutral"] if instance.label != "no_relation" else labels2id["contradiction"],
             )
             for t in negative_template
         ]
@@ -186,9 +184,7 @@ def tacred2mnli_with_negative_pattern(
         mnli_instances.append(
             MNLIInputFeatures(
                 premise=instance.context,
-                hypothesis="{subj} and {obj} are not related.".format(
-                    subj=instance.subj, obj=instance.obj
-                ),
+                hypothesis="{subj} and {obj} are not related.".format(subj=instance.subj, obj=instance.obj),
                 label=labels2id["contradiction"],
             )
         )
@@ -196,9 +192,7 @@ def tacred2mnli_with_negative_pattern(
     return mnli_instances
 
 
-tacred2mnli = (
-    tacred2mnli_with_negative_pattern if args.negative_pattern else tacred2mnli
-)
+tacred2mnli = tacred2mnli_with_negative_pattern if args.negative_pattern else tacred2mnli
 
 
 with open(args.input_file, "rt") as f:

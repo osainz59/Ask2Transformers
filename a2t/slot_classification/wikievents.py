@@ -79,9 +79,7 @@ class WikiEventsArgumentDataset(torch.utils.data.Dataset):
         self.mark_trigger = mark_trigger
 
         path_name = data_path.replace(".jsonl", "")
-        path_name = (
-            f"{path_name}.prepro.{max_sentence_distance}.{create_negatives}.jsonl"
-        )
+        path_name = f"{path_name}.prepro.{max_sentence_distance}.{create_negatives}.jsonl"
         if self.mark_trigger:
             path_name = path_name.replace(".jsonl", ".trigger.jsonl")
 
@@ -119,18 +117,13 @@ class WikiEventsArgumentDataset(torch.utils.data.Dataset):
         with open(self.data_path) as data_f:
             for i, data_line in tqdm(enumerate(data_f)):
                 instance = json.loads(data_line)
-                entities = {
-                    entity["id"]: entity for entity in instance["entity_mentions"]
-                }
+                entities = {entity["id"]: entity for entity in instance["entity_mentions"]}
 
-                tokens = [
-                    token for sentence in instance["sentences"] for token in sentence[0]
-                ]
+                tokens = [token for sentence in instance["sentences"] for token in sentence[0]]
 
                 if self.max_sentence_distance is not None:
                     all_sub_sentences = [
-                        list(sent_tokenize(text, tokens[0][1]))
-                        for tokens, text in instance["sentences"]
+                        list(sent_tokenize(text, tokens[0][1])) for tokens, text in instance["sentences"]
                     ]
 
                 for event in instance["event_mentions"]:
@@ -155,35 +148,22 @@ class WikiEventsArgumentDataset(torch.utils.data.Dataset):
                     # sub_sentences = sent_tokenize(sentence, instance['sentences'][event['trigger']['sent_idx']][0][0][1])
                     # sub_sentences = list(sub_sentences)
                     if self.max_sentence_distance is not None:
-                        sub_sentences = deepcopy(
-                            all_sub_sentences[event["trigger"]["sent_idx"]]
-                        )
-                        trigger_sub_sentence = find_subsentence(
-                            tokens[event["trigger"]["start"]][1], sub_sentences
-                        )
+                        sub_sentences = deepcopy(all_sub_sentences[event["trigger"]["sent_idx"]])
+                        trigger_sub_sentence = find_subsentence(tokens[event["trigger"]["start"]][1], sub_sentences)
 
                         if self.mark_trigger:
-                            start_pos, trigger_sub_sentence_ = sub_sentences[
-                                trigger_sub_sentence
-                            ]
+                            start_pos, trigger_sub_sentence_ = sub_sentences[trigger_sub_sentence]
 
                             marked_sentence = (
-                                trigger_sub_sentence_[
-                                    : tokens[event["trigger"]["start"]][1] - start_pos
-                                ]
+                                trigger_sub_sentence_[: tokens[event["trigger"]["start"]][1] - start_pos]
                                 + "<trg> "
                                 + trigger_sub_sentence_[
                                     tokens[event["trigger"]["start"]][1]
-                                    - start_pos : tokens[event["trigger"]["end"] - 1][
-                                        -1
-                                    ]
+                                    - start_pos : tokens[event["trigger"]["end"] - 1][-1]
                                     - start_pos
                                 ]
                                 + " <trg>"
-                                + trigger_sub_sentence_[
-                                    tokens[event["trigger"]["end"] - 1][-1]
-                                    - start_pos :
-                                ]
+                                + trigger_sub_sentence_[tokens[event["trigger"]["end"] - 1][-1] - start_pos :]
                             )
 
                             sub_sentences[trigger_sub_sentence][-1] = marked_sentence
@@ -194,16 +174,14 @@ class WikiEventsArgumentDataset(torch.utils.data.Dataset):
                             print(sentence)
                             pprint(sub_sentences)
                             raise ValueError(
-                                "Trigger sub-sentence idx must be greater than 0. Found "
-                                + str(trigger_sub_sentence)
+                                "Trigger sub-sentence idx must be greater than 0. Found " + str(trigger_sub_sentence)
                             )
 
                     for argument in event["arguments"]:
 
                         label = (
                             argument["role"]
-                            if entities[argument["entity_id"]]["sent_idx"]
-                            == event["trigger"]["sent_idx"]
+                            if entities[argument["entity_id"]]["sent_idx"] == event["trigger"]["sent_idx"]
                             else "OOR"
                         )
 
@@ -214,13 +192,9 @@ class WikiEventsArgumentDataset(torch.utils.data.Dataset):
                             )
 
                             if (
-                                (
-                                    abs(trigger_sub_sentence - arg_sub_sentence)
-                                    <= self.max_sentence_distance
-                                )
+                                (abs(trigger_sub_sentence - arg_sub_sentence) <= self.max_sentence_distance)
                                 and arg_sub_sentence >= 0
-                                and entities[argument["entity_id"]]["sent_idx"]
-                                == event["trigger"]["sent_idx"]
+                                and entities[argument["entity_id"]]["sent_idx"] == event["trigger"]["sent_idx"]
                             ):
                                 sentence = (
                                     " ".join(
@@ -257,15 +231,12 @@ class WikiEventsArgumentDataset(torch.utils.data.Dataset):
                                     entities[argument["entity_id"]]["sent_idx"],
                                     event["trigger"]["sent_idx"],
                                 )
-                                print(
-                                    sub_sentences[trigger_sub_sentence:arg_sub_sentence]
-                                )
+                                print(sub_sentences[trigger_sub_sentence:arg_sub_sentence])
                                 raise ValueError()
 
                             label = (
                                 label
-                                if abs(trigger_sub_sentence - arg_sub_sentence)
-                                <= self.max_sentence_distance
+                                if abs(trigger_sub_sentence - arg_sub_sentence) <= self.max_sentence_distance
                                 else "OOR"
                             )
 
@@ -279,9 +250,7 @@ class WikiEventsArgumentDataset(torch.utils.data.Dataset):
                                 arg=argument["text"],
                                 arg_id=argument["entity_id"],
                                 arg_type=entities[argument["entity_id"]]["entity_type"],
-                                arg_sent_idx=entities[argument["entity_id"]][
-                                    "sent_idx"
-                                ],
+                                arg_sent_idx=entities[argument["entity_id"]]["sent_idx"],
                                 role=label,
                                 pair_type=f"{event['event_type']}:{entities[argument['entity_id']]['entity_type']}",
                                 context=sentence,
@@ -298,14 +267,9 @@ class WikiEventsArgumentDataset(torch.utils.data.Dataset):
                                 continue
 
                             if self.max_sentence_distance is not None:
-                                arg_sub_sentence = find_subsentence(
-                                    tokens[entity["start"]][1], sub_sentences
-                                )
+                                arg_sub_sentence = find_subsentence(tokens[entity["start"]][1], sub_sentences)
 
-                                if (
-                                    abs(trigger_sub_sentence - arg_sub_sentence)
-                                    > self.max_sentence_distance
-                                ):
+                                if abs(trigger_sub_sentence - arg_sub_sentence) > self.max_sentence_distance:
                                     continue
 
                                 sentence = (

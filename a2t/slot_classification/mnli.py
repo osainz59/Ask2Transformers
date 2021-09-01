@@ -55,9 +55,7 @@ class NLISlotClassifier(_NLISlotClassifier):
         pretrained_model: str = "roberta-large-mnli",
         **kwargs,
     ):
-        super(NLITopicClassifier, self).__init__(
-            labels, *args, pretrained_model=pretrained_model, **kwargs
-        )
+        super(NLITopicClassifier, self).__init__(labels, *args, pretrained_model=pretrained_model, **kwargs)
 
     def __call__(
         self,
@@ -65,9 +63,7 @@ class NLISlotClassifier(_NLISlotClassifier):
         batch_size: int = 1,
         multiclass=True,
     ):
-        outputs = super().__call__(
-            features=features, batch_size=batch_size, multiclass=multiclass
-        )
+        outputs = super().__call__(features=features, batch_size=batch_size, multiclass=multiclass)
         outputs = np_softmax(outputs) if not multiclass else outputs
         outputs = self._apply_negative_threshold(outputs)
 

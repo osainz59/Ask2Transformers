@@ -38,17 +38,13 @@ class _NLISuperSenseClassifier(Classifier):
 
     def _initialize(self, pretrained_model="roberta-large-mnli"):
         self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
-        self.model = AutoModelForSequenceClassification.from_pretrained(
-            pretrained_model
-        )
+        self.model = AutoModelForSequenceClassification.from_pretrained(pretrained_model)
 
     def _run_batch(self, batch):
         with torch.no_grad():
             input_ids = self.tokenizer.batch_encode_plus(batch, padding=True)
             input_ids = torch.tensor(input_ids["input_ids"]).to(self.device)
-            output = self.model(input_ids)[0][:, self.ent_pos].view(
-                input_ids.shape[0] // len(self.labels), -1
-            )
+            output = self.model(input_ids)[0][:, self.ent_pos].view(input_ids.shape[0] // len(self.labels), -1)
             output = output.detach().cpu().numpy()
 
         return output
@@ -118,9 +114,7 @@ class POSAwareNLISuperSenseClassifier(_NLISuperSenseClassifier):
 
         self.to_np_mask = np.vectorize(to_np_mask)
 
-        super(POSAwareNLISuperSenseClassifier, self).__init__(
-            labels=WORDNET_LEXNAMES, **kwargs
-        )
+        super(POSAwareNLISuperSenseClassifier, self).__init__(labels=WORDNET_LEXNAMES, **kwargs)
 
     def __call__(self, contexts: List[str], pos_tags: List[str], batch_size: int = 1):
         assert len(contexts) == len(pos_tags)

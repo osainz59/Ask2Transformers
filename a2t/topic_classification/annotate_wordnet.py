@@ -53,9 +53,7 @@ with open(args.config, "rt") as f:
 
 for configuration in config:
     os.makedirs(f"experiments/{configuration['name']}", exist_ok=True)
-    classifier = CLASSIFIERS[configuration["classification_model"]](
-        labels=topics, **configuration
-    )
+    classifier = CLASSIFIERS[configuration["classification_model"]](labels=topics, **configuration)
     output = classifier(glosses, batch_size=configuration["batch_size"])
     # Normalize the output to avoid low confidence level due to large ammount of labels
     output = (output - output.min()) / (output.max() - output.min())

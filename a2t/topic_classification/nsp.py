@@ -41,9 +41,7 @@ class NSPTopicClassifier(Classifier):
         with torch.no_grad():
             input_ids = self.tokenizer.batch_encode_plus(batch, padding=True)
             input_ids = torch.tensor(input_ids["input_ids"]).to(self.device)
-            output = self.model(input_ids)[0][:, self.cls_pos].view(
-                len(batch) // len(self.labels), -1
-            )
+            output = self.model(input_ids)[0][:, self.cls_pos].view(len(batch) // len(self.labels), -1)
             output = torch.softmax(output, dim=-1).detach().cpu().numpy()
 
         return output
@@ -55,8 +53,7 @@ class NSPTopicClassifier(Classifier):
         batch, outputs = [], []
         for i, context in tqdm(enumerate(contexts), total=len(contexts)):
             sentences = [
-                f'{context} {self.tokenizer.sep_token} {self.query_phrase} "{topic}".'
-                for topic in self.labels
+                f'{context} {self.tokenizer.sep_token} {self.query_phrase} "{topic}".' for topic in self.labels
             ]
             batch.extend(sentences)
 

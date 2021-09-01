@@ -90,9 +90,7 @@ def load_ontology(dataset, ontology_file=None):
     return ontology_dict
 
 
-def find_arg_span(
-    arg, context_words, trigger_start, trigger_end, head_only=False, doc=None
-):
+def find_arg_span(arg, context_words, trigger_start, trigger_end, head_only=False, doc=None):
     match = None
     arg_len = len(arg)
     min_dis = len(context_words)  # minimum distance to trigger

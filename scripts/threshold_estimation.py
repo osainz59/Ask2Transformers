@@ -39,12 +39,8 @@ def main(args):
     result_dict["best"].append([best_threshold, best_f1, 0.0, 0.0])
 
     threshold, _ = find_optimal_threshold(dev_labels, dev_output)
-    p, r, f1 = precision_recall_fscore_(
-        test_labels, apply_threshold(test_output, threshold=threshold)
-    )
-    result_dict[1].append(
-        [threshold, f1, abs(best_threshold - threshold), abs(best_f1 - f1), p, r]
-    )
+    p, r, f1 = precision_recall_fscore_(test_labels, apply_threshold(test_output, threshold=threshold))
+    result_dict[1].append([threshold, f1, abs(best_threshold - threshold), abs(best_f1 - f1), p, r])
 
     # Estimate the threshold for each split
     for n_splits in args.splits:
@@ -52,9 +48,7 @@ def main(args):
         for _, idx in kfold.split(dev_output, dev_labels):
             splitted_output, splitted_labels = dev_output[idx], dev_labels[idx]
             threshold, _ = find_optimal_threshold(splitted_labels, splitted_output)
-            p, r, f1 = precision_recall_fscore_(
-                test_labels, apply_threshold(test_output, threshold=threshold)
-            )
+            p, r, f1 = precision_recall_fscore_(test_labels, apply_threshold(test_output, threshold=threshold))
             result_dict[n_splits].append(
                 [
                     threshold,
