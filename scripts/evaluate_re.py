@@ -2,12 +2,14 @@ from argparse import ArgumentParser
 import numpy as np
 import glob
 import sys
-sys.path.append('./')
+
+sys.path.append("./")
 from a2t.relation_classification.utils import *
 
 parser = ArgumentParser()
 
-parser.add_argument('--name', type=str, default='deberta')
+parser.add_argument("--name", type=str, default="deberta")
+
 
 def main(name):
     # Load dev data
@@ -25,18 +27,16 @@ def main(name):
             labels = np.load(f"{file_name}/labels.npy")
             output = np.load(f"{file_name}/output.npy")
             p, r, f = precision_recall_fscore_(
-                labels, apply_threshold(output, dev_data[file_name.replace('test', 'dev')])
+                labels,
+                apply_threshold(output, dev_data[file_name.replace("test", "dev")]),
             )
-            pre.append(p*100)
-            rec.append(r*100)
-            f1.append(f*100)
+            pre.append(p * 100)
+            rec.append(r * 100)
+            f1.append(f * 100)
 
         std = np.std(f1)
-        output = sorted(list(zip(pre, rec, f1)), key=lambda x: x[-1])[len(f1)//2]
+        output = sorted(list(zip(pre, rec, f1)), key=lambda x: x[-1])[len(f1) // 2]
         print(f"{split} - P/R/F1: {output} +/- {std}")
-
-    
-
 
 
 if __name__ == "__main__":
