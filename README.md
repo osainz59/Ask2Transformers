@@ -1,5 +1,5 @@
 <h1 align="center">Ask2Transformers</h1>
-<h3 align="center">A Framework for Entailment based Zero Shot text classification</h3>
+<h3 align="center">A Framework for Textual Entailment based Zero Shot text classification</h3>
 <p align="center">
  <a href="https://paperswithcode.com/sota/domain-labelling-on-babeldomains?p=ask2transformers-zero-shot-domain-labelling">
   <img align="center" alt="Contributor Covenant" src="https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/ask2transformers-zero-shot-domain-labelling/domain-labelling-on-babeldomains">
