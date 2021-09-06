@@ -2,6 +2,7 @@ experiments/*
 models/
 data/*
 examples/*
+bash_scripts/*
 
 onnx/
 

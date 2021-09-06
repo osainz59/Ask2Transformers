@@ -163,6 +163,8 @@ Rows indicates the different models and columns the percentage of trainig data u
 | NLI <span style="font-size:75%">RoBERTa</span> | 55.6±<small>1.3</small> | 56.1±<small>0.0</small> | 64.1±<small>0.2</small> | 67.8±<small>0.2</small> | 71.0 |
 | NLI <span style="font-size:75%">DeBERTa</span> | **62.8**±<small>1.7</small> | **63.7**±<small>0.0</small> | **69.0**±<small>0.2</small> | **67.9**±<small>0.5</small> | **73.9** |
 
+The data splits for training and development are available at [resources/tacred_splits/](../../resources/tacred_splits/).
+
 ## Citation
 
 Coming soon.
