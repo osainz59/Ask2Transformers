@@ -167,4 +167,13 @@ The data splits for training and development are available at [resources/tacred_
 
 ## Citation
 
-Coming soon.
+```bibtex
+@misc{sainz2021label,
+      title={Label Verbalization and Entailment for Effective Zero- and Few-Shot Relation Extraction}, 
+      author={Oscar Sainz and Oier Lopez de Lacalle and Gorka Labaka and Ander Barrena and Eneko Agirre},
+      year={2021},
+      eprint={2109.03659},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
+```
