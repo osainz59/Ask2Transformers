@@ -2,7 +2,7 @@
 
 <img src="../../imgs/RE_NLI_white_bg.svg" style="border-radius: 15px">
 
-This repository contains the code for the work [Label Verbalization and Entailment for Effective Zero- and Few-Shot Relation Extraction]() accepted in [EMNLP2021](https://2021.emnlp.org/).
+This repository contains the code for the work [Label Verbalization and Entailment for Effective Zero- and Few-Shot Relation Extraction](https://arxiv.org/abs/2109.03659) accepted in [EMNLP2021](https://2021.emnlp.org/).
 
 On this work we explore how with few verbalization and restrinctions we can build a simple yet effective relation classifier. As shown in the image above the process consist in 3 steps:
 
