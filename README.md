@@ -50,13 +50,21 @@ By default, `roberta-large-mnli` checkpoint is used to perform the inference. Yo
 ## Citation
 Cite this paper if you want to cite stuff related to Relation Extraction, etc.
 ```bibtex
-@misc{sainz2021label,
-      title={Label Verbalization and Entailment for Effective Zero- and Few-Shot Relation Extraction}, 
-      author={Oscar Sainz and Oier Lopez de Lacalle and Gorka Labaka and Ander Barrena and Eneko Agirre},
-      year={2021},
-      eprint={2109.03659},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL}
+@inproceedings{sainz-etal-2021-label,
+    title = "Label Verbalization and Entailment for Effective Zero and Few-Shot Relation Extraction",
+    author = "Sainz, Oscar  and
+      Lopez de Lacalle, Oier  and
+      Labaka, Gorka  and
+      Barrena, Ander  and
+      Agirre, Eneko",
+    booktitle = "Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing",
+    month = nov,
+    year = "2021",
+    address = "Online and Punta Cana, Dominican Republic",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.emnlp-main.92",
+    pages = "1199--1212",
+    abstract = "Relation extraction systems require large amounts of labeled examples which are costly to annotate. In this work we reformulate relation extraction as an entailment task, with simple, hand-made, verbalizations of relations produced in less than 15 min per relation. The system relies on a pretrained textual entailment engine which is run as-is (no training examples, zero-shot) or further fine-tuned on labeled examples (few-shot or fully trained). In our experiments on TACRED we attain 63{\%} F1 zero-shot, 69{\%} with 16 examples per relation (17{\%} points better than the best supervised system on the same conditions), and only 4 points short to the state-of-the-art (which uses 20 times more training data). We also show that the performance can be improved significantly with larger entailment models, up to 12 points in zero-shot, allowing to report the best results to date on TACRED when fully trained. The analysis shows that our few-shot systems are specially effective when discriminating between relations, and that the performance difference in low data regimes comes mainly from identifying no-relation cases.",
 }
 ``` 
 
