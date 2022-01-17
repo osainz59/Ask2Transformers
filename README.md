@@ -47,6 +47,9 @@ By default, `roberta-large-mnli` checkpoint is used to perform the inference. Yo
 
 **Coming soon:** `t5-large` like generative models support.
 
+## Training your own models
+There is no special script for fine-tuning your own entailment based models. In our experiments, we have used the publicly available [run_glue.py](https://github.com/huggingface/transformers/blob/master/examples/pytorch/text-classification/run_glue.py) python script (from HuggingFace Transformers). To train your own model, first, you will need to convert your actual dataset in some sort of NLI data, we recommend you to have a look to [tacred2mnli.py](https://github.com/osainz59/Ask2Transformers/blob/master/scripts/tacred2mnli.py) script that serves as an example.
+
 ## Citation
 Cite this paper if you want to cite stuff related to Relation Extraction, etc.
 ```bibtex
