@@ -8,7 +8,7 @@ setuptools.setup(
     name="a2t",
     version=a2t.__version__,
     author="Oscar Sainz",
-    author_email="osainz006@ehu.eus",
+    author_email="oscar.sainz@ehu.eus",
     description="Ask2Transformers is a library for zero-shot classification based on Transformers.",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -20,5 +20,5 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires=">=3.6",
-    install_requires=["transformers", "tqdm", "torch"],
+    install_requires=["transformers", "tqdm", "torch", "numpy", "scikit-learn"],
 )

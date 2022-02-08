@@ -1,0 +1,1274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>a2t.tasks.base API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>a2t.tasks.base</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from collections import defaultdict
+import warnings
+from dataclasses import dataclass, field
+from typing import List, Dict, Union
+import re
+
+import numpy as np
+from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+
+from a2t.utils import find_optimal_threshold, apply_threshold
+
+
+@dataclass
+class Features:
+    context: str
+    label: str = None
+    inst_type: str = None
+
+
+class IncorrectFeatureTypeError(Exception):
+    pass
+
+
+@dataclass
+class Task:
+    &#34;&#34;&#34;Abstract class for Tasks definition.&#34;&#34;&#34;
+
+    name: str = None
+    required_variables: List[str] = field(default_factory=list)
+    additional_variables: List[str] = field(default_factory=list)
+    labels: List[str] = field(default_factory=list)
+    templates: Dict[str, List[str]] = field(default_factory=dict)
+    valid_conditions: Dict[str, List[str]] = field(default_factory=dict)
+    negative_label_id: int = -1  # -1 for no negative class
+    multi_label: bool = False
+    features_class: type = Features
+
+    def __post_init__(self):
+        self._assert_minimal_constraints()
+        self._assert_constraints()
+
+        self.label2id = {label: i for i, label in enumerate(self.labels)}
+        self.n_labels = len(self.labels)
+
+        if not self.templates:
+            self.templates = {}
+
+        # Create the templates to label mapping
+        self.template2label = defaultdict(list)
+        for label, templates in self.templates.items():
+            for template in templates:
+                self.template2label[template].append(label)
+
+        template_list = list(self.template2label.keys())
+        template2id = {template: i for i, template in enumerate(template_list)}
+
+        self.label2templateid = defaultdict(list)
+        for label, templates in self.templates.items():
+            self.label2templateid[label].extend([template2id[template] for template in templates])
+
+        # Create the valid_conditions matrix
+        if self.valid_conditions:
+            self._valid_conditions = {}
+            self._always_valid_labels = np.zeros(self.n_labels)
+            self._always_valid_labels[self.negative_label_id] = 1.0
+            for label, conditions in self.valid_conditions.items():
+                if label not in self.labels:
+                    continue
+                for condition in conditions:
+                    if condition == &#34;*&#34;:
+                        self._always_valid_labels[self.label2id[label]] = 1.0
+                        continue
+                    if condition not in self._valid_conditions:
+                        self._valid_conditions[condition] = np.zeros(self.n_labels)
+                        if self.negative_label_id &gt;= 0:
+                            self._valid_conditions[condition][self.negative_label_id] = 1.0
+                    self._valid_conditions[condition][self.label2id[label]] = 1.0
+        else:
+            self._valid_conditions = None
+
+        def idx2label(idx):
+            return self.labels[idx]
+
+        self.idx2label = np.vectorize(idx2label)
+
+    def __repr__(self) -&gt; str:
+        class_name = self.name if self.name else str(self.__class__)
+        labels_repr = self.labels.__repr__()
+        if len(labels_repr) &gt; 89:
+            labels_repr = self.labels[:3].__repr__().replace(&#34;]&#34;, &#34;, ...]&#34;)
+        templates_repr = len(self.template2label)
+        feature_class_repr = str(self.features_class)
+
+        return (
+            f&#34;{class_name} (&#34;
+            f&#34;\n\tLabels: {labels_repr}&#34;
+            f&#34;\n\tTemplates: {templates_repr}&#34;
+            f&#34;\n\tFeatures: {feature_class_repr}&#34;
+            &#34;\n)&#34;
+        )
+
+    def _assert_constraints(self):
+        raise NotImplementedError(f&#34;{self.__class__} is an abstract class. This method should be implemented.&#34;)
+
+    def _assert_minimal_constraints(self):
+        assert len(self.labels) &gt; 0, &#34;The number of labels should be greather than 0.&#34;
+
+        assert self.negative_label_id &lt; len(
+            self.labels
+        ), &#34;The id for the negative label should be lower than the amount of labels.&#34;
+
+        if self.negative_label_id &gt;= 0:
+            assert self.templates is not None and len(
+                [value for values in self.templates.values() for value in values]
+            ), &#34;`templates` parameter must not be None nor empty.&#34;
+
+        assert all(
+            key in self.labels for key in self.templates.keys()
+        ), &#34;All the keys of templates dicts must be defined on labels.&#34;
+
+        if self.valid_conditions:
+            assert all(
+                key in self.labels for key in self.valid_conditions.keys()
+            ), &#34;All the keys of valid_conditions dict must be defined on labels.&#34;
+
+        assert all(
+            var in self.features_class.__dict__[&#34;__dataclass_fields__&#34;]
+            for var in self.required_variables + self.additional_variables
+        ), &#34;All variables should be defined on the features_class.&#34;
+
+        assert all(
+            var.strip(&#34;{&#34;).strip(&#34;}&#34;) in [*self.required_variables, *self.additional_variables]
+            for templates in self.templates.values()
+            for template in templates
+            for var in re.findall(r&#34;{\w+}&#34;, template)
+        )
+
+    def assert_features_class(self, features: List[Features]) -&gt; None:
+        for feature in features:
+            if not isinstance(feature, self.features_class):
+                raise IncorrectFeatureTypeError(
+                    f&#34;Incorrect feature type given. Expected {self.features_class} but obtained {type(feature)}.&#34;
+                )
+
+    def generate_premise_hypotheses_pairs(self, features: List[Features], sep_token: str = &#34;&lt;/s&gt;&#34;) -&gt; List[str]:
+        if not isinstance(features, list):
+            features = [features]
+        sentence_pairs = [
+            f&#34;{feature.context} {sep_token} {template.format(**feature.__dict__)}&#34;
+            for feature in features
+            for templates in self.templates.values()
+            for template in templates
+        ]
+        return sentence_pairs
+
+    def reverse_to_labels(self, template_probs: np.array) -&gt; np.array:
+        outputs = np.hstack(
+            [
+                np.max(template_probs[:, self.label2templateid[label]], axis=-1, keepdims=True)
+                if label in self.label2templateid
+                else np.zeros((template_probs.shape[0], 1))
+                for label in self.labels
+            ]
+        )
+        return outputs
+
+    def apply_valid_conditions(self, features: List[Features], probs: np.array) -&gt; np.array:
+        if self._valid_conditions:
+            mask_matrix = np.stack(
+                [self._valid_conditions.get(feature.inst_type, np.zeros(self.n_labels)) for feature in features],
+                axis=0,
+            )
+            probs = probs * np.logical_or(mask_matrix, self._always_valid_labels)  # TODO: Need a test
+        return probs
+
+    def compute_metrics(self, labels: np.array, output: np.array, threshold: Union[str, float] = &#34;optimize&#34;):
+        # TODO: Unittest
+        raise NotImplementedError(&#34;This method must be implemented.&#34;)
+
+
+class ZeroaryTask(Task):
+    def _assert_constraints(self):
+        # Assert the number of required variables to be 0
+        assert len(self.required_variables) == 0, &#34;Zero-ary tasks like Text classifiation do not require any variable.&#34;
+
+    def compute_metrics(self, labels: np.array, output: np.array, threshold: Union[str, float] = None):
+        # TODO: Unittest + documentation
+        if threshold:
+            warnings.warn(f&#34;{self.__class__} do not require &#39;threshold&#39;, ignored.&#34;)
+
+        return {&#34;accuracy_score&#34;: accuracy_score(labels, output.argmax(-1))}
+
+
+class ZeroaryFeatures(Features):
+    pass
+
+
+class UnaryTask(Task):
+    def _assert_constraints(self):
+        # Assert the number of required variables to be 1
+        assert len(self.required_variables) == 1, &#34;Unary-ary tasks like Span classifiation requires 1 variable.&#34;
+
+    def compute_metrics(self, labels: np.array, output: np.array, threshold: Union[str, float] = &#34;optimize&#34;):
+        # TODO: Unittest + documentation
+        if threshold not in [&#34;default&#34;, &#34;optimize&#34;] and not isinstance(threshold, float):
+            raise ValueError(&#34;Threshold must be either &#39;default&#39;, &#39;optimize&#39; or a float value.&#34;)
+
+        if threshold == &#34;default&#34;:
+            threshold = 0.5
+
+        if threshold == &#34;optimize&#34;:
+            threshold, _ = find_optimal_threshold(labels, output, negative_label_id=self.negative_label_id)
+            output_ = apply_threshold(output, threshold=threshold, negative_label_id=self.negative_label_id)
+
+        results = {&#34;optimal_threshold&#34;: threshold}
+        if self.negative_label_id &lt; 0:
+            results[&#34;accuracy_score&#34;] = accuracy_score(labels, output.argmax(-1))
+        else:
+            positive_labels = list(set(range(len(self.labels))) - set([self.negative_label_id]))
+            output_pos = output.copy()
+            output_pos[:, self.negative_label_id] = 0.0
+
+            results[&#34;positive_accuracy&#34;] = accuracy_score(
+                labels[labels != self.negative_label_id], output_pos[labels != self.negative_label_id, :].argmax(-1)
+            )
+
+            pre, rec, f1, _ = precision_recall_fscore_support(labels, output_.argmax(-1), labels=positive_labels)
+            results[&#34;precision&#34;] = pre
+            results[&#34;recall&#34;] = rec
+            results[&#34;f1-score&#34;] = f1
+
+        return results
+
+
+@dataclass
+class UnaryFeatures(Features):
+    X: str = None
+
+
+class BinaryTask(Task):
+    def _assert_constraints(self):
+        # Assert the number of required variables to be 2
+        assert len(self.required_variables) == 2, &#34;Binary-ary tasks like Tuple classifiation require 2 variable.&#34;
+
+    def compute_metrics(self, labels: np.array, output: np.array, threshold: Union[str, float] = &#34;optimize&#34;):
+        # TODO: Unittest + documentation
+        if threshold not in [&#34;default&#34;, &#34;optimize&#34;] and not isinstance(threshold, float):
+            raise ValueError(&#34;Threshold must be either &#39;default&#39;, &#39;optimize&#39; or a float value.&#34;)
+
+        if threshold == &#34;default&#34;:
+            threshold = 0.5
+
+        if threshold == &#34;optimize&#34;:
+            threshold, _ = find_optimal_threshold(labels, output, negative_label_id=self.negative_label_id)
+            output_ = apply_threshold(output, threshold=threshold, negative_label_id=self.negative_label_id)
+
+        results = {&#34;optimal_threshold&#34;: threshold}
+        if self.negative_label_id &lt; 0:
+            results[&#34;accuracy_score&#34;] = accuracy_score(labels, output.argmax(-1))
+        else:
+            positive_labels = list(set(range(len(self.labels))) - set([self.negative_label_id]))
+            output_pos = output.copy()
+            output_pos[:, self.negative_label_id] = 0.0
+
+            results[&#34;positive_accuracy&#34;] = accuracy_score(
+                labels[labels != self.negative_label_id], output_pos[labels != self.negative_label_id, :].argmax(-1)
+            )
+
+            pre, rec, f1, _ = precision_recall_fscore_support(labels, output_.argmax(-1), labels=positive_labels)
+            results[&#34;precision&#34;] = pre
+            results[&#34;recall&#34;] = rec
+            results[&#34;f1-score&#34;] = f1
+
+        return results
+
+
+@dataclass
+class BinaryFeatures(Features):
+    X: str = None
+    Y: str = None</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="a2t.tasks.base.Features"><code class="flex name class">
+<span>class <span class="ident">Features</span></span>
+<span>(</span><span>context: str, label: str = None, inst_type: str = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Features(context: str, label: str = None, inst_type: str = None)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class Features:
+    context: str
+    label: str = None
+    inst_type: str = None</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="a2t.tasks.base.BinaryFeatures" href="#a2t.tasks.base.BinaryFeatures">BinaryFeatures</a></li>
+<li><a title="a2t.tasks.base.UnaryFeatures" href="#a2t.tasks.base.UnaryFeatures">UnaryFeatures</a></li>
+<li><a title="a2t.tasks.base.ZeroaryFeatures" href="#a2t.tasks.base.ZeroaryFeatures">ZeroaryFeatures</a></li>
+<li><a title="a2t.tasks.span_classification.NamedEntityClassificationFeatures" href="span_classification.html#a2t.tasks.span_classification.NamedEntityClassificationFeatures">NamedEntityClassificationFeatures</a></li>
+<li><a title="a2t.tasks.text_classification.TopicClassificationFeatures" href="text_classification.html#a2t.tasks.text_classification.TopicClassificationFeatures">TopicClassificationFeatures</a></li>
+<li><a title="a2t.tasks.tuple_classification.RelationClassificationFeatures" href="tuple_classification.html#a2t.tasks.tuple_classification.RelationClassificationFeatures">RelationClassificationFeatures</a></li>
+<li><a title="a2t.tasks.tuple_classification.TACREDFeatures" href="tuple_classification.html#a2t.tasks.tuple_classification.TACREDFeatures">TACREDFeatures</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="a2t.tasks.base.Features.context"><code class="name">var <span class="ident">context</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.Features.label"><code class="name">var <span class="ident">label</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.Features.inst_type"><code class="name">var <span class="ident">inst_type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="a2t.tasks.base.IncorrectFeatureTypeError"><code class="flex name class">
+<span>class <span class="ident">IncorrectFeatureTypeError</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Common base class for all non-exit exceptions.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class IncorrectFeatureTypeError(Exception):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+</dd>
+<dt id="a2t.tasks.base.Task"><code class="flex name class">
+<span>class <span class="ident">Task</span></span>
+<span>(</span><span>name: str = None, required_variables: List[str] = &lt;factory&gt;, additional_variables: List[str] = &lt;factory&gt;, labels: List[str] = &lt;factory&gt;, templates: Dict[str, List[str]] = &lt;factory&gt;, valid_conditions: Dict[str, List[str]] = &lt;factory&gt;, negative_label_id: int = -1, multi_label: bool = False, features_class: type = a2t.tasks.base.Features)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Abstract class for Tasks definition.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class Task:
+    &#34;&#34;&#34;Abstract class for Tasks definition.&#34;&#34;&#34;
+
+    name: str = None
+    required_variables: List[str] = field(default_factory=list)
+    additional_variables: List[str] = field(default_factory=list)
+    labels: List[str] = field(default_factory=list)
+    templates: Dict[str, List[str]] = field(default_factory=dict)
+    valid_conditions: Dict[str, List[str]] = field(default_factory=dict)
+    negative_label_id: int = -1  # -1 for no negative class
+    multi_label: bool = False
+    features_class: type = Features
+
+    def __post_init__(self):
+        self._assert_minimal_constraints()
+        self._assert_constraints()
+
+        self.label2id = {label: i for i, label in enumerate(self.labels)}
+        self.n_labels = len(self.labels)
+
+        if not self.templates:
+            self.templates = {}
+
+        # Create the templates to label mapping
+        self.template2label = defaultdict(list)
+        for label, templates in self.templates.items():
+            for template in templates:
+                self.template2label[template].append(label)
+
+        template_list = list(self.template2label.keys())
+        template2id = {template: i for i, template in enumerate(template_list)}
+
+        self.label2templateid = defaultdict(list)
+        for label, templates in self.templates.items():
+            self.label2templateid[label].extend([template2id[template] for template in templates])
+
+        # Create the valid_conditions matrix
+        if self.valid_conditions:
+            self._valid_conditions = {}
+            self._always_valid_labels = np.zeros(self.n_labels)
+            self._always_valid_labels[self.negative_label_id] = 1.0
+            for label, conditions in self.valid_conditions.items():
+                if label not in self.labels:
+                    continue
+                for condition in conditions:
+                    if condition == &#34;*&#34;:
+                        self._always_valid_labels[self.label2id[label]] = 1.0
+                        continue
+                    if condition not in self._valid_conditions:
+                        self._valid_conditions[condition] = np.zeros(self.n_labels)
+                        if self.negative_label_id &gt;= 0:
+                            self._valid_conditions[condition][self.negative_label_id] = 1.0
+                    self._valid_conditions[condition][self.label2id[label]] = 1.0
+        else:
+            self._valid_conditions = None
+
+        def idx2label(idx):
+            return self.labels[idx]
+
+        self.idx2label = np.vectorize(idx2label)
+
+    def __repr__(self) -&gt; str:
+        class_name = self.name if self.name else str(self.__class__)
+        labels_repr = self.labels.__repr__()
+        if len(labels_repr) &gt; 89:
+            labels_repr = self.labels[:3].__repr__().replace(&#34;]&#34;, &#34;, ...]&#34;)
+        templates_repr = len(self.template2label)
+        feature_class_repr = str(self.features_class)
+
+        return (
+            f&#34;{class_name} (&#34;
+            f&#34;\n\tLabels: {labels_repr}&#34;
+            f&#34;\n\tTemplates: {templates_repr}&#34;
+            f&#34;\n\tFeatures: {feature_class_repr}&#34;
+            &#34;\n)&#34;
+        )
+
+    def _assert_constraints(self):
+        raise NotImplementedError(f&#34;{self.__class__} is an abstract class. This method should be implemented.&#34;)
+
+    def _assert_minimal_constraints(self):
+        assert len(self.labels) &gt; 0, &#34;The number of labels should be greather than 0.&#34;
+
+        assert self.negative_label_id &lt; len(
+            self.labels
+        ), &#34;The id for the negative label should be lower than the amount of labels.&#34;
+
+        if self.negative_label_id &gt;= 0:
+            assert self.templates is not None and len(
+                [value for values in self.templates.values() for value in values]
+            ), &#34;`templates` parameter must not be None nor empty.&#34;
+
+        assert all(
+            key in self.labels for key in self.templates.keys()
+        ), &#34;All the keys of templates dicts must be defined on labels.&#34;
+
+        if self.valid_conditions:
+            assert all(
+                key in self.labels for key in self.valid_conditions.keys()
+            ), &#34;All the keys of valid_conditions dict must be defined on labels.&#34;
+
+        assert all(
+            var in self.features_class.__dict__[&#34;__dataclass_fields__&#34;]
+            for var in self.required_variables + self.additional_variables
+        ), &#34;All variables should be defined on the features_class.&#34;
+
+        assert all(
+            var.strip(&#34;{&#34;).strip(&#34;}&#34;) in [*self.required_variables, *self.additional_variables]
+            for templates in self.templates.values()
+            for template in templates
+            for var in re.findall(r&#34;{\w+}&#34;, template)
+        )
+
+    def assert_features_class(self, features: List[Features]) -&gt; None:
+        for feature in features:
+            if not isinstance(feature, self.features_class):
+                raise IncorrectFeatureTypeError(
+                    f&#34;Incorrect feature type given. Expected {self.features_class} but obtained {type(feature)}.&#34;
+                )
+
+    def generate_premise_hypotheses_pairs(self, features: List[Features], sep_token: str = &#34;&lt;/s&gt;&#34;) -&gt; List[str]:
+        if not isinstance(features, list):
+            features = [features]
+        sentence_pairs = [
+            f&#34;{feature.context} {sep_token} {template.format(**feature.__dict__)}&#34;
+            for feature in features
+            for templates in self.templates.values()
+            for template in templates
+        ]
+        return sentence_pairs
+
+    def reverse_to_labels(self, template_probs: np.array) -&gt; np.array:
+        outputs = np.hstack(
+            [
+                np.max(template_probs[:, self.label2templateid[label]], axis=-1, keepdims=True)
+                if label in self.label2templateid
+                else np.zeros((template_probs.shape[0], 1))
+                for label in self.labels
+            ]
+        )
+        return outputs
+
+    def apply_valid_conditions(self, features: List[Features], probs: np.array) -&gt; np.array:
+        if self._valid_conditions:
+            mask_matrix = np.stack(
+                [self._valid_conditions.get(feature.inst_type, np.zeros(self.n_labels)) for feature in features],
+                axis=0,
+            )
+            probs = probs * np.logical_or(mask_matrix, self._always_valid_labels)  # TODO: Need a test
+        return probs
+
+    def compute_metrics(self, labels: np.array, output: np.array, threshold: Union[str, float] = &#34;optimize&#34;):
+        # TODO: Unittest
+        raise NotImplementedError(&#34;This method must be implemented.&#34;)</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="a2t.tasks.base.BinaryTask" href="#a2t.tasks.base.BinaryTask">BinaryTask</a></li>
+<li><a title="a2t.tasks.base.UnaryTask" href="#a2t.tasks.base.UnaryTask">UnaryTask</a></li>
+<li><a title="a2t.tasks.base.ZeroaryTask" href="#a2t.tasks.base.ZeroaryTask">ZeroaryTask</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="a2t.tasks.base.Task.required_variables"><code class="name">var <span class="ident">required_variables</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.Task.additional_variables"><code class="name">var <span class="ident">additional_variables</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.Task.labels"><code class="name">var <span class="ident">labels</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.Task.templates"><code class="name">var <span class="ident">templates</span> : Dict[str, List[str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.Task.valid_conditions"><code class="name">var <span class="ident">valid_conditions</span> : Dict[str, List[str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.Task.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.Task.negative_label_id"><code class="name">var <span class="ident">negative_label_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.Task.multi_label"><code class="name">var <span class="ident">multi_label</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.Task.features_class"><code class="name">var <span class="ident">features_class</span> : type</code></dt>
+<dd>
+<div class="desc"><p>Features(context: str, label: str = None, inst_type: str = None)</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="a2t.tasks.base.Task.assert_features_class"><code class="name flex">
+<span>def <span class="ident">assert_features_class</span></span>(<span>self, features: List[<a title="a2t.tasks.base.Features" href="#a2t.tasks.base.Features">Features</a>]) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def assert_features_class(self, features: List[Features]) -&gt; None:
+    for feature in features:
+        if not isinstance(feature, self.features_class):
+            raise IncorrectFeatureTypeError(
+                f&#34;Incorrect feature type given. Expected {self.features_class} but obtained {type(feature)}.&#34;
+            )</code></pre>
+</details>
+</dd>
+<dt id="a2t.tasks.base.Task.generate_premise_hypotheses_pairs"><code class="name flex">
+<span>def <span class="ident">generate_premise_hypotheses_pairs</span></span>(<span>self, features: List[<a title="a2t.tasks.base.Features" href="#a2t.tasks.base.Features">Features</a>], sep_token: str = &#x27;&lt;/s&gt;&#x27;) ‑> List[str]</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_premise_hypotheses_pairs(self, features: List[Features], sep_token: str = &#34;&lt;/s&gt;&#34;) -&gt; List[str]:
+    if not isinstance(features, list):
+        features = [features]
+    sentence_pairs = [
+        f&#34;{feature.context} {sep_token} {template.format(**feature.__dict__)}&#34;
+        for feature in features
+        for templates in self.templates.values()
+        for template in templates
+    ]
+    return sentence_pairs</code></pre>
+</details>
+</dd>
+<dt id="a2t.tasks.base.Task.reverse_to_labels"><code class="name flex">
+<span>def <span class="ident">reverse_to_labels</span></span>(<span>self, template_probs: <built-in function array>) ‑> <built-in function array></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reverse_to_labels(self, template_probs: np.array) -&gt; np.array:
+    outputs = np.hstack(
+        [
+            np.max(template_probs[:, self.label2templateid[label]], axis=-1, keepdims=True)
+            if label in self.label2templateid
+            else np.zeros((template_probs.shape[0], 1))
+            for label in self.labels
+        ]
+    )
+    return outputs</code></pre>
+</details>
+</dd>
+<dt id="a2t.tasks.base.Task.apply_valid_conditions"><code class="name flex">
+<span>def <span class="ident">apply_valid_conditions</span></span>(<span>self, features: List[<a title="a2t.tasks.base.Features" href="#a2t.tasks.base.Features">Features</a>], probs: <built-in function array>) ‑> <built-in function array></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def apply_valid_conditions(self, features: List[Features], probs: np.array) -&gt; np.array:
+    if self._valid_conditions:
+        mask_matrix = np.stack(
+            [self._valid_conditions.get(feature.inst_type, np.zeros(self.n_labels)) for feature in features],
+            axis=0,
+        )
+        probs = probs * np.logical_or(mask_matrix, self._always_valid_labels)  # TODO: Need a test
+    return probs</code></pre>
+</details>
+</dd>
+<dt id="a2t.tasks.base.Task.compute_metrics"><code class="name flex">
+<span>def <span class="ident">compute_metrics</span></span>(<span>self, labels: <built-in function array>, output: <built-in function array>, threshold: Union[str, float] = 'optimize')</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_metrics(self, labels: np.array, output: np.array, threshold: Union[str, float] = &#34;optimize&#34;):
+    # TODO: Unittest
+    raise NotImplementedError(&#34;This method must be implemented.&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="a2t.tasks.base.ZeroaryTask"><code class="flex name class">
+<span>class <span class="ident">ZeroaryTask</span></span>
+<span>(</span><span>name: str = None, required_variables: List[str] = &lt;factory&gt;, additional_variables: List[str] = &lt;factory&gt;, labels: List[str] = &lt;factory&gt;, templates: Dict[str, List[str]] = &lt;factory&gt;, valid_conditions: Dict[str, List[str]] = &lt;factory&gt;, negative_label_id: int = -1, multi_label: bool = False, features_class: type = a2t.tasks.base.Features)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Abstract class for Tasks definition.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZeroaryTask(Task):
+    def _assert_constraints(self):
+        # Assert the number of required variables to be 0
+        assert len(self.required_variables) == 0, &#34;Zero-ary tasks like Text classifiation do not require any variable.&#34;
+
+    def compute_metrics(self, labels: np.array, output: np.array, threshold: Union[str, float] = None):
+        # TODO: Unittest + documentation
+        if threshold:
+            warnings.warn(f&#34;{self.__class__} do not require &#39;threshold&#39;, ignored.&#34;)
+
+        return {&#34;accuracy_score&#34;: accuracy_score(labels, output.argmax(-1))}</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="a2t.tasks.base.Task" href="#a2t.tasks.base.Task">Task</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="a2t.tasks.text_classification.TopicClassificationTask" href="text_classification.html#a2t.tasks.text_classification.TopicClassificationTask">TopicClassificationTask</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="a2t.tasks.base.ZeroaryTask.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.ZeroaryTask.required_variables"><code class="name">var <span class="ident">required_variables</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.ZeroaryTask.additional_variables"><code class="name">var <span class="ident">additional_variables</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.ZeroaryTask.labels"><code class="name">var <span class="ident">labels</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.ZeroaryTask.templates"><code class="name">var <span class="ident">templates</span> : Dict[str, List[str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.ZeroaryTask.valid_conditions"><code class="name">var <span class="ident">valid_conditions</span> : Dict[str, List[str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.ZeroaryTask.negative_label_id"><code class="name">var <span class="ident">negative_label_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.ZeroaryTask.multi_label"><code class="name">var <span class="ident">multi_label</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="a2t.tasks.base.ZeroaryTask.compute_metrics"><code class="name flex">
+<span>def <span class="ident">compute_metrics</span></span>(<span>self, labels: <built-in function array>, output: <built-in function array>, threshold: Union[str, float] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_metrics(self, labels: np.array, output: np.array, threshold: Union[str, float] = None):
+    # TODO: Unittest + documentation
+    if threshold:
+        warnings.warn(f&#34;{self.__class__} do not require &#39;threshold&#39;, ignored.&#34;)
+
+    return {&#34;accuracy_score&#34;: accuracy_score(labels, output.argmax(-1))}</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="a2t.tasks.base.Task" href="#a2t.tasks.base.Task">Task</a></b></code>:
+<ul class="hlist">
+<li><code><a title="a2t.tasks.base.Task.features_class" href="#a2t.tasks.base.Task.features_class">features_class</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="a2t.tasks.base.ZeroaryFeatures"><code class="flex name class">
+<span>class <span class="ident">ZeroaryFeatures</span></span>
+<span>(</span><span>context: str, label: str = None, inst_type: str = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Features(context: str, label: str = None, inst_type: str = None)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZeroaryFeatures(Features):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="a2t.tasks.base.Features" href="#a2t.tasks.base.Features">Features</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="a2t.tasks.base.ZeroaryFeatures.context"><code class="name">var <span class="ident">context</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.ZeroaryFeatures.label"><code class="name">var <span class="ident">label</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.ZeroaryFeatures.inst_type"><code class="name">var <span class="ident">inst_type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="a2t.tasks.base.UnaryTask"><code class="flex name class">
+<span>class <span class="ident">UnaryTask</span></span>
+<span>(</span><span>name: str = None, required_variables: List[str] = &lt;factory&gt;, additional_variables: List[str] = &lt;factory&gt;, labels: List[str] = &lt;factory&gt;, templates: Dict[str, List[str]] = &lt;factory&gt;, valid_conditions: Dict[str, List[str]] = &lt;factory&gt;, negative_label_id: int = -1, multi_label: bool = False, features_class: type = a2t.tasks.base.Features)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Abstract class for Tasks definition.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class UnaryTask(Task):
+    def _assert_constraints(self):
+        # Assert the number of required variables to be 1
+        assert len(self.required_variables) == 1, &#34;Unary-ary tasks like Span classifiation requires 1 variable.&#34;
+
+    def compute_metrics(self, labels: np.array, output: np.array, threshold: Union[str, float] = &#34;optimize&#34;):
+        # TODO: Unittest + documentation
+        if threshold not in [&#34;default&#34;, &#34;optimize&#34;] and not isinstance(threshold, float):
+            raise ValueError(&#34;Threshold must be either &#39;default&#39;, &#39;optimize&#39; or a float value.&#34;)
+
+        if threshold == &#34;default&#34;:
+            threshold = 0.5
+
+        if threshold == &#34;optimize&#34;:
+            threshold, _ = find_optimal_threshold(labels, output, negative_label_id=self.negative_label_id)
+            output_ = apply_threshold(output, threshold=threshold, negative_label_id=self.negative_label_id)
+
+        results = {&#34;optimal_threshold&#34;: threshold}
+        if self.negative_label_id &lt; 0:
+            results[&#34;accuracy_score&#34;] = accuracy_score(labels, output.argmax(-1))
+        else:
+            positive_labels = list(set(range(len(self.labels))) - set([self.negative_label_id]))
+            output_pos = output.copy()
+            output_pos[:, self.negative_label_id] = 0.0
+
+            results[&#34;positive_accuracy&#34;] = accuracy_score(
+                labels[labels != self.negative_label_id], output_pos[labels != self.negative_label_id, :].argmax(-1)
+            )
+
+            pre, rec, f1, _ = precision_recall_fscore_support(labels, output_.argmax(-1), labels=positive_labels)
+            results[&#34;precision&#34;] = pre
+            results[&#34;recall&#34;] = rec
+            results[&#34;f1-score&#34;] = f1
+
+        return results</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="a2t.tasks.base.Task" href="#a2t.tasks.base.Task">Task</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="a2t.tasks.span_classification.NamedEntityClassificationTask" href="span_classification.html#a2t.tasks.span_classification.NamedEntityClassificationTask">NamedEntityClassificationTask</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="a2t.tasks.base.UnaryTask.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.UnaryTask.required_variables"><code class="name">var <span class="ident">required_variables</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.UnaryTask.additional_variables"><code class="name">var <span class="ident">additional_variables</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.UnaryTask.labels"><code class="name">var <span class="ident">labels</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.UnaryTask.templates"><code class="name">var <span class="ident">templates</span> : Dict[str, List[str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.UnaryTask.valid_conditions"><code class="name">var <span class="ident">valid_conditions</span> : Dict[str, List[str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.UnaryTask.negative_label_id"><code class="name">var <span class="ident">negative_label_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.UnaryTask.multi_label"><code class="name">var <span class="ident">multi_label</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="a2t.tasks.base.UnaryTask.compute_metrics"><code class="name flex">
+<span>def <span class="ident">compute_metrics</span></span>(<span>self, labels: <built-in function array>, output: <built-in function array>, threshold: Union[str, float] = 'optimize')</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_metrics(self, labels: np.array, output: np.array, threshold: Union[str, float] = &#34;optimize&#34;):
+    # TODO: Unittest + documentation
+    if threshold not in [&#34;default&#34;, &#34;optimize&#34;] and not isinstance(threshold, float):
+        raise ValueError(&#34;Threshold must be either &#39;default&#39;, &#39;optimize&#39; or a float value.&#34;)
+
+    if threshold == &#34;default&#34;:
+        threshold = 0.5
+
+    if threshold == &#34;optimize&#34;:
+        threshold, _ = find_optimal_threshold(labels, output, negative_label_id=self.negative_label_id)
+        output_ = apply_threshold(output, threshold=threshold, negative_label_id=self.negative_label_id)
+
+    results = {&#34;optimal_threshold&#34;: threshold}
+    if self.negative_label_id &lt; 0:
+        results[&#34;accuracy_score&#34;] = accuracy_score(labels, output.argmax(-1))
+    else:
+        positive_labels = list(set(range(len(self.labels))) - set([self.negative_label_id]))
+        output_pos = output.copy()
+        output_pos[:, self.negative_label_id] = 0.0
+
+        results[&#34;positive_accuracy&#34;] = accuracy_score(
+            labels[labels != self.negative_label_id], output_pos[labels != self.negative_label_id, :].argmax(-1)
+        )
+
+        pre, rec, f1, _ = precision_recall_fscore_support(labels, output_.argmax(-1), labels=positive_labels)
+        results[&#34;precision&#34;] = pre
+        results[&#34;recall&#34;] = rec
+        results[&#34;f1-score&#34;] = f1
+
+    return results</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="a2t.tasks.base.Task" href="#a2t.tasks.base.Task">Task</a></b></code>:
+<ul class="hlist">
+<li><code><a title="a2t.tasks.base.Task.features_class" href="#a2t.tasks.base.Task.features_class">features_class</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="a2t.tasks.base.UnaryFeatures"><code class="flex name class">
+<span>class <span class="ident">UnaryFeatures</span></span>
+<span>(</span><span>context: str, label: str = None, inst_type: str = None, X: str = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>UnaryFeatures(context: str, label: str = None, inst_type: str = None, X: str = None)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class UnaryFeatures(Features):
+    X: str = None</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="a2t.tasks.base.Features" href="#a2t.tasks.base.Features">Features</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="a2t.tasks.base.UnaryFeatures.X"><code class="name">var <span class="ident">X</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="a2t.tasks.base.BinaryTask"><code class="flex name class">
+<span>class <span class="ident">BinaryTask</span></span>
+<span>(</span><span>name: str = None, required_variables: List[str] = &lt;factory&gt;, additional_variables: List[str] = &lt;factory&gt;, labels: List[str] = &lt;factory&gt;, templates: Dict[str, List[str]] = &lt;factory&gt;, valid_conditions: Dict[str, List[str]] = &lt;factory&gt;, negative_label_id: int = -1, multi_label: bool = False, features_class: type = a2t.tasks.base.Features)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Abstract class for Tasks definition.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BinaryTask(Task):
+    def _assert_constraints(self):
+        # Assert the number of required variables to be 2
+        assert len(self.required_variables) == 2, &#34;Binary-ary tasks like Tuple classifiation require 2 variable.&#34;
+
+    def compute_metrics(self, labels: np.array, output: np.array, threshold: Union[str, float] = &#34;optimize&#34;):
+        # TODO: Unittest + documentation
+        if threshold not in [&#34;default&#34;, &#34;optimize&#34;] and not isinstance(threshold, float):
+            raise ValueError(&#34;Threshold must be either &#39;default&#39;, &#39;optimize&#39; or a float value.&#34;)
+
+        if threshold == &#34;default&#34;:
+            threshold = 0.5
+
+        if threshold == &#34;optimize&#34;:
+            threshold, _ = find_optimal_threshold(labels, output, negative_label_id=self.negative_label_id)
+            output_ = apply_threshold(output, threshold=threshold, negative_label_id=self.negative_label_id)
+
+        results = {&#34;optimal_threshold&#34;: threshold}
+        if self.negative_label_id &lt; 0:
+            results[&#34;accuracy_score&#34;] = accuracy_score(labels, output.argmax(-1))
+        else:
+            positive_labels = list(set(range(len(self.labels))) - set([self.negative_label_id]))
+            output_pos = output.copy()
+            output_pos[:, self.negative_label_id] = 0.0
+
+            results[&#34;positive_accuracy&#34;] = accuracy_score(
+                labels[labels != self.negative_label_id], output_pos[labels != self.negative_label_id, :].argmax(-1)
+            )
+
+            pre, rec, f1, _ = precision_recall_fscore_support(labels, output_.argmax(-1), labels=positive_labels)
+            results[&#34;precision&#34;] = pre
+            results[&#34;recall&#34;] = rec
+            results[&#34;f1-score&#34;] = f1
+
+        return results</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="a2t.tasks.base.Task" href="#a2t.tasks.base.Task">Task</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="a2t.tasks.tuple_classification.RelationClassificationTask" href="tuple_classification.html#a2t.tasks.tuple_classification.RelationClassificationTask">RelationClassificationTask</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="a2t.tasks.base.BinaryTask.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.BinaryTask.required_variables"><code class="name">var <span class="ident">required_variables</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.BinaryTask.additional_variables"><code class="name">var <span class="ident">additional_variables</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.BinaryTask.labels"><code class="name">var <span class="ident">labels</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.BinaryTask.templates"><code class="name">var <span class="ident">templates</span> : Dict[str, List[str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.BinaryTask.valid_conditions"><code class="name">var <span class="ident">valid_conditions</span> : Dict[str, List[str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.BinaryTask.negative_label_id"><code class="name">var <span class="ident">negative_label_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.BinaryTask.multi_label"><code class="name">var <span class="ident">multi_label</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="a2t.tasks.base.BinaryTask.compute_metrics"><code class="name flex">
+<span>def <span class="ident">compute_metrics</span></span>(<span>self, labels: <built-in function array>, output: <built-in function array>, threshold: Union[str, float] = 'optimize')</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_metrics(self, labels: np.array, output: np.array, threshold: Union[str, float] = &#34;optimize&#34;):
+    # TODO: Unittest + documentation
+    if threshold not in [&#34;default&#34;, &#34;optimize&#34;] and not isinstance(threshold, float):
+        raise ValueError(&#34;Threshold must be either &#39;default&#39;, &#39;optimize&#39; or a float value.&#34;)
+
+    if threshold == &#34;default&#34;:
+        threshold = 0.5
+
+    if threshold == &#34;optimize&#34;:
+        threshold, _ = find_optimal_threshold(labels, output, negative_label_id=self.negative_label_id)
+        output_ = apply_threshold(output, threshold=threshold, negative_label_id=self.negative_label_id)
+
+    results = {&#34;optimal_threshold&#34;: threshold}
+    if self.negative_label_id &lt; 0:
+        results[&#34;accuracy_score&#34;] = accuracy_score(labels, output.argmax(-1))
+    else:
+        positive_labels = list(set(range(len(self.labels))) - set([self.negative_label_id]))
+        output_pos = output.copy()
+        output_pos[:, self.negative_label_id] = 0.0
+
+        results[&#34;positive_accuracy&#34;] = accuracy_score(
+            labels[labels != self.negative_label_id], output_pos[labels != self.negative_label_id, :].argmax(-1)
+        )
+
+        pre, rec, f1, _ = precision_recall_fscore_support(labels, output_.argmax(-1), labels=positive_labels)
+        results[&#34;precision&#34;] = pre
+        results[&#34;recall&#34;] = rec
+        results[&#34;f1-score&#34;] = f1
+
+    return results</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="a2t.tasks.base.Task" href="#a2t.tasks.base.Task">Task</a></b></code>:
+<ul class="hlist">
+<li><code><a title="a2t.tasks.base.Task.features_class" href="#a2t.tasks.base.Task.features_class">features_class</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="a2t.tasks.base.BinaryFeatures"><code class="flex name class">
+<span>class <span class="ident">BinaryFeatures</span></span>
+<span>(</span><span>context: str, label: str = None, inst_type: str = None, X: str = None, Y: str = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>BinaryFeatures(context: str, label: str = None, inst_type: str = None, X: str = None, Y: str = None)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class BinaryFeatures(Features):
+    X: str = None
+    Y: str = None</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="a2t.tasks.base.Features" href="#a2t.tasks.base.Features">Features</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="a2t.tasks.base.BinaryFeatures.X"><code class="name">var <span class="ident">X</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="a2t.tasks.base.BinaryFeatures.Y"><code class="name">var <span class="ident">Y</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="a2t.tasks" href="index.html">a2t.tasks</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="a2t.tasks.base.Features" href="#a2t.tasks.base.Features">Features</a></code></h4>
+<ul class="">
+<li><code><a title="a2t.tasks.base.Features.context" href="#a2t.tasks.base.Features.context">context</a></code></li>
+<li><code><a title="a2t.tasks.base.Features.label" href="#a2t.tasks.base.Features.label">label</a></code></li>
+<li><code><a title="a2t.tasks.base.Features.inst_type" href="#a2t.tasks.base.Features.inst_type">inst_type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.base.IncorrectFeatureTypeError" href="#a2t.tasks.base.IncorrectFeatureTypeError">IncorrectFeatureTypeError</a></code></h4>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.base.Task" href="#a2t.tasks.base.Task">Task</a></code></h4>
+<ul class="">
+<li><code><a title="a2t.tasks.base.Task.assert_features_class" href="#a2t.tasks.base.Task.assert_features_class">assert_features_class</a></code></li>
+<li><code><a title="a2t.tasks.base.Task.generate_premise_hypotheses_pairs" href="#a2t.tasks.base.Task.generate_premise_hypotheses_pairs">generate_premise_hypotheses_pairs</a></code></li>
+<li><code><a title="a2t.tasks.base.Task.reverse_to_labels" href="#a2t.tasks.base.Task.reverse_to_labels">reverse_to_labels</a></code></li>
+<li><code><a title="a2t.tasks.base.Task.apply_valid_conditions" href="#a2t.tasks.base.Task.apply_valid_conditions">apply_valid_conditions</a></code></li>
+<li><code><a title="a2t.tasks.base.Task.compute_metrics" href="#a2t.tasks.base.Task.compute_metrics">compute_metrics</a></code></li>
+<li><code><a title="a2t.tasks.base.Task.required_variables" href="#a2t.tasks.base.Task.required_variables">required_variables</a></code></li>
+<li><code><a title="a2t.tasks.base.Task.additional_variables" href="#a2t.tasks.base.Task.additional_variables">additional_variables</a></code></li>
+<li><code><a title="a2t.tasks.base.Task.labels" href="#a2t.tasks.base.Task.labels">labels</a></code></li>
+<li><code><a title="a2t.tasks.base.Task.templates" href="#a2t.tasks.base.Task.templates">templates</a></code></li>
+<li><code><a title="a2t.tasks.base.Task.valid_conditions" href="#a2t.tasks.base.Task.valid_conditions">valid_conditions</a></code></li>
+<li><code><a title="a2t.tasks.base.Task.name" href="#a2t.tasks.base.Task.name">name</a></code></li>
+<li><code><a title="a2t.tasks.base.Task.negative_label_id" href="#a2t.tasks.base.Task.negative_label_id">negative_label_id</a></code></li>
+<li><code><a title="a2t.tasks.base.Task.multi_label" href="#a2t.tasks.base.Task.multi_label">multi_label</a></code></li>
+<li><code><a title="a2t.tasks.base.Task.features_class" href="#a2t.tasks.base.Task.features_class">features_class</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.base.ZeroaryTask" href="#a2t.tasks.base.ZeroaryTask">ZeroaryTask</a></code></h4>
+<ul class="">
+<li><code><a title="a2t.tasks.base.ZeroaryTask.compute_metrics" href="#a2t.tasks.base.ZeroaryTask.compute_metrics">compute_metrics</a></code></li>
+<li><code><a title="a2t.tasks.base.ZeroaryTask.name" href="#a2t.tasks.base.ZeroaryTask.name">name</a></code></li>
+<li><code><a title="a2t.tasks.base.ZeroaryTask.required_variables" href="#a2t.tasks.base.ZeroaryTask.required_variables">required_variables</a></code></li>
+<li><code><a title="a2t.tasks.base.ZeroaryTask.additional_variables" href="#a2t.tasks.base.ZeroaryTask.additional_variables">additional_variables</a></code></li>
+<li><code><a title="a2t.tasks.base.ZeroaryTask.labels" href="#a2t.tasks.base.ZeroaryTask.labels">labels</a></code></li>
+<li><code><a title="a2t.tasks.base.ZeroaryTask.templates" href="#a2t.tasks.base.ZeroaryTask.templates">templates</a></code></li>
+<li><code><a title="a2t.tasks.base.ZeroaryTask.valid_conditions" href="#a2t.tasks.base.ZeroaryTask.valid_conditions">valid_conditions</a></code></li>
+<li><code><a title="a2t.tasks.base.ZeroaryTask.negative_label_id" href="#a2t.tasks.base.ZeroaryTask.negative_label_id">negative_label_id</a></code></li>
+<li><code><a title="a2t.tasks.base.ZeroaryTask.multi_label" href="#a2t.tasks.base.ZeroaryTask.multi_label">multi_label</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.base.ZeroaryFeatures" href="#a2t.tasks.base.ZeroaryFeatures">ZeroaryFeatures</a></code></h4>
+<ul class="">
+<li><code><a title="a2t.tasks.base.ZeroaryFeatures.context" href="#a2t.tasks.base.ZeroaryFeatures.context">context</a></code></li>
+<li><code><a title="a2t.tasks.base.ZeroaryFeatures.label" href="#a2t.tasks.base.ZeroaryFeatures.label">label</a></code></li>
+<li><code><a title="a2t.tasks.base.ZeroaryFeatures.inst_type" href="#a2t.tasks.base.ZeroaryFeatures.inst_type">inst_type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.base.UnaryTask" href="#a2t.tasks.base.UnaryTask">UnaryTask</a></code></h4>
+<ul class="">
+<li><code><a title="a2t.tasks.base.UnaryTask.compute_metrics" href="#a2t.tasks.base.UnaryTask.compute_metrics">compute_metrics</a></code></li>
+<li><code><a title="a2t.tasks.base.UnaryTask.name" href="#a2t.tasks.base.UnaryTask.name">name</a></code></li>
+<li><code><a title="a2t.tasks.base.UnaryTask.required_variables" href="#a2t.tasks.base.UnaryTask.required_variables">required_variables</a></code></li>
+<li><code><a title="a2t.tasks.base.UnaryTask.additional_variables" href="#a2t.tasks.base.UnaryTask.additional_variables">additional_variables</a></code></li>
+<li><code><a title="a2t.tasks.base.UnaryTask.labels" href="#a2t.tasks.base.UnaryTask.labels">labels</a></code></li>
+<li><code><a title="a2t.tasks.base.UnaryTask.templates" href="#a2t.tasks.base.UnaryTask.templates">templates</a></code></li>
+<li><code><a title="a2t.tasks.base.UnaryTask.valid_conditions" href="#a2t.tasks.base.UnaryTask.valid_conditions">valid_conditions</a></code></li>
+<li><code><a title="a2t.tasks.base.UnaryTask.negative_label_id" href="#a2t.tasks.base.UnaryTask.negative_label_id">negative_label_id</a></code></li>
+<li><code><a title="a2t.tasks.base.UnaryTask.multi_label" href="#a2t.tasks.base.UnaryTask.multi_label">multi_label</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.base.UnaryFeatures" href="#a2t.tasks.base.UnaryFeatures">UnaryFeatures</a></code></h4>
+<ul class="">
+<li><code><a title="a2t.tasks.base.UnaryFeatures.X" href="#a2t.tasks.base.UnaryFeatures.X">X</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.base.BinaryTask" href="#a2t.tasks.base.BinaryTask">BinaryTask</a></code></h4>
+<ul class="">
+<li><code><a title="a2t.tasks.base.BinaryTask.compute_metrics" href="#a2t.tasks.base.BinaryTask.compute_metrics">compute_metrics</a></code></li>
+<li><code><a title="a2t.tasks.base.BinaryTask.name" href="#a2t.tasks.base.BinaryTask.name">name</a></code></li>
+<li><code><a title="a2t.tasks.base.BinaryTask.required_variables" href="#a2t.tasks.base.BinaryTask.required_variables">required_variables</a></code></li>
+<li><code><a title="a2t.tasks.base.BinaryTask.additional_variables" href="#a2t.tasks.base.BinaryTask.additional_variables">additional_variables</a></code></li>
+<li><code><a title="a2t.tasks.base.BinaryTask.labels" href="#a2t.tasks.base.BinaryTask.labels">labels</a></code></li>
+<li><code><a title="a2t.tasks.base.BinaryTask.templates" href="#a2t.tasks.base.BinaryTask.templates">templates</a></code></li>
+<li><code><a title="a2t.tasks.base.BinaryTask.valid_conditions" href="#a2t.tasks.base.BinaryTask.valid_conditions">valid_conditions</a></code></li>
+<li><code><a title="a2t.tasks.base.BinaryTask.negative_label_id" href="#a2t.tasks.base.BinaryTask.negative_label_id">negative_label_id</a></code></li>
+<li><code><a title="a2t.tasks.base.BinaryTask.multi_label" href="#a2t.tasks.base.BinaryTask.multi_label">multi_label</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.base.BinaryFeatures" href="#a2t.tasks.base.BinaryFeatures">BinaryFeatures</a></code></h4>
+<ul class="">
+<li><code><a title="a2t.tasks.base.BinaryFeatures.X" href="#a2t.tasks.base.BinaryFeatures.X">X</a></code></li>
+<li><code><a title="a2t.tasks.base.BinaryFeatures.Y" href="#a2t.tasks.base.BinaryFeatures.Y">Y</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

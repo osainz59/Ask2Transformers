@@ -3,6 +3,7 @@ models/
 data/*
 examples/*
 bash_scripts/*
+legacy_code/
 
 onnx/
 

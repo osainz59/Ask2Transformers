@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>a2t.base API documentation</title>
+<meta name="description" content="The module `base` implements all the basic methods to perform the inference, including the `EntailmentClassifier`." />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>a2t.base</code></h1>
+</header>
+<section id="section-intro">
+<p>The module <code>base</code> implements all the basic methods to perform the inference, including the <code><a title="a2t.base.EntailmentClassifier" href="#a2t.base.EntailmentClassifier">EntailmentClassifier</a></code>.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;The module `base` implements all the basic methods to perform the inference, including the `EntailmentClassifier`.
+&#34;&#34;&#34;
+import os
+import sys
+import gc
+from typing import List
+
+import numpy as np
+import torch
+
+try:
+    from tqdm import tqdm
+
+    _use_tqdm = True
+except ImportError:
+    _use_tqdm = False
+
+from transformers import AutoConfig, AutoTokenizer, AutoModelForSequenceClassification
+
+from .tasks import Features, Task
+
+try:
+    import transformers
+
+    transformers.logging.set_verbosity_error()
+except ImportError:
+    pass
+
+
+def np_softmax(x, dim=-1):
+    e = np.exp(x)
+    return e / np.sum(e, axis=dim, keepdims=True)
+
+
+def np_sigmoid(x, dim=-1):
+    return 1 / (1 + np.exp(-x))
+
+
+class Classifier(object):
+    &#34;&#34;&#34;Abstact classifier class.&#34;&#34;&#34;
+
+    def __init__(
+        self, labels: List[str], pretrained_model: str = &#34;roberta-large-mnli&#34;, use_cuda=True, half=False, verbose=True
+    ):
+        super().__init__()
+
+        self.device = torch.device(&#34;cuda&#34; if torch.cuda.is_available() and use_cuda else &#34;cpu&#34;)
+        self.labels = labels
+        self.use_cuda = use_cuda
+        self.half = half
+        self.verbose = verbose
+
+        # Supress stdout printing for model downloads
+        if not verbose:
+            sys.stdout = open(os.devnull, &#34;w&#34;)
+            self._initialize(pretrained_model)
+            sys.stdout = sys.__stdout__
+        else:
+            self._initialize(pretrained_model)
+
+        self.model = self.model.to(self.device)
+        self.model = self.model.eval()
+        if self.use_cuda and self.half and torch.cuda.is_available():
+            self.model = self.model.half()
+
+    def _initialize(self, pretrained_model):
+        raise NotImplementedError
+
+    def __call__(self, context, batch_size=1):
+        raise NotImplementedError
+
+    def clear_gpu_memory(self):
+        self.model.cpu()
+        del self.model
+        gc.collect()
+        torch.cuda.empty_cache()
+
+
+class EntailmentClassifier(Classifier):
+    &#34;&#34;&#34;General purpose Entailment based classifier.
+
+    This class contains the code for entailment-based zero-shot classification inference. It is pretended to be
+    task and data independent.
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        pretrained_model: str = &#34;roberta-large-mnli&#34;,
+        use_cuda: bool = True,
+        half: bool = False,
+        verbose: bool = True,
+        use_tqdm: bool = True,
+        **kwargs
+    ):
+        &#34;&#34;&#34;
+        Args:
+            pretrained_model (str, optional): The name or path of the pretrained model. Defaults to &#34;roberta-large-mnli&#34;.
+            use_cuda (bool, optional): Use the GPU if possible. Defaults to True.
+            half (bool, optional): Use half precision if possible. Defaults to False.
+            verbose (bool, optional): Output log information. Defaults to True.
+        &#34;&#34;&#34;
+        super().__init__(None, pretrained_model, use_cuda, half, verbose)
+        self.use_tqdm = use_tqdm and _use_tqdm
+
+    def _initialize(self, pretrained_model: str):
+        self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
+        self.model = AutoModelForSequenceClassification.from_pretrained(pretrained_model)
+        self.config = AutoConfig.from_pretrained(pretrained_model)
+        self.ent_pos = self.config.label2id.get(&#34;ENTAILMENT&#34;, self.config.label2id.get(&#34;entailment&#34;, None))
+        if self.ent_pos is None:
+            raise ValueError(&#34;The model config must contain ENTAILMENT label in the label2id dict.&#34;)
+        else:
+            self.ent_pos = int(self.ent_pos)
+
+    @staticmethod
+    def apply_threshold(
+        output: np.ndarray,
+        threshold: float = 0.0,
+        ignore_negative_prediction: bool = True,
+        application_type: str = &#34;prediction&#34;,
+    ) -&gt; np.ndarray:
+        &#34;&#34;&#34;
+
+        Args:
+            output (ndarray): (batch_size, n_labels) The predicted probabilities.
+            threshold (float): The threshold value to apply.
+            ignore_negative_prediction (bool): Ignore the negative prediction probabilites. Default to True.
+            application_type (str): How to apply the threshold: Options:
+
+                * **&#34;prediction&#34;**: Set to 1.0 the probability of the negative class if the no prediction is higher than the threshold.
+                * **&#34;mask&#34;**: Set to 0.0 the probabilities of the positive classes that are lower or equal to the threshold.
+        &#34;&#34;&#34;
+        output_ = output.copy()
+        if ignore_negative_prediction:
+            output_[:, 0] = 0.0
+        if application_type == &#34;prediction&#34;:
+            activations = (output_ &gt;= threshold).sum(-1).astype(int)
+            output_[activations == 0, 0] = 1.00
+        elif application_type == &#34;mask&#34;:
+            activations = output_ &lt; threshold
+            output_[activations] = 0.0
+        else:
+            raise ValueError(&#34;&#34;&#34;application_type argument must be &#34;prediction&#34; or &#34;mask&#34;.&#34;&#34;&#34;)
+
+        return output_
+
+    def __call__(
+        self,
+        task: Task,
+        features: List[Features],
+        negative_threshold: float = 0.5,
+        topk: int = 1,
+        return_labels: bool = False,
+        return_confidences: bool = False,
+        ignore_negative_prediction: bool = False,
+        return_raw_output: bool = False,
+        **kwargs
+    ) -&gt; List:
+        &#34;&#34;&#34;Call method for the EntailmentClassifier.
+
+
+        TODO: Add output documentation.
+
+        Args:
+            task (Task): The task instance used for inference.
+            features (List[Features]): The list of features to classify.
+            negative_threshold (float, optional): The threshold used if necessary. Defaults to 0.5.
+            topk (int, optional): Return the first `k` predictions with higher probabilities. Defaults to 1.
+            return_labels (bool, optional): Whether to return the label ids or names. Defaults to False (ids).
+            return_confidences (bool, optional): Whether to return prediction confidences or not. Defaults to False.
+            ignore_negative_prediction (bool, optional): Whether to ignore the predictions of the negative class. Defaults to False.
+            return_raw_output (bool, optional): Return the raw output along with the processed one. Defaults to False.
+
+        Returns:
+            List: A list with the predictions.
+        &#34;&#34;&#34;
+        task.assert_features_class(features)
+
+        outputs = []
+        iterator = features if not self.use_tqdm else tqdm(features, total=len(features))
+        with torch.no_grad():
+            for feature in iterator:
+                sentence_pairs = task.generate_premise_hypotheses_pairs([feature], self.tokenizer.sep_token)
+                data = self.tokenizer(sentence_pairs, return_tensors=&#34;pt&#34;, padding=True).input_ids
+                data = data.to(self.device)
+                output = self.model(data)[0].detach().cpu().numpy()
+                outputs.append(output)
+
+        outputs = np.vstack(outputs)
+
+        if task.multi_label:
+            outputs = np.exp(outputs) / np.exp(outputs).sum(-1, keepdims=True)
+        outputs = outputs[..., self.ent_pos].reshape(len(features), -1)
+
+        preds = task.reverse_to_labels(outputs)
+        if not task.multi_label:
+            preds = np_softmax(preds)
+
+        preds = task.apply_valid_conditions(features, preds)
+
+        apply_threshold = task.multi_label and negative_threshold &gt; 0
+        if apply_threshold:
+            preds = self.apply_threshold(
+                preds, threshold=negative_threshold, ignore_negative_prediction=ignore_negative_prediction
+            )
+
+        predictions = np.argsort(preds, -1)[:, ::-1]
+        if topk &gt; 0:
+            predictions = predictions[:, :topk]
+        if return_labels:
+            predictions = task.idx2label(predictions)
+        if return_confidences:
+            confidences = np.sort(preds, -1)[:, ::-1]
+            if topk &gt; 0:
+                confidences = confidences[:, :topk]
+
+            predictions = np.stack((predictions, confidences), -1).tolist()
+            predictions = [
+                [(int(label), float(conf)) if not return_labels else (label, float(conf)) for label, conf in row]
+                for row in predictions
+            ]
+        else:
+            predictions = predictions.tolist()
+        if topk == 1:
+            predictions = [row[0] for row in predictions]
+
+        if return_raw_output:
+            return (predictions, preds)
+        else:
+            return predictions
+
+
+__pdoc__ = {&#34;EntailmentClassifier.__call__&#34;: True}</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="a2t.base.EntailmentClassifier"><code class="flex name class">
+<span>class <span class="ident">EntailmentClassifier</span></span>
+<span>(</span><span>pretrained_model: str = 'roberta-large-mnli', use_cuda: bool = True, half: bool = False, verbose: bool = True, use_tqdm: bool = True, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>General purpose Entailment based classifier.</p>
+<p>This class contains the code for entailment-based zero-shot classification inference. It is pretended to be
+task and data independent.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>pretrained_model</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>The name or path of the pretrained model. Defaults to "roberta-large-mnli".</dd>
+<dt><strong><code>use_cuda</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Use the GPU if possible. Defaults to True.</dd>
+<dt><strong><code>half</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Use half precision if possible. Defaults to False.</dd>
+<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Output log information. Defaults to True.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EntailmentClassifier(Classifier):
+    &#34;&#34;&#34;General purpose Entailment based classifier.
+
+    This class contains the code for entailment-based zero-shot classification inference. It is pretended to be
+    task and data independent.
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        pretrained_model: str = &#34;roberta-large-mnli&#34;,
+        use_cuda: bool = True,
+        half: bool = False,
+        verbose: bool = True,
+        use_tqdm: bool = True,
+        **kwargs
+    ):
+        &#34;&#34;&#34;
+        Args:
+            pretrained_model (str, optional): The name or path of the pretrained model. Defaults to &#34;roberta-large-mnli&#34;.
+            use_cuda (bool, optional): Use the GPU if possible. Defaults to True.
+            half (bool, optional): Use half precision if possible. Defaults to False.
+            verbose (bool, optional): Output log information. Defaults to True.
+        &#34;&#34;&#34;
+        super().__init__(None, pretrained_model, use_cuda, half, verbose)
+        self.use_tqdm = use_tqdm and _use_tqdm
+
+    def _initialize(self, pretrained_model: str):
+        self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
+        self.model = AutoModelForSequenceClassification.from_pretrained(pretrained_model)
+        self.config = AutoConfig.from_pretrained(pretrained_model)
+        self.ent_pos = self.config.label2id.get(&#34;ENTAILMENT&#34;, self.config.label2id.get(&#34;entailment&#34;, None))
+        if self.ent_pos is None:
+            raise ValueError(&#34;The model config must contain ENTAILMENT label in the label2id dict.&#34;)
+        else:
+            self.ent_pos = int(self.ent_pos)
+
+    @staticmethod
+    def apply_threshold(
+        output: np.ndarray,
+        threshold: float = 0.0,
+        ignore_negative_prediction: bool = True,
+        application_type: str = &#34;prediction&#34;,
+    ) -&gt; np.ndarray:
+        &#34;&#34;&#34;
+
+        Args:
+            output (ndarray): (batch_size, n_labels) The predicted probabilities.
+            threshold (float): The threshold value to apply.
+            ignore_negative_prediction (bool): Ignore the negative prediction probabilites. Default to True.
+            application_type (str): How to apply the threshold: Options:
+
+                * **&#34;prediction&#34;**: Set to 1.0 the probability of the negative class if the no prediction is higher than the threshold.
+                * **&#34;mask&#34;**: Set to 0.0 the probabilities of the positive classes that are lower or equal to the threshold.
+        &#34;&#34;&#34;
+        output_ = output.copy()
+        if ignore_negative_prediction:
+            output_[:, 0] = 0.0
+        if application_type == &#34;prediction&#34;:
+            activations = (output_ &gt;= threshold).sum(-1).astype(int)
+            output_[activations == 0, 0] = 1.00
+        elif application_type == &#34;mask&#34;:
+            activations = output_ &lt; threshold
+            output_[activations] = 0.0
+        else:
+            raise ValueError(&#34;&#34;&#34;application_type argument must be &#34;prediction&#34; or &#34;mask&#34;.&#34;&#34;&#34;)
+
+        return output_
+
+    def __call__(
+        self,
+        task: Task,
+        features: List[Features],
+        negative_threshold: float = 0.5,
+        topk: int = 1,
+        return_labels: bool = False,
+        return_confidences: bool = False,
+        ignore_negative_prediction: bool = False,
+        return_raw_output: bool = False,
+        **kwargs
+    ) -&gt; List:
+        &#34;&#34;&#34;Call method for the EntailmentClassifier.
+
+
+        TODO: Add output documentation.
+
+        Args:
+            task (Task): The task instance used for inference.
+            features (List[Features]): The list of features to classify.
+            negative_threshold (float, optional): The threshold used if necessary. Defaults to 0.5.
+            topk (int, optional): Return the first `k` predictions with higher probabilities. Defaults to 1.
+            return_labels (bool, optional): Whether to return the label ids or names. Defaults to False (ids).
+            return_confidences (bool, optional): Whether to return prediction confidences or not. Defaults to False.
+            ignore_negative_prediction (bool, optional): Whether to ignore the predictions of the negative class. Defaults to False.
+            return_raw_output (bool, optional): Return the raw output along with the processed one. Defaults to False.
+
+        Returns:
+            List: A list with the predictions.
+        &#34;&#34;&#34;
+        task.assert_features_class(features)
+
+        outputs = []
+        iterator = features if not self.use_tqdm else tqdm(features, total=len(features))
+        with torch.no_grad():
+            for feature in iterator:
+                sentence_pairs = task.generate_premise_hypotheses_pairs([feature], self.tokenizer.sep_token)
+                data = self.tokenizer(sentence_pairs, return_tensors=&#34;pt&#34;, padding=True).input_ids
+                data = data.to(self.device)
+                output = self.model(data)[0].detach().cpu().numpy()
+                outputs.append(output)
+
+        outputs = np.vstack(outputs)
+
+        if task.multi_label:
+            outputs = np.exp(outputs) / np.exp(outputs).sum(-1, keepdims=True)
+        outputs = outputs[..., self.ent_pos].reshape(len(features), -1)
+
+        preds = task.reverse_to_labels(outputs)
+        if not task.multi_label:
+            preds = np_softmax(preds)
+
+        preds = task.apply_valid_conditions(features, preds)
+
+        apply_threshold = task.multi_label and negative_threshold &gt; 0
+        if apply_threshold:
+            preds = self.apply_threshold(
+                preds, threshold=negative_threshold, ignore_negative_prediction=ignore_negative_prediction
+            )
+
+        predictions = np.argsort(preds, -1)[:, ::-1]
+        if topk &gt; 0:
+            predictions = predictions[:, :topk]
+        if return_labels:
+            predictions = task.idx2label(predictions)
+        if return_confidences:
+            confidences = np.sort(preds, -1)[:, ::-1]
+            if topk &gt; 0:
+                confidences = confidences[:, :topk]
+
+            predictions = np.stack((predictions, confidences), -1).tolist()
+            predictions = [
+                [(int(label), float(conf)) if not return_labels else (label, float(conf)) for label, conf in row]
+                for row in predictions
+            ]
+        else:
+            predictions = predictions.tolist()
+        if topk == 1:
+            predictions = [row[0] for row in predictions]
+
+        if return_raw_output:
+            return (predictions, preds)
+        else:
+            return predictions</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>a2t.base.Classifier</li>
+</ul>
+<h3>Static methods</h3>
+<dl>
+<dt id="a2t.base.EntailmentClassifier.apply_threshold"><code class="name flex">
+<span>def <span class="ident">apply_threshold</span></span>(<span>output: numpy.ndarray, threshold: float = 0.0, ignore_negative_prediction: bool = True, application_type: str = 'prediction') ‑> numpy.ndarray</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>output</code></strong> :&ensp;<code>ndarray</code></dt>
+<dd>(batch_size, n_labels) The predicted probabilities.</dd>
+<dt><strong><code>threshold</code></strong> :&ensp;<code>float</code></dt>
+<dd>The threshold value to apply.</dd>
+<dt><strong><code>ignore_negative_prediction</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Ignore the negative prediction probabilites. Default to True.</dd>
+<dt><strong><code>application_type</code></strong> :&ensp;<code>str</code></dt>
+<dd>
+<p>How to apply the threshold: Options:</p>
+<ul>
+<li><strong>"prediction"</strong>: Set to 1.0 the probability of the negative class if the no prediction is higher than the threshold.</li>
+<li><strong>"mask"</strong>: Set to 0.0 the probabilities of the positive classes that are lower or equal to the threshold.</li>
+</ul>
+</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def apply_threshold(
+    output: np.ndarray,
+    threshold: float = 0.0,
+    ignore_negative_prediction: bool = True,
+    application_type: str = &#34;prediction&#34;,
+) -&gt; np.ndarray:
+    &#34;&#34;&#34;
+
+    Args:
+        output (ndarray): (batch_size, n_labels) The predicted probabilities.
+        threshold (float): The threshold value to apply.
+        ignore_negative_prediction (bool): Ignore the negative prediction probabilites. Default to True.
+        application_type (str): How to apply the threshold: Options:
+
+            * **&#34;prediction&#34;**: Set to 1.0 the probability of the negative class if the no prediction is higher than the threshold.
+            * **&#34;mask&#34;**: Set to 0.0 the probabilities of the positive classes that are lower or equal to the threshold.
+    &#34;&#34;&#34;
+    output_ = output.copy()
+    if ignore_negative_prediction:
+        output_[:, 0] = 0.0
+    if application_type == &#34;prediction&#34;:
+        activations = (output_ &gt;= threshold).sum(-1).astype(int)
+        output_[activations == 0, 0] = 1.00
+    elif application_type == &#34;mask&#34;:
+        activations = output_ &lt; threshold
+        output_[activations] = 0.0
+    else:
+        raise ValueError(&#34;&#34;&#34;application_type argument must be &#34;prediction&#34; or &#34;mask&#34;.&#34;&#34;&#34;)
+
+    return output_</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="a2t.base.EntailmentClassifier.__call__"><code class="name flex">
+<span>def <span class="ident">__call__</span></span>(<span>self, task: a2t.tasks.base.Task, features: List[a2t.tasks.base.Features], negative_threshold: float = 0.5, topk: int = 1, return_labels: bool = False, return_confidences: bool = False, ignore_negative_prediction: bool = False, return_raw_output: bool = False, **kwargs) ‑> List</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Call method for the EntailmentClassifier.</p>
+<p>TODO: Add output documentation.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>task</code></strong> :&ensp;<code>Task</code></dt>
+<dd>The task instance used for inference.</dd>
+<dt><strong><code>features</code></strong> :&ensp;<code>List[Features]</code></dt>
+<dd>The list of features to classify.</dd>
+<dt><strong><code>negative_threshold</code></strong> :&ensp;<code>float</code>, optional</dt>
+<dd>The threshold used if necessary. Defaults to 0.5.</dd>
+<dt><strong><code>topk</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Return the first <code>k</code> predictions with higher probabilities. Defaults to 1.</dd>
+<dt><strong><code>return_labels</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Whether to return the label ids or names. Defaults to False (ids).</dd>
+<dt><strong><code>return_confidences</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Whether to return prediction confidences or not. Defaults to False.</dd>
+<dt><strong><code>ignore_negative_prediction</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Whether to ignore the predictions of the negative class. Defaults to False.</dd>
+<dt><strong><code>return_raw_output</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Return the raw output along with the processed one. Defaults to False.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>List</code></dt>
+<dd>A list with the predictions.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __call__(
+    self,
+    task: Task,
+    features: List[Features],
+    negative_threshold: float = 0.5,
+    topk: int = 1,
+    return_labels: bool = False,
+    return_confidences: bool = False,
+    ignore_negative_prediction: bool = False,
+    return_raw_output: bool = False,
+    **kwargs
+) -&gt; List:
+    &#34;&#34;&#34;Call method for the EntailmentClassifier.
+
+
+    TODO: Add output documentation.
+
+    Args:
+        task (Task): The task instance used for inference.
+        features (List[Features]): The list of features to classify.
+        negative_threshold (float, optional): The threshold used if necessary. Defaults to 0.5.
+        topk (int, optional): Return the first `k` predictions with higher probabilities. Defaults to 1.
+        return_labels (bool, optional): Whether to return the label ids or names. Defaults to False (ids).
+        return_confidences (bool, optional): Whether to return prediction confidences or not. Defaults to False.
+        ignore_negative_prediction (bool, optional): Whether to ignore the predictions of the negative class. Defaults to False.
+        return_raw_output (bool, optional): Return the raw output along with the processed one. Defaults to False.
+
+    Returns:
+        List: A list with the predictions.
+    &#34;&#34;&#34;
+    task.assert_features_class(features)
+
+    outputs = []
+    iterator = features if not self.use_tqdm else tqdm(features, total=len(features))
+    with torch.no_grad():
+        for feature in iterator:
+            sentence_pairs = task.generate_premise_hypotheses_pairs([feature], self.tokenizer.sep_token)
+            data = self.tokenizer(sentence_pairs, return_tensors=&#34;pt&#34;, padding=True).input_ids
+            data = data.to(self.device)
+            output = self.model(data)[0].detach().cpu().numpy()
+            outputs.append(output)
+
+    outputs = np.vstack(outputs)
+
+    if task.multi_label:
+        outputs = np.exp(outputs) / np.exp(outputs).sum(-1, keepdims=True)
+    outputs = outputs[..., self.ent_pos].reshape(len(features), -1)
+
+    preds = task.reverse_to_labels(outputs)
+    if not task.multi_label:
+        preds = np_softmax(preds)
+
+    preds = task.apply_valid_conditions(features, preds)
+
+    apply_threshold = task.multi_label and negative_threshold &gt; 0
+    if apply_threshold:
+        preds = self.apply_threshold(
+            preds, threshold=negative_threshold, ignore_negative_prediction=ignore_negative_prediction
+        )
+
+    predictions = np.argsort(preds, -1)[:, ::-1]
+    if topk &gt; 0:
+        predictions = predictions[:, :topk]
+    if return_labels:
+        predictions = task.idx2label(predictions)
+    if return_confidences:
+        confidences = np.sort(preds, -1)[:, ::-1]
+        if topk &gt; 0:
+            confidences = confidences[:, :topk]
+
+        predictions = np.stack((predictions, confidences), -1).tolist()
+        predictions = [
+            [(int(label), float(conf)) if not return_labels else (label, float(conf)) for label, conf in row]
+            for row in predictions
+        ]
+    else:
+        predictions = predictions.tolist()
+    if topk == 1:
+        predictions = [row[0] for row in predictions]
+
+    if return_raw_output:
+        return (predictions, preds)
+    else:
+        return predictions</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="a2t" href="index.html">a2t</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="a2t.base.EntailmentClassifier" href="#a2t.base.EntailmentClassifier">EntailmentClassifier</a></code></h4>
+<ul class="">
+<li><code><a title="a2t.base.EntailmentClassifier.apply_threshold" href="#a2t.base.EntailmentClassifier.apply_threshold">apply_threshold</a></code></li>
+<li><code><a title="a2t.base.EntailmentClassifier.__call__" href="#a2t.base.EntailmentClassifier.__call__">__call__</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

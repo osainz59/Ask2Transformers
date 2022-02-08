@@ -1,0 +1,1638 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>a2t.tasks API documentation</title>
+<meta name="description" content="The module `tasks` contains the code related to the `Task` definition …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>a2t.tasks</code></h1>
+</header>
+<section id="section-intro">
+<p>The module <code>tasks</code> contains the code related to the <code><a title="a2t.tasks.Task" href="#a2t.tasks.Task">Task</a></code> definition.</p>
+<p><img alt="Task taxonomy." src="../../../imgs/task_taxonomy.svg"></p>
+<p>The tasks on this module are organized based on the number of spans to classify:</p>
+<ul>
+<li><code><a title="a2t.tasks.ZeroaryTask" href="#a2t.tasks.ZeroaryTask">ZeroaryTask</a></code>: are tasks like Text Classification, where the aim is to classify the given text into a set of predefined
+labels.</li>
+<li><code><a title="a2t.tasks.UnaryTask" href="#a2t.tasks.UnaryTask">UnaryTask</a></code>: are tasks like Named Entity Classification, where the object to classify is an span within a text.</li>
+<li><code><a title="a2t.tasks.BinaryTask" href="#a2t.tasks.BinaryTask">BinaryTask</a></code>: are tasks like Relation Classification, where what is actually classified is the relation between two spans in a text.</li>
+</ul>
+<p>There are also more specific predefined task classes like <code><a title="a2t.tasks.TopicClassificationTask" href="#a2t.tasks.TopicClassificationTask">TopicClassificationTask</a></code> that includes helpful code and default values for
+the given task. You can either create create a task specific class or instantiate one of the predefined ones.</p>
+<p>In addition to the <code><a title="a2t.tasks.Task" href="#a2t.tasks.Task">Task</a></code> class a <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class must be defined. The <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class will define which type of information is
+used during the classification. For example, for a <code><a title="a2t.tasks.UnaryTask" href="#a2t.tasks.UnaryTask">UnaryTask</a></code> a <code>context</code> and some variable <code>X</code> for the span are needed. This class
+will also be used to instantiate the task data instances.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;The module `tasks` contains the code related to the `Task` definition.
+
+![Task taxonomy.](../../../imgs/task_taxonomy.svg)
+
+The tasks on this module are organized based on the number of spans to classify:
+
+* `ZeroaryTask`: are tasks like Text Classification, where the aim is to classify the given text into a set of predefined
+labels.
+* `UnaryTask`: are tasks like Named Entity Classification, where the object to classify is an span within a text.
+* `BinaryTask`: are tasks like Relation Classification, where what is actually classified is the relation between two spans in a text.
+
+There are also more specific predefined task classes like `TopicClassificationTask` that includes helpful code and default values for 
+the given task. You can either create create a task specific class or instantiate one of the predefined ones.
+
+In addition to the `Task` class a `Features` class must be defined. The `Features` class will define which type of information is
+used during the classification. For example, for a `UnaryTask` a `context` and some variable `X` for the span are needed. This class
+will also be used to instantiate the task data instances.
+&#34;&#34;&#34;
+
+from .base import Task, ZeroaryTask, UnaryTask, BinaryTask, Features, ZeroaryFeatures, UnaryFeatures, BinaryFeatures
+from .text_classification import TopicClassificationFeatures, TopicClassificationTask
+from .span_classification import NamedEntityClassificationFeatures, NamedEntityClassificationTask
+from .tuple_classification import (
+    RelationClassificationFeatures,
+    RelationClassificationTask,
+    TACREDRelationClassificationTask,
+    TACREDFeatures,
+)
+
+
+PREDEFINED_TASKS = {
+    &#34;zero-ary&#34;: (ZeroaryTask, ZeroaryFeatures),
+    &#34;unary&#34;: (UnaryTask, UnaryFeatures),
+    &#34;binary&#34;: (BinaryTask, BinaryFeatures),
+    &#34;topic-classification&#34;: (TopicClassificationTask, TopicClassificationFeatures),
+    &#34;named-entity-classification&#34;: (NamedEntityClassificationTask, NamedEntityClassificationFeatures),
+    &#34;relation-classification&#34;: (RelationClassificationTask, RelationClassificationFeatures),
+    &#34;tacred&#34;: (TACREDRelationClassificationTask, TACREDFeatures),
+}
+
+
+__all__ = [
+    &#34;Task&#34;,
+    &#34;Features&#34;,
+    &#34;ZeroaryTask&#34;,
+    &#34;ZeroaryFeatures&#34;,
+    &#34;UnaryTask&#34;,
+    &#34;UnaryFeatures&#34;,
+    &#34;BinaryTask&#34;,
+    &#34;BinaryFeatures&#34;,
+    &#34;TopicClassificationFeatures&#34;,
+    &#34;TopicClassificationTask&#34;,
+    &#34;TACREDFeatures&#34;,
+    &#34;TACREDRelationClassificationTask&#34;,
+    &#34;PREDEFINED_TASKS&#34;,
+]
+
+# Ignore __dataclass_fields__ variables on documentation
+__pdoc__ = {
+    **{
+        f&#34;{_class}.{varname}&#34;: False
+        for _class in __all__
+        if hasattr(eval(_class), &#34;__dataclass_fields__&#34;)
+        for varname in eval(_class).__dataclass_fields__.keys()
+    }
+}</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="a2t.tasks.Task"><code class="flex name class">
+<span>class <span class="ident">Task</span></span>
+<span>(</span><span>name: str = None, required_variables: List[str] = &lt;factory&gt;, additional_variables: List[str] = &lt;factory&gt;, labels: List[str] = &lt;factory&gt;, templates: Dict[str, List[str]] = &lt;factory&gt;, valid_conditions: Dict[str, List[str]] = &lt;factory&gt;, negative_label_id: int = -1, multi_label: bool = False, features_class: type = a2t.tasks.base.Features)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Abstract class for Tasks definition.</p>
+<p>The method <code>_assert_constraints()</code> must be overrided.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>A name for the task that may be used for to differentiate task when saving. Defaults to None.</dd>
+<dt><strong><code>required_variables</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
+<dd>The variables required to perform the task and must be implemented by the <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class. Defaults to empty list.</dd>
+<dt><strong><code>additional_variables</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
+<dd>The variables not required to perform the task and must be implemented by the <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class. Defaults to empty list.</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
+<dd>The labels for the task. Defaults to empty list.</dd>
+<dt><strong><code>templates</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
+<dd>The templates/verbalizations for the task. Defaults to empty dict.</dd>
+<dt><strong><code>valid_conditions</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
+<dd>The valid conditions or constraints for the task.</dd>
+<dt><strong><code>negative_label_id</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>The index of the negative label or -1 if no negative label exist. A negative label is for example the class <code>Other</code> on NER, that means that the specific token is not a named entity. Defaults to -1.</dd>
+<dt><strong><code>multi_label</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Wheter the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.</dd>
+<dt><strong><code>features_class</code></strong> :&ensp;<code>type</code>, optional</dt>
+<dd>The <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class related to the task. Default to <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code>.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class Task:
+    &#34;&#34;&#34;Abstract class for Tasks definition.
+
+    The method `_assert_constraints()` must be overrided.
+
+    Args:
+        name (str, optional): A name for the task that may be used for to differentiate task when saving. Defaults to None.
+        required_variables (List[str], optional): The variables required to perform the task and must be implemented by the `Features` class. Defaults to empty list.
+        additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `Features` class. Defaults to empty list.
+        labels (List[str], optional): The labels for the task. Defaults to empty list.
+        templates (Dict[str, List[str]], optional): The templates/verbalizations for the task. Defaults to empty dict.
+        valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task.
+        negative_label_id (int, optional): The index of the negative label or -1 if no negative label exist. A negative label is for example the class `Other` on NER, that means that the specific token is not a named entity. Defaults to -1.
+        multi_label (bool, optional): Wheter the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.
+        features_class (type, optional): The `Features` class related to the task. Default to `Features`.
+    &#34;&#34;&#34;
+
+    name: str = None
+    required_variables: List[str] = field(default_factory=list)
+    additional_variables: List[str] = field(default_factory=list)
+    labels: List[str] = field(default_factory=list)
+    templates: Dict[str, List[str]] = field(default_factory=dict)
+    valid_conditions: Dict[str, List[str]] = field(default_factory=dict)
+    negative_label_id: int = -1  # -1 for no negative class
+    multi_label: bool = False
+    features_class: type = Features
+
+    def __post_init__(self):
+        self._assert_minimal_constraints()
+        self._assert_constraints()
+
+        self.label2id = {label: i for i, label in enumerate(self.labels)}
+        self.n_labels = len(self.labels)
+
+        if not self.templates:
+            self.templates = {}
+
+        # Create the templates to label mapping
+        self.template2label = defaultdict(list)
+        for label, templates in self.templates.items():
+            for template in templates:
+                self.template2label[template].append(label)
+
+        self.template_list = list(self.template2label.keys())
+        template2id = {template: i for i, template in enumerate(self.template_list)}
+
+        self.label2templateid = defaultdict(list)
+        for label, templates in self.templates.items():
+            self.label2templateid[label].extend([template2id[template] for template in templates])
+
+        # Create the valid_conditions matrix
+        if self.valid_conditions:
+            self._valid_conditions = {}
+            self._always_valid_labels = np.zeros(self.n_labels)
+            self._always_valid_labels[self.negative_label_id] = 1.0
+            for label, conditions in self.valid_conditions.items():
+                if label not in self.labels:
+                    continue
+                for condition in conditions:
+                    if condition == &#34;*&#34;:
+                        self._always_valid_labels[self.label2id[label]] = 1.0
+                        continue
+                    if condition not in self._valid_conditions:
+                        self._valid_conditions[condition] = np.zeros(self.n_labels)
+                        if self.negative_label_id &gt;= 0:
+                            self._valid_conditions[condition][self.negative_label_id] = 1.0
+                    self._valid_conditions[condition][self.label2id[label]] = 1.0
+        else:
+            self._valid_conditions = None
+
+        def idx2label(idx):
+            return self.labels[idx]
+
+        self.idx2label = np.vectorize(idx2label)
+
+    def __repr__(self) -&gt; str:
+        class_name = self.name if self.name else str(self.__class__)
+        labels_repr = self.labels.__repr__()
+        if len(labels_repr) &gt; 89:
+            labels_repr = self.labels[:3].__repr__().replace(&#34;]&#34;, &#34;, ...]&#34;)
+        templates_repr = len(self.template2label)
+        feature_class_repr = str(self.features_class)
+
+        return (
+            f&#34;{class_name} (&#34;
+            f&#34;\n\tLabels: {labels_repr}&#34;
+            f&#34;\n\tTemplates: {templates_repr}&#34;
+            f&#34;\n\tFeatures: {feature_class_repr}&#34;
+            &#34;\n)&#34;
+        )
+
+    def _assert_constraints(self):
+        raise NotImplementedError(f&#34;{self.__class__} is an abstract class. This method should be implemented.&#34;)
+
+    def _assert_minimal_constraints(self):
+        assert len(self.labels) &gt; 0, &#34;The number of labels should be greather than 0.&#34;
+
+        assert self.negative_label_id &lt; len(
+            self.labels
+        ), &#34;The id for the negative label should be lower than the amount of labels.&#34;
+
+        if self.negative_label_id &gt;= 0:
+            assert self.templates is not None and len(
+                [value for values in self.templates.values() for value in values]
+            ), &#34;`templates` parameter must not be None nor empty.&#34;
+
+        assert all(
+            key in self.labels for key in self.templates.keys()
+        ), &#34;All the keys of templates dicts must be defined on labels.&#34;
+
+        if self.valid_conditions:
+            assert all(
+                key in self.labels for key in self.valid_conditions.keys()
+            ), &#34;All the keys of valid_conditions dict must be defined on labels.&#34;
+
+        assert all(
+            var in self.features_class.__dict__[&#34;__dataclass_fields__&#34;]
+            for var in self.required_variables + self.additional_variables
+        ), &#34;All variables should be defined on the features_class.&#34;
+
+        assert all(
+            var.strip(&#34;{&#34;).strip(&#34;}&#34;) in [*self.required_variables, *self.additional_variables]
+            for templates in self.templates.values()
+            for template in templates
+            for var in re.findall(r&#34;{\w+}&#34;, template)
+        )
+
+    def assert_features_class(self, features: List[Features]) -&gt; None:
+        &#34;&#34;&#34;Assert that all features are instance of the task specific `Features` class.
+
+        Args:
+            features (List[Features]): The list of features to check.
+
+        Raises:
+            IncorrectFeatureTypeError: Raised when any feature is not an instance of the task specific `Features` class.
+        &#34;&#34;&#34;
+        for feature in features:
+            if not isinstance(feature, self.features_class):
+                raise IncorrectFeatureTypeError(
+                    f&#34;Incorrect feature type given. Expected {self.features_class} but obtained {type(feature)}.&#34;
+                )
+
+    def generate_premise_hypotheses_pairs(self, features: List[Features], sep_token: str = &#34;&lt;/s&gt;&#34;) -&gt; List[str]:
+        &#34;&#34;&#34;Generate premise-hypothesis pairs based on the `Task` templates.
+
+        Args:
+            features (List[Features]): The list of features.
+            sep_token (str, optional): The model specific separator token. Defaults to &#34;&lt;/s&gt;&#34;.
+
+        Returns:
+            List[str]: The list of premise-hypothesis pairs generated from the features and templates.
+        &#34;&#34;&#34;
+        if not isinstance(features, list):
+            features = [features]
+
+        sentence_pairs = [
+            f&#34;{feature.context} {sep_token} {template.format(**feature.__dict__)}&#34;
+            for feature in features
+            for template in self.template_list
+        ]
+        return sentence_pairs
+
+    def reverse_to_labels(self, template_probs: np.ndarray, collate_fn: Callable = np.max) -&gt; np.ndarray:
+        &#34;&#34;&#34;A function that maps template probabilities to label probabilites. By default, the maximum probabilities among
+        label related templates is used.
+
+        Args:
+            template_probs (np.ndarray): (batch_size, n_templates) The templates probabilites.
+            collate_fn (Callable, optional): The probabilites collate function. Defaults to np.max.
+
+        Returns:
+            np.ndarray: (batch_size, n_labels) The labels probabilities.
+        &#34;&#34;&#34;
+        outputs = np.hstack(
+            [
+                collate_fn(template_probs[:, self.label2templateid[label]], axis=-1, keepdims=True)
+                if label in self.label2templateid
+                else np.zeros((template_probs.shape[0], 1))
+                for label in self.labels
+            ]
+        )
+        return outputs
+
+    def apply_valid_conditions(self, features: List[Features], probs: np.ndarray) -&gt; np.ndarray:
+        &#34;&#34;&#34;Applies the valid conditions to the labels probabilities. If a constraint is not satisfied the probability is set to 0.
+
+        Args:
+            features (List[Features]): (batch_size,) The list of features.
+            probs (np.ndarray): (batch_size, n_labels) The labels probabilities.
+
+        Returns:
+            np.ndarray: (batch_size, n_labels) The labels probabilities.
+        &#34;&#34;&#34;
+        if self._valid_conditions:
+            mask_matrix = np.stack(
+                [self._valid_conditions.get(feature.inst_type, np.zeros(self.n_labels)) for feature in features],
+                axis=0,
+            )
+            probs = probs * np.logical_or(mask_matrix, self._always_valid_labels)  # TODO: Need a test
+        return probs
+
+    def compute_metrics(
+        self, labels: np.ndarray, output: np.ndarray, threshold: Union[str, float] = &#34;optimize&#34;
+    ) -&gt; Dict[str, float]:
+        &#34;&#34;&#34;Compute the metrics for the given task. This method is abstract and needs to be overrided.
+
+        Args:
+            labels (np.ndarray): (batch_size,) The correct labels.
+            output (np.ndarray): (batch_size, n_labels) The labels probabilities.
+            threshold (Union[str, float], optional): The threshold to use on the evaluation. Options:
+
+                * **&#34;default&#34;**: The threshold is set to 0.5.
+                * **&#34;optimize&#34;**: Optimize the threshold with the `labels`. Intended to be used on the development split.
+                * **`float`**: A specific float value for the threshold.
+
+                Defaults to &#34;optimize&#34;.
+
+        Raises:
+            NotImplementedError: Raise if not overrided.
+
+        Returns:
+            Dict[str, float]: Dict with the resulting metrics.
+        &#34;&#34;&#34;
+        # TODO: Unittest
+        raise NotImplementedError(&#34;This method must be implemented.&#34;)
+
+    @classmethod
+    def from_config(cls, file_path: str) -&gt; object:
+        &#34;&#34;&#34;Loads the Task instance from a configuration file.
+
+        Args:
+            file_path (str): The path to the configuration file.
+
+        Returns:
+            Task: A `Task` instance based on the configuration file.
+        &#34;&#34;&#34;
+        with open(file_path, &#34;rt&#34;) as f:
+            config = json.load(f)
+
+        if &#34;features_class&#34; in config:
+            components = config[&#34;features_class&#34;].split(&#34;.&#34;)
+            mod = __import__(components[0])
+            for comp in components[1:]:
+                mod = getattr(mod, comp)
+
+            config[&#34;features_class&#34;] = mod
+
+        params = set([p.name for p in fields(cls)]) | set(inspect.signature(cls).parameters.keys())
+        params = {key: config[key] for key in params if key in config}
+
+        return cls(**params)
+
+    def to_config(self, file_path: str) -&gt; None:
+        &#34;&#34;&#34;Saves the task instance to a configuration file.
+
+        Args:
+            file_path (str): The path to the configuration file.
+        &#34;&#34;&#34;
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        with open(file_path, &#34;wt&#34;) as f:
+            values = {key: value for key, value in vars(self).items()}
+            values[&#34;features_class&#34;] = values[&#34;features_class&#34;].__module__ + &#34;.&#34; + values[&#34;features_class&#34;].__name__
+            for key in [&#34;label2id&#34;, &#34;idx2label&#34;, &#34;n_labels&#34;, &#34;template2label&#34;, &#34;label2templateid&#34;, &#34;_valid_conditions&#34;]:
+                del values[key]
+
+            json.dump(values, f, indent=4)</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li>a2t.tasks.base.BinaryTask</li>
+<li>a2t.tasks.base.UnaryTask</li>
+<li>a2t.tasks.base.ZeroaryTask</li>
+</ul>
+<h3>Static methods</h3>
+<dl>
+<dt id="a2t.tasks.Task.from_config"><code class="name flex">
+<span>def <span class="ident">from_config</span></span>(<span>file_path: str) ‑> object</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Loads the Task instance from a configuration file.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>file_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>The path to the configuration file.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="a2t.tasks.Task" href="#a2t.tasks.Task">Task</a></code></dt>
+<dd>A <code><a title="a2t.tasks.Task" href="#a2t.tasks.Task">Task</a></code> instance based on the configuration file.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def from_config(cls, file_path: str) -&gt; object:
+    &#34;&#34;&#34;Loads the Task instance from a configuration file.
+
+    Args:
+        file_path (str): The path to the configuration file.
+
+    Returns:
+        Task: A `Task` instance based on the configuration file.
+    &#34;&#34;&#34;
+    with open(file_path, &#34;rt&#34;) as f:
+        config = json.load(f)
+
+    if &#34;features_class&#34; in config:
+        components = config[&#34;features_class&#34;].split(&#34;.&#34;)
+        mod = __import__(components[0])
+        for comp in components[1:]:
+            mod = getattr(mod, comp)
+
+        config[&#34;features_class&#34;] = mod
+
+    params = set([p.name for p in fields(cls)]) | set(inspect.signature(cls).parameters.keys())
+    params = {key: config[key] for key in params if key in config}
+
+    return cls(**params)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="a2t.tasks.Task.assert_features_class"><code class="name flex">
+<span>def <span class="ident">assert_features_class</span></span>(<span>self, features: List[a2t.tasks.base.Features]) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Assert that all features are instance of the task specific <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>features</code></strong> :&ensp;<code>List[<a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a>]</code></dt>
+<dd>The list of features to check.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>IncorrectFeatureTypeError</code></dt>
+<dd>Raised when any feature is not an instance of the task specific <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def assert_features_class(self, features: List[Features]) -&gt; None:
+    &#34;&#34;&#34;Assert that all features are instance of the task specific `Features` class.
+
+    Args:
+        features (List[Features]): The list of features to check.
+
+    Raises:
+        IncorrectFeatureTypeError: Raised when any feature is not an instance of the task specific `Features` class.
+    &#34;&#34;&#34;
+    for feature in features:
+        if not isinstance(feature, self.features_class):
+            raise IncorrectFeatureTypeError(
+                f&#34;Incorrect feature type given. Expected {self.features_class} but obtained {type(feature)}.&#34;
+            )</code></pre>
+</details>
+</dd>
+<dt id="a2t.tasks.Task.generate_premise_hypotheses_pairs"><code class="name flex">
+<span>def <span class="ident">generate_premise_hypotheses_pairs</span></span>(<span>self, features: List[a2t.tasks.base.Features], sep_token: str = &#x27;&lt;/s&gt;&#x27;) ‑> List[str]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate premise-hypothesis pairs based on the <code><a title="a2t.tasks.Task" href="#a2t.tasks.Task">Task</a></code> templates.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>features</code></strong> :&ensp;<code>List[<a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a>]</code></dt>
+<dd>The list of features.</dd>
+<dt><strong><code>sep_token</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>The model specific separator token. Defaults to "</s>".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>List[str]</code></dt>
+<dd>The list of premise-hypothesis pairs generated from the features and templates.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_premise_hypotheses_pairs(self, features: List[Features], sep_token: str = &#34;&lt;/s&gt;&#34;) -&gt; List[str]:
+    &#34;&#34;&#34;Generate premise-hypothesis pairs based on the `Task` templates.
+
+    Args:
+        features (List[Features]): The list of features.
+        sep_token (str, optional): The model specific separator token. Defaults to &#34;&lt;/s&gt;&#34;.
+
+    Returns:
+        List[str]: The list of premise-hypothesis pairs generated from the features and templates.
+    &#34;&#34;&#34;
+    if not isinstance(features, list):
+        features = [features]
+
+    sentence_pairs = [
+        f&#34;{feature.context} {sep_token} {template.format(**feature.__dict__)}&#34;
+        for feature in features
+        for template in self.template_list
+    ]
+    return sentence_pairs</code></pre>
+</details>
+</dd>
+<dt id="a2t.tasks.Task.reverse_to_labels"><code class="name flex">
+<span>def <span class="ident">reverse_to_labels</span></span>(<span>self, template_probs: numpy.ndarray, collate_fn: Callable = &lt;function amax&gt;) ‑> numpy.ndarray</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A function that maps template probabilities to label probabilites. By default, the maximum probabilities among
+label related templates is used.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>template_probs</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>(batch_size, n_templates) The templates probabilites.</dd>
+<dt><strong><code>collate_fn</code></strong> :&ensp;<code>Callable</code>, optional</dt>
+<dd>The probabilites collate function. Defaults to np.max.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>np.ndarray</code></dt>
+<dd>(batch_size, n_labels) The labels probabilities.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reverse_to_labels(self, template_probs: np.ndarray, collate_fn: Callable = np.max) -&gt; np.ndarray:
+    &#34;&#34;&#34;A function that maps template probabilities to label probabilites. By default, the maximum probabilities among
+    label related templates is used.
+
+    Args:
+        template_probs (np.ndarray): (batch_size, n_templates) The templates probabilites.
+        collate_fn (Callable, optional): The probabilites collate function. Defaults to np.max.
+
+    Returns:
+        np.ndarray: (batch_size, n_labels) The labels probabilities.
+    &#34;&#34;&#34;
+    outputs = np.hstack(
+        [
+            collate_fn(template_probs[:, self.label2templateid[label]], axis=-1, keepdims=True)
+            if label in self.label2templateid
+            else np.zeros((template_probs.shape[0], 1))
+            for label in self.labels
+        ]
+    )
+    return outputs</code></pre>
+</details>
+</dd>
+<dt id="a2t.tasks.Task.apply_valid_conditions"><code class="name flex">
+<span>def <span class="ident">apply_valid_conditions</span></span>(<span>self, features: List[a2t.tasks.base.Features], probs: numpy.ndarray) ‑> numpy.ndarray</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Applies the valid conditions to the labels probabilities. If a constraint is not satisfied the probability is set to 0.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>features</code></strong> :&ensp;<code>List[<a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a>]</code></dt>
+<dd>(batch_size,) The list of features.</dd>
+<dt><strong><code>probs</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>(batch_size, n_labels) The labels probabilities.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>np.ndarray</code></dt>
+<dd>(batch_size, n_labels) The labels probabilities.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def apply_valid_conditions(self, features: List[Features], probs: np.ndarray) -&gt; np.ndarray:
+    &#34;&#34;&#34;Applies the valid conditions to the labels probabilities. If a constraint is not satisfied the probability is set to 0.
+
+    Args:
+        features (List[Features]): (batch_size,) The list of features.
+        probs (np.ndarray): (batch_size, n_labels) The labels probabilities.
+
+    Returns:
+        np.ndarray: (batch_size, n_labels) The labels probabilities.
+    &#34;&#34;&#34;
+    if self._valid_conditions:
+        mask_matrix = np.stack(
+            [self._valid_conditions.get(feature.inst_type, np.zeros(self.n_labels)) for feature in features],
+            axis=0,
+        )
+        probs = probs * np.logical_or(mask_matrix, self._always_valid_labels)  # TODO: Need a test
+    return probs</code></pre>
+</details>
+</dd>
+<dt id="a2t.tasks.Task.compute_metrics"><code class="name flex">
+<span>def <span class="ident">compute_metrics</span></span>(<span>self, labels: numpy.ndarray, output: numpy.ndarray, threshold: Union[str, float] = 'optimize') ‑> Dict[str, float]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Compute the metrics for the given task. This method is abstract and needs to be overrided.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>labels</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>(batch_size,) The correct labels.</dd>
+<dt><strong><code>output</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>(batch_size, n_labels) The labels probabilities.</dd>
+<dt><strong><code>threshold</code></strong> :&ensp;<code>Union[str, float]</code>, optional</dt>
+<dd>
+<p>The threshold to use on the evaluation. Options:</p>
+<ul>
+<li><strong>"default"</strong>: The threshold is set to 0.5.</li>
+<li><strong>"optimize"</strong>: Optimize the threshold with the <code>labels</code>. Intended to be used on the development split.</li>
+<li><strong><code>float</code></strong>: A specific float value for the threshold.</li>
+</ul>
+<p>Defaults to "optimize".</p>
+</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>NotImplementedError</code></dt>
+<dd>Raise if not overrided.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Dict[str, float]</code></dt>
+<dd>Dict with the resulting metrics.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_metrics(
+    self, labels: np.ndarray, output: np.ndarray, threshold: Union[str, float] = &#34;optimize&#34;
+) -&gt; Dict[str, float]:
+    &#34;&#34;&#34;Compute the metrics for the given task. This method is abstract and needs to be overrided.
+
+    Args:
+        labels (np.ndarray): (batch_size,) The correct labels.
+        output (np.ndarray): (batch_size, n_labels) The labels probabilities.
+        threshold (Union[str, float], optional): The threshold to use on the evaluation. Options:
+
+            * **&#34;default&#34;**: The threshold is set to 0.5.
+            * **&#34;optimize&#34;**: Optimize the threshold with the `labels`. Intended to be used on the development split.
+            * **`float`**: A specific float value for the threshold.
+
+            Defaults to &#34;optimize&#34;.
+
+    Raises:
+        NotImplementedError: Raise if not overrided.
+
+    Returns:
+        Dict[str, float]: Dict with the resulting metrics.
+    &#34;&#34;&#34;
+    # TODO: Unittest
+    raise NotImplementedError(&#34;This method must be implemented.&#34;)</code></pre>
+</details>
+</dd>
+<dt id="a2t.tasks.Task.to_config"><code class="name flex">
+<span>def <span class="ident">to_config</span></span>(<span>self, file_path: str) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Saves the task instance to a configuration file.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>file_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>The path to the configuration file.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_config(self, file_path: str) -&gt; None:
+    &#34;&#34;&#34;Saves the task instance to a configuration file.
+
+    Args:
+        file_path (str): The path to the configuration file.
+    &#34;&#34;&#34;
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    with open(file_path, &#34;wt&#34;) as f:
+        values = {key: value for key, value in vars(self).items()}
+        values[&#34;features_class&#34;] = values[&#34;features_class&#34;].__module__ + &#34;.&#34; + values[&#34;features_class&#34;].__name__
+        for key in [&#34;label2id&#34;, &#34;idx2label&#34;, &#34;n_labels&#34;, &#34;template2label&#34;, &#34;label2templateid&#34;, &#34;_valid_conditions&#34;]:
+            del values[key]
+
+        json.dump(values, f, indent=4)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="a2t.tasks.Features"><code class="flex name class">
+<span>class <span class="ident">Features</span></span>
+<span>(</span><span>context: str, label: str = None, inst_type: str = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A simple class to handle the features information.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>context</code></strong> :&ensp;<code>str</code></dt>
+<dd>The context sentence.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>The label of the instance.</dd>
+<dt><strong><code>inst_type</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>The type of the instance. This information is used for the `valid_conditions' constraints.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class Features:
+    &#34;&#34;&#34;A simple class to handle the features information.
+
+    Args:
+        context (str): The context sentence.
+        label (str, optional): The label of the instance.
+        inst_type (str, optional): The type of the instance. This information is used for the `valid_conditions&#39; constraints.
+    &#34;&#34;&#34;
+
+    context: str
+    label: str = None
+    inst_type: str = None</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li>a2t.tasks.base.BinaryFeatures</li>
+<li>a2t.tasks.base.UnaryFeatures</li>
+<li>a2t.tasks.base.ZeroaryFeatures</li>
+<li>a2t.tasks.span_classification.NamedEntityClassificationFeatures</li>
+<li>a2t.tasks.text_classification.TopicClassificationFeatures</li>
+<li>a2t.tasks.tuple_classification.RelationClassificationFeatures</li>
+<li>a2t.tasks.tuple_classification.TACREDFeatures</li>
+</ul>
+</dd>
+<dt id="a2t.tasks.ZeroaryTask"><code class="flex name class">
+<span>class <span class="ident">ZeroaryTask</span></span>
+<span>(</span><span>name: str = None, required_variables: List[str] = &lt;factory&gt;, additional_variables: List[str] = &lt;factory&gt;, labels: List[str] = &lt;factory&gt;, templates: Dict[str, List[str]] = &lt;factory&gt;, valid_conditions: Dict[str, List[str]] = &lt;factory&gt;, negative_label_id: int = -1, multi_label: bool = False, features_class: type = a2t.tasks.base.ZeroaryFeatures)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A <code><a title="a2t.tasks.Task" href="#a2t.tasks.Task">Task</a></code> implementation for Text Classification like tasks.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>A name for the task that may be used for to differentiate task when saving. Defaults to None.</dd>
+<dt><strong><code>additional_variables</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
+<dd>The variables not required to perform the task and must be implemented by the <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class. Defaults to empty list.</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
+<dd>The labels for the task. Defaults to empty list.</dd>
+<dt><strong><code>templates</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
+<dd>The templates/verbalizations for the task. Defaults to empty dict.</dd>
+<dt><strong><code>valid_conditions</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
+<dd>The valid conditions or constraints for the task.</dd>
+<dt><strong><code>multi_label</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Wheter the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.</dd>
+<dt><strong><code>features_class</code></strong> :&ensp;<code>type</code>, optional</dt>
+<dd>The <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class related to the task. Default to <code><a title="a2t.tasks.ZeroaryFeatures" href="#a2t.tasks.ZeroaryFeatures">ZeroaryFeatures</a></code>.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class ZeroaryTask(Task):
+    &#34;&#34;&#34;A `Task` implementation for Text Classification like tasks.
+
+    Args:
+        name (str, optional): A name for the task that may be used for to differentiate task when saving. Defaults to None.
+        additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `Features` class. Defaults to empty list.
+        labels (List[str], optional): The labels for the task. Defaults to empty list.
+        templates (Dict[str, List[str]], optional): The templates/verbalizations for the task. Defaults to empty dict.
+        valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task.
+        multi_label (bool, optional): Wheter the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.
+        features_class (type, optional): The `Features` class related to the task. Default to `ZeroaryFeatures`.
+    &#34;&#34;&#34;
+
+    features_class: type = ZeroaryFeatures
+
+    def _assert_constraints(self):
+        # Assert the number of required variables to be 0
+        assert len(self.required_variables) == 0, &#34;Zero-ary tasks like Text classifiation do not require any variable.&#34;
+
+    def compute_metrics(self, labels: np.ndarray, output: np.ndarray, threshold: Union[str, float] = None) -&gt; Dict[str, float]:
+        &#34;&#34;&#34;Compute the metrics for the given task. By default on `ZeroaryTask` the Accuracy is computed.
+
+        Args:
+            labels (np.ndarray): (batch_size,) The correct labels.
+            output (np.ndarray): (batch_size, n_labels) The labels probabilities.
+            threshold (Union[str, float], optional): No threshold is needed on `ZeroaryTask`.
+
+        Returns:
+            Dict[str, float]: Dict with the resulting metrics.
+        &#34;&#34;&#34;
+        # TODO: Unittest
+        if threshold:
+            warnings.warn(f&#34;{self.__class__} do not require &#39;threshold&#39;, ignored.&#34;)
+
+        return {&#34;accuracy_score&#34;: accuracy_score(labels, output.argmax(-1))}</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>a2t.tasks.base.Task</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li>a2t.tasks.text_classification.TopicClassificationTask</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="a2t.tasks.ZeroaryTask.compute_metrics"><code class="name flex">
+<span>def <span class="ident">compute_metrics</span></span>(<span>self, labels: numpy.ndarray, output: numpy.ndarray, threshold: Union[str, float] = None) ‑> Dict[str, float]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Compute the metrics for the given task. By default on <code><a title="a2t.tasks.ZeroaryTask" href="#a2t.tasks.ZeroaryTask">ZeroaryTask</a></code> the Accuracy is computed.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>labels</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>(batch_size,) The correct labels.</dd>
+<dt><strong><code>output</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>(batch_size, n_labels) The labels probabilities.</dd>
+<dt><strong><code>threshold</code></strong> :&ensp;<code>Union[str, float]</code>, optional</dt>
+<dd>No threshold is needed on <code><a title="a2t.tasks.ZeroaryTask" href="#a2t.tasks.ZeroaryTask">ZeroaryTask</a></code>.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Dict[str, float]</code></dt>
+<dd>Dict with the resulting metrics.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_metrics(self, labels: np.ndarray, output: np.ndarray, threshold: Union[str, float] = None) -&gt; Dict[str, float]:
+    &#34;&#34;&#34;Compute the metrics for the given task. By default on `ZeroaryTask` the Accuracy is computed.
+
+    Args:
+        labels (np.ndarray): (batch_size,) The correct labels.
+        output (np.ndarray): (batch_size, n_labels) The labels probabilities.
+        threshold (Union[str, float], optional): No threshold is needed on `ZeroaryTask`.
+
+    Returns:
+        Dict[str, float]: Dict with the resulting metrics.
+    &#34;&#34;&#34;
+    # TODO: Unittest
+    if threshold:
+        warnings.warn(f&#34;{self.__class__} do not require &#39;threshold&#39;, ignored.&#34;)
+
+    return {&#34;accuracy_score&#34;: accuracy_score(labels, output.argmax(-1))}</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="a2t.tasks.ZeroaryFeatures"><code class="flex name class">
+<span>class <span class="ident">ZeroaryFeatures</span></span>
+<span>(</span><span>context: str, label: str = None, inst_type: str = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A features class for <code><a title="a2t.tasks.ZeroaryTask" href="#a2t.tasks.ZeroaryTask">ZeroaryTask</a></code>. It only requires a <code>context</code> argument.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZeroaryFeatures(Features):
+    &#34;&#34;&#34;A features class for `ZeroaryTask`. It only requires a `context` argument.&#34;&#34;&#34;
+
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>a2t.tasks.base.Features</li>
+</ul>
+</dd>
+<dt id="a2t.tasks.UnaryTask"><code class="flex name class">
+<span>class <span class="ident">UnaryTask</span></span>
+<span>(</span><span>name: str = None, required_variables: List[str] = &lt;factory&gt;, additional_variables: List[str] = &lt;factory&gt;, labels: List[str] = &lt;factory&gt;, templates: Dict[str, List[str]] = &lt;factory&gt;, valid_conditions: Dict[str, List[str]] = &lt;factory&gt;, negative_label_id: int = -1, multi_label: bool = False, features_class: type = a2t.tasks.base.UnaryFeatures)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A <code><a title="a2t.tasks.Task" href="#a2t.tasks.Task">Task</a></code> implementation for Span Classification like tasks.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>A name for the task that may be used for to differentiate task when saving. Defaults to None.</dd>
+<dt><strong><code>additional_variables</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
+<dd>The variables not required to perform the task and must be implemented by the <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class. Defaults to empty list.</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
+<dd>The labels for the task. Defaults to empty list.</dd>
+<dt><strong><code>templates</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
+<dd>The templates/verbalizations for the task. Defaults to empty dict.</dd>
+<dt><strong><code>valid_conditions</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
+<dd>The valid conditions or constraints for the task.</dd>
+<dt><strong><code>multi_label</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Wheter the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.</dd>
+<dt><strong><code>features_class</code></strong> :&ensp;<code>type</code>, optional</dt>
+<dd>The <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class related to the task. Default to <code><a title="a2t.tasks.UnaryFeatures" href="#a2t.tasks.UnaryFeatures">UnaryFeatures</a></code>.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class UnaryTask(Task):
+    &#34;&#34;&#34;A `Task` implementation for Span Classification like tasks.
+
+    Args:
+        name (str, optional): A name for the task that may be used for to differentiate task when saving. Defaults to None.
+        additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `Features` class. Defaults to empty list.
+        labels (List[str], optional): The labels for the task. Defaults to empty list.
+        templates (Dict[str, List[str]], optional): The templates/verbalizations for the task. Defaults to empty dict.
+        valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task.
+        multi_label (bool, optional): Wheter the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.
+        features_class (type, optional): The `Features` class related to the task. Default to `UnaryFeatures`.
+    &#34;&#34;&#34;
+
+    features_class: type = UnaryFeatures
+
+    def _assert_constraints(self):
+        # Assert the number of required variables to be 1
+        assert len(self.required_variables) == 1, &#34;Unary-ary tasks like Span classifiation requires 1 variable.&#34;
+
+    def compute_metrics(self, labels: np.ndarray, output: np.ndarray, threshold: Union[str, float] = &#34;optimize&#34;):
+        &#34;&#34;&#34;Compute the metrics for the given task. By default on `UnaryTask` the Accuracy is computed if
+        the `negative_label_id` is &lt; 0, otherwise the Precision, Recall, F1-Score and positive Accuracy are
+        computed.
+
+        Args:
+            labels (np.ndarray): (batch_size,) The correct labels.
+            output (np.ndarray): (batch_size, n_labels) The labels probabilities.
+            threshold (Union[str, float], optional): The threshold to use on the evaluation. Options:
+
+                * &#34;default&#34;: The threshold is set to 0.5.
+                * &#34;optimize&#34;: Optimize the threshold with the `labels`. Intended to be used on the development split.
+                * `float`: A specific float value for the threshold.
+
+                Defaults to &#34;optimize&#34;.
+
+        Returns:
+            Dict[str, float]: Dict with the resulting metrics.
+        &#34;&#34;&#34;
+        # TODO: Unittest
+        if threshold not in [&#34;default&#34;, &#34;optimize&#34;] and not isinstance(threshold, float):
+            raise ValueError(&#34;Threshold must be either &#39;default&#39;, &#39;optimize&#39; or a float value.&#34;)
+
+        if threshold == &#34;default&#34;:
+            threshold = 0.5
+
+        if threshold == &#34;optimize&#34;:
+            threshold, _ = find_optimal_threshold(labels, output, negative_label_id=self.negative_label_id)
+
+        results = {&#34;optimal_threshold&#34;: threshold}
+        if self.negative_label_id &lt; 0:
+            results[&#34;accuracy_score&#34;] = accuracy_score(labels, output.argmax(-1))
+        else:
+            output_ = apply_threshold(output, threshold=threshold, negative_label_id=self.negative_label_id)
+            positive_labels = list(set(range(len(self.labels))) - set([self.negative_label_id]))
+            output_pos = output.copy()
+            output_pos[:, self.negative_label_id] = 0.0
+
+            results[&#34;positive_accuracy&#34;] = accuracy_score(
+                labels[labels != self.negative_label_id], output_pos[labels != self.negative_label_id, :].argmax(-1)
+            )
+
+            pre, rec, f1, _ = precision_recall_fscore_support(labels, output_, labels=positive_labels, average=&#34;micro&#34;)
+            results[&#34;precision&#34;] = pre
+            results[&#34;recall&#34;] = rec
+            results[&#34;f1-score&#34;] = f1
+
+        return results</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>a2t.tasks.base.Task</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li>a2t.tasks.span_classification.NamedEntityClassificationTask</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="a2t.tasks.UnaryTask.compute_metrics"><code class="name flex">
+<span>def <span class="ident">compute_metrics</span></span>(<span>self, labels: numpy.ndarray, output: numpy.ndarray, threshold: Union[str, float] = 'optimize')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Compute the metrics for the given task. By default on <code><a title="a2t.tasks.UnaryTask" href="#a2t.tasks.UnaryTask">UnaryTask</a></code> the Accuracy is computed if
+the <code>negative_label_id</code> is &lt; 0, otherwise the Precision, Recall, F1-Score and positive Accuracy are
+computed.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>labels</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>(batch_size,) The correct labels.</dd>
+<dt><strong><code>output</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>(batch_size, n_labels) The labels probabilities.</dd>
+<dt><strong><code>threshold</code></strong> :&ensp;<code>Union[str, float]</code>, optional</dt>
+<dd>
+<p>The threshold to use on the evaluation. Options:</p>
+<ul>
+<li>"default": The threshold is set to 0.5.</li>
+<li>"optimize": Optimize the threshold with the <code>labels</code>. Intended to be used on the development split.</li>
+<li><code>float</code>: A specific float value for the threshold.</li>
+</ul>
+<p>Defaults to "optimize".</p>
+</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Dict[str, float]</code></dt>
+<dd>Dict with the resulting metrics.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_metrics(self, labels: np.ndarray, output: np.ndarray, threshold: Union[str, float] = &#34;optimize&#34;):
+    &#34;&#34;&#34;Compute the metrics for the given task. By default on `UnaryTask` the Accuracy is computed if
+    the `negative_label_id` is &lt; 0, otherwise the Precision, Recall, F1-Score and positive Accuracy are
+    computed.
+
+    Args:
+        labels (np.ndarray): (batch_size,) The correct labels.
+        output (np.ndarray): (batch_size, n_labels) The labels probabilities.
+        threshold (Union[str, float], optional): The threshold to use on the evaluation. Options:
+
+            * &#34;default&#34;: The threshold is set to 0.5.
+            * &#34;optimize&#34;: Optimize the threshold with the `labels`. Intended to be used on the development split.
+            * `float`: A specific float value for the threshold.
+
+            Defaults to &#34;optimize&#34;.
+
+    Returns:
+        Dict[str, float]: Dict with the resulting metrics.
+    &#34;&#34;&#34;
+    # TODO: Unittest
+    if threshold not in [&#34;default&#34;, &#34;optimize&#34;] and not isinstance(threshold, float):
+        raise ValueError(&#34;Threshold must be either &#39;default&#39;, &#39;optimize&#39; or a float value.&#34;)
+
+    if threshold == &#34;default&#34;:
+        threshold = 0.5
+
+    if threshold == &#34;optimize&#34;:
+        threshold, _ = find_optimal_threshold(labels, output, negative_label_id=self.negative_label_id)
+
+    results = {&#34;optimal_threshold&#34;: threshold}
+    if self.negative_label_id &lt; 0:
+        results[&#34;accuracy_score&#34;] = accuracy_score(labels, output.argmax(-1))
+    else:
+        output_ = apply_threshold(output, threshold=threshold, negative_label_id=self.negative_label_id)
+        positive_labels = list(set(range(len(self.labels))) - set([self.negative_label_id]))
+        output_pos = output.copy()
+        output_pos[:, self.negative_label_id] = 0.0
+
+        results[&#34;positive_accuracy&#34;] = accuracy_score(
+            labels[labels != self.negative_label_id], output_pos[labels != self.negative_label_id, :].argmax(-1)
+        )
+
+        pre, rec, f1, _ = precision_recall_fscore_support(labels, output_, labels=positive_labels, average=&#34;micro&#34;)
+        results[&#34;precision&#34;] = pre
+        results[&#34;recall&#34;] = rec
+        results[&#34;f1-score&#34;] = f1
+
+    return results</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="a2t.tasks.UnaryFeatures"><code class="flex name class">
+<span>class <span class="ident">UnaryFeatures</span></span>
+<span>(</span><span>context: str, label: str = None, inst_type: str = None, X: str = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A features class for <code><a title="a2t.tasks.UnaryTask" href="#a2t.tasks.UnaryTask">UnaryTask</a></code>. It requires <code>context</code> and <code>X</code> arguments.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class UnaryFeatures(Features):
+    &#34;&#34;&#34;A features class for `UnaryTask`. It requires `context` and `X` arguments.&#34;&#34;&#34;
+
+    X: str = None</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>a2t.tasks.base.Features</li>
+</ul>
+</dd>
+<dt id="a2t.tasks.BinaryTask"><code class="flex name class">
+<span>class <span class="ident">BinaryTask</span></span>
+<span>(</span><span>name: str = None, required_variables: List[str] = &lt;factory&gt;, additional_variables: List[str] = &lt;factory&gt;, labels: List[str] = &lt;factory&gt;, templates: Dict[str, List[str]] = &lt;factory&gt;, valid_conditions: Dict[str, List[str]] = &lt;factory&gt;, negative_label_id: int = -1, multi_label: bool = False, features_class: type = a2t.tasks.base.BinaryFeatures)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A <code><a title="a2t.tasks.Task" href="#a2t.tasks.Task">Task</a></code> implementation for Relation Classification like tasks.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>A name for the task that may be used for to differentiate task when saving. Defaults to None.</dd>
+<dt><strong><code>additional_variables</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
+<dd>The variables not required to perform the task and must be implemented by the <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class. Defaults to empty list.</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
+<dd>The labels for the task. Defaults to empty list.</dd>
+<dt><strong><code>templates</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
+<dd>The templates/verbalizations for the task. Defaults to empty dict.</dd>
+<dt><strong><code>valid_conditions</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
+<dd>The valid conditions or constraints for the task.</dd>
+<dt><strong><code>multi_label</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Wheter the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.</dd>
+<dt><strong><code>features_class</code></strong> :&ensp;<code>type</code>, optional</dt>
+<dd>The <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class related to the task. Default to <code><a title="a2t.tasks.BinaryFeatures" href="#a2t.tasks.BinaryFeatures">BinaryFeatures</a></code>.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class BinaryTask(Task):
+    &#34;&#34;&#34;A `Task` implementation for Relation Classification like tasks.
+
+    Args:
+        name (str, optional): A name for the task that may be used for to differentiate task when saving. Defaults to None.
+        additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `Features` class. Defaults to empty list.
+        labels (List[str], optional): The labels for the task. Defaults to empty list.
+        templates (Dict[str, List[str]], optional): The templates/verbalizations for the task. Defaults to empty dict.
+        valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task.
+        multi_label (bool, optional): Wheter the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.
+        features_class (type, optional): The `Features` class related to the task. Default to `BinaryFeatures`.
+    &#34;&#34;&#34;
+
+    features_class: type = BinaryFeatures
+
+    def _assert_constraints(self):
+        # Assert the number of required variables to be 2
+        assert len(self.required_variables) == 2, &#34;Binary-ary tasks like Tuple classifiation require 2 variable.&#34;
+
+    def compute_metrics(self, labels: np.ndarray, output: np.ndarray, threshold: Union[str, float] = &#34;optimize&#34;):
+        &#34;&#34;&#34;Compute the metrics for the given task. By default on `BinaryTask` the Accuracy is computed if
+        the `negative_label_id` is &lt; 0, otherwise the Precision, Recall, F1-Score and positive Accuracy are
+        computed.
+
+        Args:
+            labels (np.ndarray): (batch_size,) The correct labels.
+            output (np.ndarray): (batch_size, n_labels) The labels probabilities.
+            threshold (Union[str, float], optional): The threshold to use on the evaluation. Options:
+
+                * &#34;default&#34;: The threshold is set to 0.5.
+                * &#34;optimize&#34;: Optimize the threshold with the `labels`. Intended to be used on the development split.
+                * `float`: A specific float value for the threshold.
+
+                Defaults to &#34;optimize&#34;.
+
+        Returns:
+            Dict[str, float]: Dict with the resulting metrics.
+        &#34;&#34;&#34;
+        
+        # TODO: Unittest + documentation
+        if threshold not in [&#34;default&#34;, &#34;optimize&#34;] and not isinstance(threshold, float):
+            raise ValueError(&#34;Threshold must be either &#39;default&#39;, &#39;optimize&#39; or a float value.&#34;)
+
+        if threshold == &#34;default&#34;:
+            threshold = 0.5
+
+        if threshold == &#34;optimize&#34;:
+            threshold, _ = find_optimal_threshold(labels, output, negative_label_id=self.negative_label_id)
+
+        results = {&#34;optimal_threshold&#34;: threshold}
+        if self.negative_label_id &lt; 0:
+            results[&#34;accuracy_score&#34;] = accuracy_score(labels, output.argmax(-1))
+        else:
+            output_ = apply_threshold(output, threshold=threshold, negative_label_id=self.negative_label_id)
+            positive_labels = list(set(range(len(self.labels))) - set([self.negative_label_id]))
+            output_pos = output.copy()
+            output_pos[:, self.negative_label_id] = 0.0
+
+            results[&#34;positive_accuracy&#34;] = accuracy_score(
+                labels[labels != self.negative_label_id], output_pos[labels != self.negative_label_id, :].argmax(-1)
+            )
+
+            pre, rec, f1, _ = precision_recall_fscore_support(labels, output_, labels=positive_labels, average=&#34;micro&#34;)
+            results[&#34;precision&#34;] = pre
+            results[&#34;recall&#34;] = rec
+            results[&#34;f1-score&#34;] = f1
+
+        return results</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>a2t.tasks.base.Task</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li>a2t.tasks.tuple_classification.RelationClassificationTask</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="a2t.tasks.BinaryTask.compute_metrics"><code class="name flex">
+<span>def <span class="ident">compute_metrics</span></span>(<span>self, labels: numpy.ndarray, output: numpy.ndarray, threshold: Union[str, float] = 'optimize')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Compute the metrics for the given task. By default on <code><a title="a2t.tasks.BinaryTask" href="#a2t.tasks.BinaryTask">BinaryTask</a></code> the Accuracy is computed if
+the <code>negative_label_id</code> is &lt; 0, otherwise the Precision, Recall, F1-Score and positive Accuracy are
+computed.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>labels</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>(batch_size,) The correct labels.</dd>
+<dt><strong><code>output</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>(batch_size, n_labels) The labels probabilities.</dd>
+<dt><strong><code>threshold</code></strong> :&ensp;<code>Union[str, float]</code>, optional</dt>
+<dd>
+<p>The threshold to use on the evaluation. Options:</p>
+<ul>
+<li>"default": The threshold is set to 0.5.</li>
+<li>"optimize": Optimize the threshold with the <code>labels</code>. Intended to be used on the development split.</li>
+<li><code>float</code>: A specific float value for the threshold.</li>
+</ul>
+<p>Defaults to "optimize".</p>
+</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Dict[str, float]</code></dt>
+<dd>Dict with the resulting metrics.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_metrics(self, labels: np.ndarray, output: np.ndarray, threshold: Union[str, float] = &#34;optimize&#34;):
+    &#34;&#34;&#34;Compute the metrics for the given task. By default on `BinaryTask` the Accuracy is computed if
+    the `negative_label_id` is &lt; 0, otherwise the Precision, Recall, F1-Score and positive Accuracy are
+    computed.
+
+    Args:
+        labels (np.ndarray): (batch_size,) The correct labels.
+        output (np.ndarray): (batch_size, n_labels) The labels probabilities.
+        threshold (Union[str, float], optional): The threshold to use on the evaluation. Options:
+
+            * &#34;default&#34;: The threshold is set to 0.5.
+            * &#34;optimize&#34;: Optimize the threshold with the `labels`. Intended to be used on the development split.
+            * `float`: A specific float value for the threshold.
+
+            Defaults to &#34;optimize&#34;.
+
+    Returns:
+        Dict[str, float]: Dict with the resulting metrics.
+    &#34;&#34;&#34;
+    
+    # TODO: Unittest + documentation
+    if threshold not in [&#34;default&#34;, &#34;optimize&#34;] and not isinstance(threshold, float):
+        raise ValueError(&#34;Threshold must be either &#39;default&#39;, &#39;optimize&#39; or a float value.&#34;)
+
+    if threshold == &#34;default&#34;:
+        threshold = 0.5
+
+    if threshold == &#34;optimize&#34;:
+        threshold, _ = find_optimal_threshold(labels, output, negative_label_id=self.negative_label_id)
+
+    results = {&#34;optimal_threshold&#34;: threshold}
+    if self.negative_label_id &lt; 0:
+        results[&#34;accuracy_score&#34;] = accuracy_score(labels, output.argmax(-1))
+    else:
+        output_ = apply_threshold(output, threshold=threshold, negative_label_id=self.negative_label_id)
+        positive_labels = list(set(range(len(self.labels))) - set([self.negative_label_id]))
+        output_pos = output.copy()
+        output_pos[:, self.negative_label_id] = 0.0
+
+        results[&#34;positive_accuracy&#34;] = accuracy_score(
+            labels[labels != self.negative_label_id], output_pos[labels != self.negative_label_id, :].argmax(-1)
+        )
+
+        pre, rec, f1, _ = precision_recall_fscore_support(labels, output_, labels=positive_labels, average=&#34;micro&#34;)
+        results[&#34;precision&#34;] = pre
+        results[&#34;recall&#34;] = rec
+        results[&#34;f1-score&#34;] = f1
+
+    return results</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="a2t.tasks.BinaryFeatures"><code class="flex name class">
+<span>class <span class="ident">BinaryFeatures</span></span>
+<span>(</span><span>context: str, label: str = None, inst_type: str = None, X: str = None, Y: str = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A features class for <code><a title="a2t.tasks.BinaryTask" href="#a2t.tasks.BinaryTask">BinaryTask</a></code>. It requires <code>context</code>, <code>X</code> and <code>Y</code> arguments.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class BinaryFeatures(Features):
+    &#34;&#34;&#34;A features class for `BinaryTask`. It requires `context`, `X` and `Y` arguments.&#34;&#34;&#34;
+
+    X: str = None
+    Y: str = None</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>a2t.tasks.base.Features</li>
+</ul>
+</dd>
+<dt id="a2t.tasks.TopicClassificationFeatures"><code class="flex name class">
+<span>class <span class="ident">TopicClassificationFeatures</span></span>
+<span>(</span><span>context: str, label: str = None, inst_type: str = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A class handler for the Topic Classification features. It inherits from <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TopicClassificationFeatures(Features):
+    &#34;&#34;&#34;A class handler for the Topic Classification features. It inherits from `Features`.&#34;&#34;&#34;
+
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>a2t.tasks.base.Features</li>
+</ul>
+</dd>
+<dt id="a2t.tasks.TopicClassificationTask"><code class="flex name class">
+<span>class <span class="ident">TopicClassificationTask</span></span>
+<span>(</span><span>name: str = None, labels: List[str] = None, templates: Dict[str, List[str]] = None, hypothesis_template: str = 'The domain of the sentence is about {label}.', features_class: type = a2t.tasks.text_classification.TopicClassificationFeatures, preprocess_labels: bool = False, preprocess_fn: Callable = None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A class handler for Topic Classification task. It inherits from <code><a title="a2t.tasks.ZeroaryTask" href="#a2t.tasks.ZeroaryTask">ZeroaryTask</a></code> class.</p>
+<p>Initialization of a TopicClassification task.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>A name for the task that may be used for to differentiate task when saving. Defaults to None.</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>List[str]</code></dt>
+<dd>The labels for the task. Defaults to empty list.</dd>
+<dt><strong><code>templates</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
+<dd>The templates/verbalizations for the task. Defaults to None.</dd>
+<dt><strong><code>hypothesis_template</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>A meta template to generate hypothesis templates, if <code>templates</code> is None,
+then the templates will be the combinations of the <code>hypothesis_template</code> and the <code>labels</code>. It must contain the
+'{label}' placeholder. Defaults to "The domain of the sentence is about {label}.".</dd>
+<dt><strong><code>features_class</code></strong> :&ensp;<code>type</code>, optional</dt>
+<dd>The <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class related to the task. Defaults to TopicClassificationFeatures.</dd>
+<dt><strong><code>preprocess_labels</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Whether to split the topic labels. Defaults to True.</dd>
+<dt><strong><code>preprocess_fn</code></strong> :&ensp;<code>Callable</code>, optional</dt>
+<dd>The function that is applied if <code>split_labels</code> is True. If None then
+<code>TopicClassificationTask._split_labels_fn</code> is applied. Defaults to None.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>IncorrectHypothesisTemplateError</code></dt>
+<dd>Raised when the <code>hypotesis_template</code> argument does not contain the '{label}' placeholder.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TopicClassificationTask(ZeroaryTask):
+    &#34;&#34;&#34;A class handler for Topic Classification task. It inherits from `ZeroaryTask` class.&#34;&#34;&#34;
+
+    def __init__(
+        self,
+        name: str = None,
+        labels: List[str] = None,
+        templates: Dict[str, List[str]] = None,
+        hypothesis_template: str = &#34;The domain of the sentence is about {label}.&#34;,
+        features_class: type = TopicClassificationFeatures,
+        preprocess_labels: bool = False,
+        preprocess_fn: Callable = None,
+        **kwargs,
+    ) -&gt; None:
+        &#34;&#34;&#34;Initialization of a TopicClassification task.
+
+        Args:
+            name (str, optional): A name for the task that may be used for to differentiate task when saving. Defaults to None.
+            labels (List[str]): The labels for the task. Defaults to empty list.
+            templates (Dict[str, List[str]], optional): The templates/verbalizations for the task. Defaults to None.
+            hypothesis_template (str, optional): A meta template to generate hypothesis templates, if `templates` is None,
+                then the templates will be the combinations of the `hypothesis_template` and the `labels`. It must contain the
+                &#39;{label}&#39; placeholder. Defaults to &#34;The domain of the sentence is about {label}.&#34;.
+            features_class (type, optional): The `Features` class related to the task. Defaults to TopicClassificationFeatures.
+            preprocess_labels (bool, optional): Whether to split the topic labels. Defaults to True.
+            preprocess_fn (Callable, optional): The function that is applied if `split_labels` is True. If None then
+                `TopicClassificationTask._split_labels_fn` is applied. Defaults to None.
+
+        Raises:
+            IncorrectHypothesisTemplateError: Raised when the `hypotesis_template` argument does not contain the &#39;{label}&#39; placeholder.
+        &#34;&#34;&#34;
+        if not templates:
+
+            if &#34;{label}&#34; not in hypothesis_template:
+                raise IncorrectHypothesisTemplateError(
+                    &#34;The hypothesis_template argument must contain the &#39;{label}&#39; placeholder.&#34;
+                )
+
+            if preprocess_labels:
+                split_labels_fn = preprocess_fn if preprocess_fn is not None else self._split_and_extend_labels_fn
+                templates = {
+                    label: [hypothesis_template.format(label=partial_label) for partial_label in split_labels_fn(label)]
+                    for label in labels
+                }
+            else:
+                templates = {label: [hypothesis_template.format(label=label)] for label in labels}
+
+        super().__init__(
+            name=name,
+            required_variables=[],
+            additional_variables=[],
+            labels=labels,
+            templates=templates,
+            valid_conditions=None,
+            features_class=features_class,
+            **kwargs,
+        )
+
+    @staticmethod
+    def _split_labels_fn(label: str) -&gt; List[str]:
+        labels = [
+            partial_label.strip().capitalize()
+            for partial_label in label.split(&#34;,&#34;)
+            for partial_label in partial_label.split(&#34;and&#34;)
+            if len(partial_label.strip())
+        ]
+        return list(set(labels))
+
+    @staticmethod
+    def _split_and_extend_labels_fn(label: str) -&gt; List[str]:
+        labels = [label] + [
+            partial_label.strip().capitalize()
+            for partial_label in label.split(&#34;,&#34;)
+            for partial_label in partial_label.split(&#34;and&#34;)
+            if len(partial_label.strip())
+        ]
+        return list(set(labels))</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>a2t.tasks.base.ZeroaryTask</li>
+<li>a2t.tasks.base.Task</li>
+</ul>
+</dd>
+<dt id="a2t.tasks.TACREDFeatures"><code class="flex name class">
+<span>class <span class="ident">TACREDFeatures</span></span>
+<span>(</span><span>context: str, label: str = None, inst_type: str = None, subj: str = None, obj: str = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>TACREDFeatures(context: str, label: str = None, inst_type: str = None, subj: str = None, obj: str = None)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class TACREDFeatures(Features):
+    subj: str = None
+    obj: str = None</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>a2t.tasks.base.Features</li>
+</ul>
+</dd>
+<dt id="a2t.tasks.TACREDRelationClassificationTask"><code class="flex name class">
+<span>class <span class="ident">TACREDRelationClassificationTask</span></span>
+<span>(</span><span>labels: List[str], templates: Dict[str, List[str]], valid_conditions: Dict[str, List[str]], **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A class handler for Relation Classification task. It inherits from <code><a title="a2t.tasks.BinaryTask" href="#a2t.tasks.BinaryTask">BinaryTask</a></code> class.</p>
+<p>TODO: Add documentation.</p>
+<p>Initialization of a RelationClassificationTask task.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>[description]</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>List[str]</code></dt>
+<dd>[description]</dd>
+<dt><strong><code>required_variables</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
+<dd>[description]. Defaults to ["X", "Y"].</dd>
+<dt><strong><code>additional_variables</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
+<dd>[description]. Defaults to ["inst_type"].</dd>
+<dt><strong><code>templates</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
+<dd>[description]. Defaults to None.</dd>
+<dt><strong><code>valid_conditions</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
+<dd>[description]. Defaults to None.</dd>
+<dt><strong><code>features_class</code></strong> :&ensp;<code>type</code>, optional</dt>
+<dd>[description]. Defaults to RelationClassificationFeatures.</dd>
+<dt><strong><code>multi_label</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>[description]. Defaults to True.</dd>
+<dt><strong><code>negative_label_id</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>[description]. Defaults to 0.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TACREDRelationClassificationTask(RelationClassificationTask):
+    def __init__(
+        self, labels: List[str], templates: Dict[str, List[str]], valid_conditions: Dict[str, List[str]], **kwargs
+    ) -&gt; None:
+        for key in [&#34;name&#34;, &#34;required_variables&#34;, &#34;additional_variables&#34;, &#34;features_class&#34;, &#34;multi_label&#34;, &#34;negative_label_id&#34;]:
+            kwargs.pop(key, None)
+        super().__init__(
+            &#34;TACRED Relation Classification task&#34;,
+            labels=labels,
+            required_variables=[&#34;subj&#34;, &#34;obj&#34;],
+            additional_variables=[&#34;inst_type&#34;],
+            templates=templates,
+            valid_conditions=valid_conditions,
+            features_class=TACREDFeatures,
+            multi_label=True,
+            negative_label_id=0,
+            **kwargs
+        )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>a2t.tasks.tuple_classification.RelationClassificationTask</li>
+<li>a2t.tasks.base.BinaryTask</li>
+<li>a2t.tasks.base.Task</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="a2t" href="../index.html">a2t</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="a2t.tasks.Task" href="#a2t.tasks.Task">Task</a></code></h4>
+<ul class="">
+<li><code><a title="a2t.tasks.Task.from_config" href="#a2t.tasks.Task.from_config">from_config</a></code></li>
+<li><code><a title="a2t.tasks.Task.assert_features_class" href="#a2t.tasks.Task.assert_features_class">assert_features_class</a></code></li>
+<li><code><a title="a2t.tasks.Task.generate_premise_hypotheses_pairs" href="#a2t.tasks.Task.generate_premise_hypotheses_pairs">generate_premise_hypotheses_pairs</a></code></li>
+<li><code><a title="a2t.tasks.Task.reverse_to_labels" href="#a2t.tasks.Task.reverse_to_labels">reverse_to_labels</a></code></li>
+<li><code><a title="a2t.tasks.Task.apply_valid_conditions" href="#a2t.tasks.Task.apply_valid_conditions">apply_valid_conditions</a></code></li>
+<li><code><a title="a2t.tasks.Task.compute_metrics" href="#a2t.tasks.Task.compute_metrics">compute_metrics</a></code></li>
+<li><code><a title="a2t.tasks.Task.to_config" href="#a2t.tasks.Task.to_config">to_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code></h4>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.ZeroaryTask" href="#a2t.tasks.ZeroaryTask">ZeroaryTask</a></code></h4>
+<ul class="">
+<li><code><a title="a2t.tasks.ZeroaryTask.compute_metrics" href="#a2t.tasks.ZeroaryTask.compute_metrics">compute_metrics</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.ZeroaryFeatures" href="#a2t.tasks.ZeroaryFeatures">ZeroaryFeatures</a></code></h4>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.UnaryTask" href="#a2t.tasks.UnaryTask">UnaryTask</a></code></h4>
+<ul class="">
+<li><code><a title="a2t.tasks.UnaryTask.compute_metrics" href="#a2t.tasks.UnaryTask.compute_metrics">compute_metrics</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.UnaryFeatures" href="#a2t.tasks.UnaryFeatures">UnaryFeatures</a></code></h4>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.BinaryTask" href="#a2t.tasks.BinaryTask">BinaryTask</a></code></h4>
+<ul class="">
+<li><code><a title="a2t.tasks.BinaryTask.compute_metrics" href="#a2t.tasks.BinaryTask.compute_metrics">compute_metrics</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.BinaryFeatures" href="#a2t.tasks.BinaryFeatures">BinaryFeatures</a></code></h4>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.TopicClassificationFeatures" href="#a2t.tasks.TopicClassificationFeatures">TopicClassificationFeatures</a></code></h4>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.TopicClassificationTask" href="#a2t.tasks.TopicClassificationTask">TopicClassificationTask</a></code></h4>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.TACREDFeatures" href="#a2t.tasks.TACREDFeatures">TACREDFeatures</a></code></h4>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.TACREDRelationClassificationTask" href="#a2t.tasks.TACREDRelationClassificationTask">TACREDRelationClassificationTask</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
