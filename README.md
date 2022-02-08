@@ -17,7 +17,7 @@ Follow the links to see some examples of how to use the library on each task.
 Collados and Navigli, 2017)  dataset.
 - [Relation classification](./a2t/relation_classification/) evaluated on TACRED (Zhang et al., 2017) dataset. -->
 
-To get started with the repository consider reading the **new** documentation!
+To get started with the repository consider reading the **new** [documentation](https://osainz59.github.io/Ask2Transformers)!
 
 
 ## Instalation
@@ -81,7 +81,7 @@ The training (and development) splits can be found in the [resources](./resource
 
 ## About legacy code
 
-The old code of this repository has been moved to [`a2t.legacy`](./a2t/legacy/) module and is only intended to be use for experimental reproducibility. Please, consider moving to the new code. If you need help read the new documentation or post and Issue on GitHub.
+The old code of this repository has been moved to [`a2t.legacy`](./a2t/legacy/) module and is only intended to be use for experimental reproducibility. Please, consider moving to the new code. If you need help read the new [documentation](https://osainz59.github.io/Ask2Transformers) or post and Issue on GitHub.
 
 ## Citation
 Cite this paper if you want to cite stuff related to Relation Extraction, etc.

@@ -1,6 +1,6 @@
 """The module `tasks` contains the code related to the `Task` definition.
 
-![Task taxonomy.](../../../imgs/task_taxonomy.svg)
+![Task taxonomy.](https://raw.githubusercontent.com/osainz59/Ask2Transformers/master/imgs/task_taxonomy.svg)
 
 The tasks on this module are organized based on the number of spans to classify:
 
