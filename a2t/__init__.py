@@ -16,7 +16,7 @@ used to load some data from a file and create the task features.
 
 ```python
 from a2t.data import Dataset
-from a2t.task.text_classification import TopicClassificationFeatures
+from a2t.tasks import TopicClassificationFeatures
 
 labels = [
     'politics', 'culture', 'economy', 'biology', 'legal', 'medicine', 'business'
@@ -24,7 +24,7 @@ labels = [
 
 class DummyTopicClassificationDataset(Dataset):
     def __init__(self) -> None:
-        super().__init__(labels=labels, *args, **kwargs)
+        super().__init__(labels=labels)
 
         self.append(
             TopicClassificationFeatures(
@@ -58,9 +58,9 @@ make use of any entailment model available on 🤗 [Transformers](https://github
 trained on some NLI dataset.
 
 ```python
-from a2t.base import EntailmentModel
+from a2t.base import EntailmentClassifier
 
-nlp = EntailmentModel(
+nlp = EntailmentClassifier(
     'roberta-large-mnli', 
     use_tqdm=False, 
     use_cuda=True, 
@@ -86,7 +86,7 @@ print(predictions)
 The result should be something close to this:
 ```python
 [
-  [("medicine", 0.8547821), ("biology", 0.036895804), ("business", 0.032091234)]
+    [('medicine', 0.8545), ('biology', 0.03693), ('business', 0.0322)]
 ]
 ```
 
@@ -186,8 +186,8 @@ nlp(task=task, features=test_examples, return_labels=True, return_confidences=Tr
 The output should look like:
 
 ```python
-[('per:city_of_death', 0.9872344136238098), 
- ('org:founded_by', 0.9368535280227661), 
+[('per:city_of_death', 0.98828125),
+ ('org:founded_by', 0.955078125),
  ('no_relation', 1.0)]
 ```
 

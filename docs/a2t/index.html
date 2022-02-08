@@ -35,7 +35,7 @@ Biology, Legal, Medicine and Business.</p>
 <p>We will create a dummy dataset with only one instance to test our model. The <code>Dataset</code> object is intended to be
 used to load some data from a file and create the task features.</p>
 <pre><code class="language-python">from a2t.data import Dataset
-from a2t.task.text_classification import TopicClassificationFeatures
+from a2t.tasks import TopicClassificationFeatures
 
 labels = [
     'politics', 'culture', 'economy', 'biology', 'legal', 'medicine', 'business'
@@ -43,7 +43,7 @@ labels = [
 
 class DummyTopicClassificationDataset(Dataset):
     def __init__(self) -&gt; None:
-        super().__init__(labels=labels, *args, **kwargs)
+        super().__init__(labels=labels)
 
         self.append(
             TopicClassificationFeatures(
@@ -68,9 +68,9 @@ task = TopicClassificationTask(name=&quot;DummyTopic task&quot;, labels=labels)
 <p>The <code>EntailmentClassifier</code> object should be instantiated with the information about the pre-trained model and device information. You can
 make use of any entailment model available on 🤗 <a href="https://github.com/huggingface/transformers">Transformers</a> that was
 trained on some NLI dataset.</p>
-<pre><code class="language-python">from a2t.base import EntailmentModel
+<pre><code class="language-python">from a2t.base import EntailmentClassifier
 
-nlp = EntailmentModel(
+nlp = EntailmentClassifier(
     'roberta-large-mnli', 
     use_tqdm=False, 
     use_cuda=True, 
@@ -91,7 +91,7 @@ print(predictions)
 </code></pre>
 <p>The result should be something close to this:</p>
 <pre><code class="language-python">[
-  [(&quot;medicine&quot;, 0.8547821), (&quot;biology&quot;, 0.036895804), (&quot;business&quot;, 0.032091234)]
+    [('medicine', 0.8545), ('biology', 0.03693), ('business', 0.0322)]
 ]
 </code></pre>
 <h2 id="information-extraction-with-entailment">Information Extraction with Entailment</h2>
@@ -170,8 +170,8 @@ test_examples = [
 nlp(task=task, features=test_examples, return_labels=True, return_confidences=True)
 </code></pre>
 <p>The output should look like:</p>
-<pre><code class="language-python">[('per:city_of_death', 0.9872344136238098), 
- ('org:founded_by', 0.9368535280227661), 
+<pre><code class="language-python">[('per:city_of_death', 0.98828125),
+ ('org:founded_by', 0.955078125),
  ('no_relation', 1.0)]
 </code></pre>
 <p>For more information consider reading the <a href="tasks/index.html">Tasks</a> documentation.</p>
@@ -197,7 +197,7 @@ used to load some data from a file and create the task features.
 
 ```python
 from a2t.data import Dataset
-from a2t.task.text_classification import TopicClassificationFeatures
+from a2t.tasks import TopicClassificationFeatures
 
 labels = [
     &#39;politics&#39;, &#39;culture&#39;, &#39;economy&#39;, &#39;biology&#39;, &#39;legal&#39;, &#39;medicine&#39;, &#39;business&#39;
@@ -205,7 +205,7 @@ labels = [
 
 class DummyTopicClassificationDataset(Dataset):
     def __init__(self) -&gt; None:
-        super().__init__(labels=labels, *args, **kwargs)
+        super().__init__(labels=labels)
 
         self.append(
             TopicClassificationFeatures(
@@ -239,9 +239,9 @@ make use of any entailment model available on 🤗 [Transformers](https://github
 trained on some NLI dataset.
 
 ```python
-from a2t.base import EntailmentModel
+from a2t.base import EntailmentClassifier
 
-nlp = EntailmentModel(
+nlp = EntailmentClassifier(
     &#39;roberta-large-mnli&#39;, 
     use_tqdm=False, 
     use_cuda=True, 
@@ -267,7 +267,7 @@ print(predictions)
 The result should be something close to this:
 ```python
 [
-  [(&#34;medicine&#34;, 0.8547821), (&#34;biology&#34;, 0.036895804), (&#34;business&#34;, 0.032091234)]
+    [(&#39;medicine&#39;, 0.8545), (&#39;biology&#39;, 0.03693), (&#39;business&#39;, 0.0322)]
 ]
 ```
 
@@ -367,8 +367,8 @@ nlp(task=task, features=test_examples, return_labels=True, return_confidences=Tr
 The output should look like:
 
 ```python
-[(&#39;per:city_of_death&#39;, 0.9872344136238098), 
- (&#39;org:founded_by&#39;, 0.9368535280227661), 
+[(&#39;per:city_of_death&#39;, 0.98828125),
+ (&#39;org:founded_by&#39;, 0.955078125),
  (&#39;no_relation&#39;, 1.0)]
 ```
 
