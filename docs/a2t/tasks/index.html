@@ -23,7 +23,7 @@
 </header>
 <section id="section-intro">
 <p>The module <code>tasks</code> contains the code related to the <code><a title="a2t.tasks.Task" href="#a2t.tasks.Task">Task</a></code> definition.</p>
-<p><img alt="Task taxonomy." src="../../../imgs/task_taxonomy.svg"></p>
+<p><img alt="Task taxonomy." src="https://raw.githubusercontent.com/osainz59/Ask2Transformers/master/imgs/task_taxonomy.svg"></p>
 <p>The tasks on this module are organized based on the number of spans to classify:</p>
 <ul>
 <li><code><a title="a2t.tasks.ZeroaryTask" href="#a2t.tasks.ZeroaryTask">ZeroaryTask</a></code>: are tasks like Text Classification, where the aim is to classify the given text into a set of predefined
@@ -42,7 +42,7 @@ will also be used to instantiate the task data instances.</p>
 </summary>
 <pre><code class="python">&#34;&#34;&#34;The module `tasks` contains the code related to the `Task` definition.
 
-![Task taxonomy.](../../../imgs/task_taxonomy.svg)
+![Task taxonomy.](https://raw.githubusercontent.com/osainz59/Ask2Transformers/master/imgs/task_taxonomy.svg)
 
 The tasks on this module are organized based on the number of spans to classify:
 
@@ -1188,7 +1188,7 @@ class BinaryTask(Task):
         Returns:
             Dict[str, float]: Dict with the resulting metrics.
         &#34;&#34;&#34;
-        
+
         # TODO: Unittest + documentation
         if threshold not in [&#34;default&#34;, &#34;optimize&#34;] and not isinstance(threshold, float):
             raise ValueError(&#34;Threshold must be either &#39;default&#39;, &#39;optimize&#39; or a float value.&#34;)
@@ -1281,7 +1281,7 @@ computed.</p>
     Returns:
         Dict[str, float]: Dict with the resulting metrics.
     &#34;&#34;&#34;
-    
+
     # TODO: Unittest + documentation
     if threshold not in [&#34;default&#34;, &#34;optimize&#34;] and not isinstance(threshold, float):
         raise ValueError(&#34;Threshold must be either &#39;default&#39;, &#39;optimize&#39; or a float value.&#34;)
