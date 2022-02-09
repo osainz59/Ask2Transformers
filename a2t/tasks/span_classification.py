@@ -2,20 +2,16 @@ from typing import Dict, List
 from dataclasses import dataclass
 
 from .text_classification import IncorrectHypothesisTemplateError
-from .base import UnaryTask, Features
+from .base import UnaryTask, UnaryFeatures, Features
 
 
 @dataclass
-class NamedEntityClassificationFeatures(Features):
-    X: str = None
+class NamedEntityClassificationFeatures(UnaryFeatures):
+    """A class handler for the Named Entity Classification features. It inherits from `UnaryFeatures`."""
 
 
 class NamedEntityClassificationTask(UnaryTask):
-    """A class handler for Named Entity Classification task. It inherits from `UnaryTask` class.
-
-    TODO: Add documentation.
-
-    """
+    """A class handler for Named Entity Classification task. It inherits from `UnaryTask` class."""
 
     def __init__(
         self,

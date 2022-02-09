@@ -9,6 +9,7 @@ import os
 
 import numpy as np
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+from torch import negative
 
 from a2t.utils import find_optimal_threshold, apply_threshold
 
@@ -44,9 +45,9 @@ class Task:
         additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `Features` class. Defaults to empty list.
         labels (List[str], optional): The labels for the task. Defaults to empty list.
         templates (Dict[str, List[str]], optional): The templates/verbalizations for the task. Defaults to empty dict.
-        valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task.
+        valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task. Defaults to None.
         negative_label_id (int, optional): The index of the negative label or -1 if no negative label exist. A negative label is for example the class `Other` on NER, that means that the specific token is not a named entity. Defaults to -1.
-        multi_label (bool, optional): Wheter the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.
+        multi_label (bool, optional): Whether the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.
         features_class (type, optional): The `Features` class related to the task. Default to `Features`.
     """
 
@@ -55,7 +56,7 @@ class Task:
     additional_variables: List[str] = field(default_factory=list)
     labels: List[str] = field(default_factory=list)
     templates: Dict[str, List[str]] = field(default_factory=dict)
-    valid_conditions: Dict[str, List[str]] = field(default_factory=dict)
+    valid_conditions: Dict[str, List[str]] = None
     negative_label_id: int = -1  # -1 for no negative class
     multi_label: bool = False
     features_class: type = Features
@@ -313,12 +314,14 @@ class ZeroaryTask(Task):
 
     Args:
         name (str, optional): A name for the task that may be used for to differentiate task when saving. Defaults to None.
-        additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `Features` class. Defaults to empty list.
+        required_variables (List[str], optional): The variables required to perform the task and must be implemented by the `ZeroaryFeatures` class. Defaults to empty list.
+        additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `ZeroaryFeatures` class. Defaults to empty list.
         labels (List[str], optional): The labels for the task. Defaults to empty list.
         templates (Dict[str, List[str]], optional): The templates/verbalizations for the task. Defaults to empty dict.
-        valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task.
-        multi_label (bool, optional): Wheter the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.
-        features_class (type, optional): The `Features` class related to the task. Default to `ZeroaryFeatures`.
+        valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task. Defaults to None.
+        multi_label (bool, optional): Whether the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.
+        features_class (type, optional): The `Features` class related to the task. Defaults to `ZeroaryFeatures`.
+        negative_label_id (int, optional): The index of the negative label or -1 if no negative label exist. A negative label is for example the class `Other` on NER, that means that the specific token is not a named entity. Defaults to -1.
     """
 
     features_class: type = ZeroaryFeatures
@@ -358,14 +361,17 @@ class UnaryTask(Task):
 
     Args:
         name (str, optional): A name for the task that may be used for to differentiate task when saving. Defaults to None.
-        additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `Features` class. Defaults to empty list.
+        required_variables (List[str], optional): The variables required to perform the task and must be implemented by the `UnaryFeatures` class. Defaults `["X"]`.
+        additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `UnaryFeatures` class. Defaults to empty list.
         labels (List[str], optional): The labels for the task. Defaults to empty list.
         templates (Dict[str, List[str]], optional): The templates/verbalizations for the task. Defaults to empty dict.
-        valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task.
-        multi_label (bool, optional): Wheter the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.
+        valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task. Defaults to None.
+        multi_label (bool, optional): Whether the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.
         features_class (type, optional): The `Features` class related to the task. Default to `UnaryFeatures`.
+        negative_label_id (int, optional): The index of the negative label or -1 if no negative label exist. A negative label is for example the class `Other` on NER, that means that the specific token is not a named entity. Defaults to -1.
     """
 
+    required_variables: List[str] = field(default_factory=lambda: ["X"])
     features_class: type = UnaryFeatures
 
     def _assert_constraints(self):
@@ -436,14 +442,17 @@ class BinaryTask(Task):
 
     Args:
         name (str, optional): A name for the task that may be used for to differentiate task when saving. Defaults to None.
-        additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `Features` class. Defaults to empty list.
+        required_variables (List[str], optional): The variables required to perform the task and must be implemented by the `BinaryFeatures` class. Defaults `["X", "Y"]`.
+        additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `BinaryFeatures` class. Defaults to empty list.
         labels (List[str], optional): The labels for the task. Defaults to empty list.
         templates (Dict[str, List[str]], optional): The templates/verbalizations for the task. Defaults to empty dict.
-        valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task.
-        multi_label (bool, optional): Wheter the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.
+        valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task. Defaults to None.
+        multi_label (bool, optional): Whether the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.
         features_class (type, optional): The `Features` class related to the task. Default to `BinaryFeatures`.
+        negative_label_id (int, optional): The index of the negative label or -1 if no negative label exist. A negative label is for example the class `Other` on NER, that means that the specific token is not a named entity. Defaults to -1.
     """
 
+    required_variables: List[str] = field(default_factory=lambda: ["X", "Y"])
     features_class: type = BinaryFeatures
 
     def _assert_constraints(self):

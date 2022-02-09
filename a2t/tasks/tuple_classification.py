@@ -1,21 +1,15 @@
 from typing import Dict, List
 from dataclasses import dataclass
 
-from .base import BinaryTask, Features
+from .base import BinaryTask, BinaryFeatures, Features
 
 
-@dataclass
-class RelationClassificationFeatures(Features):
-    X: str = None
-    Y: str = None
+class RelationClassificationFeatures(BinaryFeatures):
+    """A class handler for the Relation Classification features. It inherits from `BinaryFeatures`."""
 
 
 class RelationClassificationTask(BinaryTask):
-    """A class handler for Relation Classification task. It inherits from `BinaryTask` class.
-
-    TODO: Add documentation.
-
-    """
+    """A class handler for Relation Classification task. It inherits from `BinaryTask` class."""
 
     def __init__(
         self,
@@ -34,15 +28,15 @@ class RelationClassificationTask(BinaryTask):
         """Initialization of a RelationClassificationTask task.
 
         Args:
-            name (str): [description]
-            labels (List[str]): [description]
-            required_variables (List[str], optional): [description]. Defaults to ["X", "Y"].
-            additional_variables (List[str], optional): [description]. Defaults to ["inst_type"].
-            templates (Dict[str, List[str]], optional): [description]. Defaults to None.
-            valid_conditions (Dict[str, List[str]], optional): [description]. Defaults to None.
-            features_class (type, optional): [description]. Defaults to RelationClassificationFeatures.
-            multi_label (bool, optional): [description]. Defaults to True.
-            negative_label_id (int, optional): [description]. Defaults to 0.
+            name (str): A name for the task that may be used for to differentiate task when saving. Defaults to None.
+            labels (List[str]): The labels for the task. Defaults to empty list.
+            required_variables (List[str], optional): The variables required to perform the task and must be implemented by the `RelationClassificationFeatures` class. Defaults to `["X", "Y"]`.
+            additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `RelationClassificationFeatures` class. Defaults to ["inst_type"].
+            templates (Dict[str, List[str]], optional): The templates/verbalizations for the task. Defaults to None.
+            valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task. Defaults to None.
+            features_class (type, optional): The `Features` class related to the task. Defaults to RelationClassificationFeatures.
+            multi_label (bool, optional): Whether the task must be treated as multi-label or not. Defaults to True.
+            negative_label_id (int, optional): The index of the negative label or -1 if no negative label exist. A negative label is for example the class `Other` on NER, that means that the specific token is not a named entity. Defaults to -1.
         """
         super().__init__(
             *args,
@@ -61,14 +55,25 @@ class RelationClassificationTask(BinaryTask):
 
 @dataclass
 class TACREDFeatures(Features):
+    """A class handler for the TACRED features. It inherits from `Features`."""
+
     subj: str = None
     obj: str = None
 
 
 class TACREDRelationClassificationTask(RelationClassificationTask):
+    """A class handler for TACRED Relation Classification task. It inherits from `RelationClassificationTask` class."""
+
     def __init__(
         self, labels: List[str], templates: Dict[str, List[str]], valid_conditions: Dict[str, List[str]], **kwargs
     ) -> None:
+        """Initialization of the TACRED RelationClassification task
+
+        Args:
+            labels (List[str]): The labels for the task.
+            templates (Dict[str, List[str]]): The templates/verbalizations for the task.
+            valid_conditions (Dict[str, List[str]]): The valid conditions or constraints for the task.
+        """
         for key in ["name", "required_variables", "additional_variables", "features_class", "multi_label", "negative_label_id"]:
             kwargs.pop(key, None)
         super().__init__(

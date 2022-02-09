@@ -92,7 +92,7 @@ The result should be something close to this:
 
 ## Information Extraction with Entailment
 
-On the previous example we already saw how to creat a Topic Classifier that will classify the whole given text into a set of topic labels.
+On the previous example we already saw how to create a Topic Classifier that will classify the whole given text into a set of topic labels.
 That kind of tasks are known as **Text Classification** tasks. On Information Extraction (IE) instead, we usually find tasks that require 
 to classify spans inside a sentence (**Span Classification** tasks like NER) or relations between spans inside a sentence/document (**Tuple 
 Classification tasks** like Relation Extraction). This framework differentiates the task types by the number of spans involved: if no spans 

@@ -119,7 +119,7 @@ __pdoc__ = {
 <dl>
 <dt id="a2t.tasks.Task"><code class="flex name class">
 <span>class <span class="ident">Task</span></span>
-<span>(</span><span>name: str = None, required_variables: List[str] = &lt;factory&gt;, additional_variables: List[str] = &lt;factory&gt;, labels: List[str] = &lt;factory&gt;, templates: Dict[str, List[str]] = &lt;factory&gt;, valid_conditions: Dict[str, List[str]] = &lt;factory&gt;, negative_label_id: int = -1, multi_label: bool = False, features_class: type = a2t.tasks.base.Features)</span>
+<span>(</span><span>name: str = None, required_variables: List[str] = &lt;factory&gt;, additional_variables: List[str] = &lt;factory&gt;, labels: List[str] = &lt;factory&gt;, templates: Dict[str, List[str]] = &lt;factory&gt;, valid_conditions: Dict[str, List[str]] = None, negative_label_id: int = -1, multi_label: bool = False, features_class: type = a2t.tasks.base.Features)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Abstract class for Tasks definition.</p>
@@ -137,11 +137,11 @@ __pdoc__ = {
 <dt><strong><code>templates</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
 <dd>The templates/verbalizations for the task. Defaults to empty dict.</dd>
 <dt><strong><code>valid_conditions</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
-<dd>The valid conditions or constraints for the task.</dd>
+<dd>The valid conditions or constraints for the task. Defaults to None.</dd>
 <dt><strong><code>negative_label_id</code></strong> :&ensp;<code>int</code>, optional</dt>
 <dd>The index of the negative label or -1 if no negative label exist. A negative label is for example the class <code>Other</code> on NER, that means that the specific token is not a named entity. Defaults to -1.</dd>
 <dt><strong><code>multi_label</code></strong> :&ensp;<code>bool</code>, optional</dt>
-<dd>Wheter the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.</dd>
+<dd>Whether the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.</dd>
 <dt><strong><code>features_class</code></strong> :&ensp;<code>type</code>, optional</dt>
 <dd>The <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class related to the task. Default to <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code>.</dd>
 </dl></div>
@@ -161,9 +161,9 @@ class Task:
         additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `Features` class. Defaults to empty list.
         labels (List[str], optional): The labels for the task. Defaults to empty list.
         templates (Dict[str, List[str]], optional): The templates/verbalizations for the task. Defaults to empty dict.
-        valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task.
+        valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task. Defaults to None.
         negative_label_id (int, optional): The index of the negative label or -1 if no negative label exist. A negative label is for example the class `Other` on NER, that means that the specific token is not a named entity. Defaults to -1.
-        multi_label (bool, optional): Wheter the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.
+        multi_label (bool, optional): Whether the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.
         features_class (type, optional): The `Features` class related to the task. Default to `Features`.
     &#34;&#34;&#34;
 
@@ -172,7 +172,7 @@ class Task:
     additional_variables: List[str] = field(default_factory=list)
     labels: List[str] = field(default_factory=list)
     templates: Dict[str, List[str]] = field(default_factory=dict)
-    valid_conditions: Dict[str, List[str]] = field(default_factory=dict)
+    valid_conditions: Dict[str, List[str]] = None
     negative_label_id: int = -1  # -1 for no negative class
     multi_label: bool = False
     features_class: type = Features
@@ -767,15 +767,13 @@ class Features:
 <li>a2t.tasks.base.BinaryFeatures</li>
 <li>a2t.tasks.base.UnaryFeatures</li>
 <li>a2t.tasks.base.ZeroaryFeatures</li>
-<li>a2t.tasks.span_classification.NamedEntityClassificationFeatures</li>
 <li>a2t.tasks.text_classification.TopicClassificationFeatures</li>
-<li>a2t.tasks.tuple_classification.RelationClassificationFeatures</li>
 <li>a2t.tasks.tuple_classification.TACREDFeatures</li>
 </ul>
 </dd>
 <dt id="a2t.tasks.ZeroaryTask"><code class="flex name class">
 <span>class <span class="ident">ZeroaryTask</span></span>
-<span>(</span><span>name: str = None, required_variables: List[str] = &lt;factory&gt;, additional_variables: List[str] = &lt;factory&gt;, labels: List[str] = &lt;factory&gt;, templates: Dict[str, List[str]] = &lt;factory&gt;, valid_conditions: Dict[str, List[str]] = &lt;factory&gt;, negative_label_id: int = -1, multi_label: bool = False, features_class: type = a2t.tasks.base.ZeroaryFeatures)</span>
+<span>(</span><span>name: str = None, required_variables: List[str] = &lt;factory&gt;, additional_variables: List[str] = &lt;factory&gt;, labels: List[str] = &lt;factory&gt;, templates: Dict[str, List[str]] = &lt;factory&gt;, valid_conditions: Dict[str, List[str]] = None, negative_label_id: int = -1, multi_label: bool = False, features_class: type = a2t.tasks.base.ZeroaryFeatures)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>A <code><a title="a2t.tasks.Task" href="#a2t.tasks.Task">Task</a></code> implementation for Text Classification like tasks.</p>
@@ -783,18 +781,22 @@ class Features:
 <dl>
 <dt><strong><code>name</code></strong> :&ensp;<code>str</code>, optional</dt>
 <dd>A name for the task that may be used for to differentiate task when saving. Defaults to None.</dd>
+<dt><strong><code>required_variables</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
+<dd>The variables required to perform the task and must be implemented by the <code><a title="a2t.tasks.ZeroaryFeatures" href="#a2t.tasks.ZeroaryFeatures">ZeroaryFeatures</a></code> class. Defaults to empty list.</dd>
 <dt><strong><code>additional_variables</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
-<dd>The variables not required to perform the task and must be implemented by the <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class. Defaults to empty list.</dd>
+<dd>The variables not required to perform the task and must be implemented by the <code><a title="a2t.tasks.ZeroaryFeatures" href="#a2t.tasks.ZeroaryFeatures">ZeroaryFeatures</a></code> class. Defaults to empty list.</dd>
 <dt><strong><code>labels</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
 <dd>The labels for the task. Defaults to empty list.</dd>
 <dt><strong><code>templates</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
 <dd>The templates/verbalizations for the task. Defaults to empty dict.</dd>
 <dt><strong><code>valid_conditions</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
-<dd>The valid conditions or constraints for the task.</dd>
+<dd>The valid conditions or constraints for the task. Defaults to None.</dd>
 <dt><strong><code>multi_label</code></strong> :&ensp;<code>bool</code>, optional</dt>
-<dd>Wheter the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.</dd>
+<dd>Whether the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.</dd>
 <dt><strong><code>features_class</code></strong> :&ensp;<code>type</code>, optional</dt>
-<dd>The <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class related to the task. Default to <code><a title="a2t.tasks.ZeroaryFeatures" href="#a2t.tasks.ZeroaryFeatures">ZeroaryFeatures</a></code>.</dd>
+<dd>The <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class related to the task. Defaults to <code><a title="a2t.tasks.ZeroaryFeatures" href="#a2t.tasks.ZeroaryFeatures">ZeroaryFeatures</a></code>.</dd>
+<dt><strong><code>negative_label_id</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>The index of the negative label or -1 if no negative label exist. A negative label is for example the class <code>Other</code> on NER, that means that the specific token is not a named entity. Defaults to -1.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -806,12 +808,14 @@ class ZeroaryTask(Task):
 
     Args:
         name (str, optional): A name for the task that may be used for to differentiate task when saving. Defaults to None.
-        additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `Features` class. Defaults to empty list.
+        required_variables (List[str], optional): The variables required to perform the task and must be implemented by the `ZeroaryFeatures` class. Defaults to empty list.
+        additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `ZeroaryFeatures` class. Defaults to empty list.
         labels (List[str], optional): The labels for the task. Defaults to empty list.
         templates (Dict[str, List[str]], optional): The templates/verbalizations for the task. Defaults to empty dict.
-        valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task.
-        multi_label (bool, optional): Wheter the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.
-        features_class (type, optional): The `Features` class related to the task. Default to `ZeroaryFeatures`.
+        valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task. Defaults to None.
+        multi_label (bool, optional): Whether the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.
+        features_class (type, optional): The `Features` class related to the task. Defaults to `ZeroaryFeatures`.
+        negative_label_id (int, optional): The index of the negative label or -1 if no negative label exist. A negative label is for example the class `Other` on NER, that means that the specific token is not a named entity. Defaults to -1.
     &#34;&#34;&#34;
 
     features_class: type = ZeroaryFeatures
@@ -912,7 +916,7 @@ class ZeroaryTask(Task):
 </dd>
 <dt id="a2t.tasks.UnaryTask"><code class="flex name class">
 <span>class <span class="ident">UnaryTask</span></span>
-<span>(</span><span>name: str = None, required_variables: List[str] = &lt;factory&gt;, additional_variables: List[str] = &lt;factory&gt;, labels: List[str] = &lt;factory&gt;, templates: Dict[str, List[str]] = &lt;factory&gt;, valid_conditions: Dict[str, List[str]] = &lt;factory&gt;, negative_label_id: int = -1, multi_label: bool = False, features_class: type = a2t.tasks.base.UnaryFeatures)</span>
+<span>(</span><span>name: str = None, required_variables: List[str] = &lt;factory&gt;, additional_variables: List[str] = &lt;factory&gt;, labels: List[str] = &lt;factory&gt;, templates: Dict[str, List[str]] = &lt;factory&gt;, valid_conditions: Dict[str, List[str]] = None, negative_label_id: int = -1, multi_label: bool = False, features_class: type = a2t.tasks.base.UnaryFeatures)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>A <code><a title="a2t.tasks.Task" href="#a2t.tasks.Task">Task</a></code> implementation for Span Classification like tasks.</p>
@@ -920,18 +924,22 @@ class ZeroaryTask(Task):
 <dl>
 <dt><strong><code>name</code></strong> :&ensp;<code>str</code>, optional</dt>
 <dd>A name for the task that may be used for to differentiate task when saving. Defaults to None.</dd>
+<dt><strong><code>required_variables</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
+<dd>The variables required to perform the task and must be implemented by the <code><a title="a2t.tasks.UnaryFeatures" href="#a2t.tasks.UnaryFeatures">UnaryFeatures</a></code> class. Defaults <code>["X"]</code>.</dd>
 <dt><strong><code>additional_variables</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
-<dd>The variables not required to perform the task and must be implemented by the <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class. Defaults to empty list.</dd>
+<dd>The variables not required to perform the task and must be implemented by the <code><a title="a2t.tasks.UnaryFeatures" href="#a2t.tasks.UnaryFeatures">UnaryFeatures</a></code> class. Defaults to empty list.</dd>
 <dt><strong><code>labels</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
 <dd>The labels for the task. Defaults to empty list.</dd>
 <dt><strong><code>templates</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
 <dd>The templates/verbalizations for the task. Defaults to empty dict.</dd>
 <dt><strong><code>valid_conditions</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
-<dd>The valid conditions or constraints for the task.</dd>
+<dd>The valid conditions or constraints for the task. Defaults to None.</dd>
 <dt><strong><code>multi_label</code></strong> :&ensp;<code>bool</code>, optional</dt>
-<dd>Wheter the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.</dd>
+<dd>Whether the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.</dd>
 <dt><strong><code>features_class</code></strong> :&ensp;<code>type</code>, optional</dt>
 <dd>The <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class related to the task. Default to <code><a title="a2t.tasks.UnaryFeatures" href="#a2t.tasks.UnaryFeatures">UnaryFeatures</a></code>.</dd>
+<dt><strong><code>negative_label_id</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>The index of the negative label or -1 if no negative label exist. A negative label is for example the class <code>Other</code> on NER, that means that the specific token is not a named entity. Defaults to -1.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -943,14 +951,17 @@ class UnaryTask(Task):
 
     Args:
         name (str, optional): A name for the task that may be used for to differentiate task when saving. Defaults to None.
-        additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `Features` class. Defaults to empty list.
+        required_variables (List[str], optional): The variables required to perform the task and must be implemented by the `UnaryFeatures` class. Defaults `[&#34;X&#34;]`.
+        additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `UnaryFeatures` class. Defaults to empty list.
         labels (List[str], optional): The labels for the task. Defaults to empty list.
         templates (Dict[str, List[str]], optional): The templates/verbalizations for the task. Defaults to empty dict.
-        valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task.
-        multi_label (bool, optional): Wheter the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.
+        valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task. Defaults to None.
+        multi_label (bool, optional): Whether the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.
         features_class (type, optional): The `Features` class related to the task. Default to `UnaryFeatures`.
+        negative_label_id (int, optional): The index of the negative label or -1 if no negative label exist. A negative label is for example the class `Other` on NER, that means that the specific token is not a named entity. Defaults to -1.
     &#34;&#34;&#34;
 
+    required_variables: List[str] = field(default_factory=lambda: [&#34;X&#34;])
     features_class: type = UnaryFeatures
 
     def _assert_constraints(self):
@@ -1121,10 +1132,14 @@ class UnaryFeatures(Features):
 <ul class="hlist">
 <li>a2t.tasks.base.Features</li>
 </ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li>a2t.tasks.span_classification.NamedEntityClassificationFeatures</li>
+</ul>
 </dd>
 <dt id="a2t.tasks.BinaryTask"><code class="flex name class">
 <span>class <span class="ident">BinaryTask</span></span>
-<span>(</span><span>name: str = None, required_variables: List[str] = &lt;factory&gt;, additional_variables: List[str] = &lt;factory&gt;, labels: List[str] = &lt;factory&gt;, templates: Dict[str, List[str]] = &lt;factory&gt;, valid_conditions: Dict[str, List[str]] = &lt;factory&gt;, negative_label_id: int = -1, multi_label: bool = False, features_class: type = a2t.tasks.base.BinaryFeatures)</span>
+<span>(</span><span>name: str = None, required_variables: List[str] = &lt;factory&gt;, additional_variables: List[str] = &lt;factory&gt;, labels: List[str] = &lt;factory&gt;, templates: Dict[str, List[str]] = &lt;factory&gt;, valid_conditions: Dict[str, List[str]] = None, negative_label_id: int = -1, multi_label: bool = False, features_class: type = a2t.tasks.base.BinaryFeatures)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>A <code><a title="a2t.tasks.Task" href="#a2t.tasks.Task">Task</a></code> implementation for Relation Classification like tasks.</p>
@@ -1132,18 +1147,22 @@ class UnaryFeatures(Features):
 <dl>
 <dt><strong><code>name</code></strong> :&ensp;<code>str</code>, optional</dt>
 <dd>A name for the task that may be used for to differentiate task when saving. Defaults to None.</dd>
+<dt><strong><code>required_variables</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
+<dd>The variables required to perform the task and must be implemented by the <code><a title="a2t.tasks.BinaryFeatures" href="#a2t.tasks.BinaryFeatures">BinaryFeatures</a></code> class. Defaults <code>["X", "Y"]</code>.</dd>
 <dt><strong><code>additional_variables</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
-<dd>The variables not required to perform the task and must be implemented by the <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class. Defaults to empty list.</dd>
+<dd>The variables not required to perform the task and must be implemented by the <code><a title="a2t.tasks.BinaryFeatures" href="#a2t.tasks.BinaryFeatures">BinaryFeatures</a></code> class. Defaults to empty list.</dd>
 <dt><strong><code>labels</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
 <dd>The labels for the task. Defaults to empty list.</dd>
 <dt><strong><code>templates</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
 <dd>The templates/verbalizations for the task. Defaults to empty dict.</dd>
 <dt><strong><code>valid_conditions</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
-<dd>The valid conditions or constraints for the task.</dd>
+<dd>The valid conditions or constraints for the task. Defaults to None.</dd>
 <dt><strong><code>multi_label</code></strong> :&ensp;<code>bool</code>, optional</dt>
-<dd>Wheter the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.</dd>
+<dd>Whether the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.</dd>
 <dt><strong><code>features_class</code></strong> :&ensp;<code>type</code>, optional</dt>
 <dd>The <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class related to the task. Default to <code><a title="a2t.tasks.BinaryFeatures" href="#a2t.tasks.BinaryFeatures">BinaryFeatures</a></code>.</dd>
+<dt><strong><code>negative_label_id</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>The index of the negative label or -1 if no negative label exist. A negative label is for example the class <code>Other</code> on NER, that means that the specific token is not a named entity. Defaults to -1.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -1155,14 +1174,17 @@ class BinaryTask(Task):
 
     Args:
         name (str, optional): A name for the task that may be used for to differentiate task when saving. Defaults to None.
-        additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `Features` class. Defaults to empty list.
+        required_variables (List[str], optional): The variables required to perform the task and must be implemented by the `BinaryFeatures` class. Defaults `[&#34;X&#34;, &#34;Y&#34;]`.
+        additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `BinaryFeatures` class. Defaults to empty list.
         labels (List[str], optional): The labels for the task. Defaults to empty list.
         templates (Dict[str, List[str]], optional): The templates/verbalizations for the task. Defaults to empty dict.
-        valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task.
-        multi_label (bool, optional): Wheter the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.
+        valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task. Defaults to None.
+        multi_label (bool, optional): Whether the task must be treated as multi-label or not. You should treat as multi-label task a task that contains a negative label. Defaults to False.
         features_class (type, optional): The `Features` class related to the task. Default to `BinaryFeatures`.
+        negative_label_id (int, optional): The index of the negative label or -1 if no negative label exist. A negative label is for example the class `Other` on NER, that means that the specific token is not a named entity. Defaults to -1.
     &#34;&#34;&#34;
 
+    required_variables: List[str] = field(default_factory=lambda: [&#34;X&#34;, &#34;Y&#34;])
     features_class: type = BinaryFeatures
 
     def _assert_constraints(self):
@@ -1336,6 +1358,10 @@ class BinaryFeatures(Features):
 <ul class="hlist">
 <li>a2t.tasks.base.Features</li>
 </ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li>a2t.tasks.tuple_classification.RelationClassificationFeatures</li>
+</ul>
 </dd>
 <dt id="a2t.tasks.TopicClassificationFeatures"><code class="flex name class">
 <span>class <span class="ident">TopicClassificationFeatures</span></span>
@@ -1482,13 +1508,15 @@ then the templates will be the combinations of the <code>hypothesis_template</co
 <span>(</span><span>context: str, label: str = None, inst_type: str = None, subj: str = None, obj: str = None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>TACREDFeatures(context: str, label: str = None, inst_type: str = None, subj: str = None, obj: str = None)</p></div>
+<div class="desc"><p>A class handler for the TACRED features. It inherits from <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code>.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@dataclass
 class TACREDFeatures(Features):
+    &#34;&#34;&#34;A class handler for the TACRED features. It inherits from `Features`.&#34;&#34;&#34;
+
     subj: str = None
     obj: str = None</code></pre>
 </details>
@@ -1502,38 +1530,34 @@ class TACREDFeatures(Features):
 <span>(</span><span>labels: List[str], templates: Dict[str, List[str]], valid_conditions: Dict[str, List[str]], **kwargs)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>A class handler for Relation Classification task. It inherits from <code><a title="a2t.tasks.BinaryTask" href="#a2t.tasks.BinaryTask">BinaryTask</a></code> class.</p>
-<p>TODO: Add documentation.</p>
-<p>Initialization of a RelationClassificationTask task.</p>
+<div class="desc"><p>A class handler for TACRED Relation Classification task. It inherits from <code>RelationClassificationTask</code> class.</p>
+<p>Initialization of the TACRED RelationClassification task</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
-<dd>[description]</dd>
 <dt><strong><code>labels</code></strong> :&ensp;<code>List[str]</code></dt>
-<dd>[description]</dd>
-<dt><strong><code>required_variables</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
-<dd>[description]. Defaults to ["X", "Y"].</dd>
-<dt><strong><code>additional_variables</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
-<dd>[description]. Defaults to ["inst_type"].</dd>
-<dt><strong><code>templates</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
-<dd>[description]. Defaults to None.</dd>
-<dt><strong><code>valid_conditions</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
-<dd>[description]. Defaults to None.</dd>
-<dt><strong><code>features_class</code></strong> :&ensp;<code>type</code>, optional</dt>
-<dd>[description]. Defaults to RelationClassificationFeatures.</dd>
-<dt><strong><code>multi_label</code></strong> :&ensp;<code>bool</code>, optional</dt>
-<dd>[description]. Defaults to True.</dd>
-<dt><strong><code>negative_label_id</code></strong> :&ensp;<code>int</code>, optional</dt>
-<dd>[description]. Defaults to 0.</dd>
+<dd>The labels for the task.</dd>
+<dt><strong><code>templates</code></strong> :&ensp;<code>Dict[str, List[str]]</code></dt>
+<dd>The templates/verbalizations for the task.</dd>
+<dt><strong><code>valid_conditions</code></strong> :&ensp;<code>Dict[str, List[str]]</code></dt>
+<dd>The valid conditions or constraints for the task.</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class TACREDRelationClassificationTask(RelationClassificationTask):
+    &#34;&#34;&#34;A class handler for TACRED Relation Classification task. It inherits from `RelationClassificationTask` class.&#34;&#34;&#34;
+
     def __init__(
         self, labels: List[str], templates: Dict[str, List[str]], valid_conditions: Dict[str, List[str]], **kwargs
     ) -&gt; None:
+        &#34;&#34;&#34;Initialization of the TACRED RelationClassification task
+
+        Args:
+            labels (List[str]): The labels for the task.
+            templates (Dict[str, List[str]]): The templates/verbalizations for the task.
+            valid_conditions (Dict[str, List[str]]): The valid conditions or constraints for the task.
+        &#34;&#34;&#34;
         for key in [&#34;name&#34;, &#34;required_variables&#34;, &#34;additional_variables&#34;, &#34;features_class&#34;, &#34;multi_label&#34;, &#34;negative_label_id&#34;]:
             kwargs.pop(key, None)
         super().__init__(

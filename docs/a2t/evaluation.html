@@ -187,7 +187,6 @@ def main(args):
             # If dev data then optimize the threshold on it
             dev_results = task.compute_metrics(dev_labels, output, threshold=&#34;optimize&#34;)
             results[pretrained_model][&#34;dev&#34;] = dev_results
-            pprint(results)
 
             with open(f&#34;experiments/{config.name}/results.json&#34;, &#34;wt&#34;) as f:
                 json.dump(results, f, indent=4)
@@ -301,7 +300,6 @@ if __name__ == &#34;__main__&#34;:
             # If dev data then optimize the threshold on it
             dev_results = task.compute_metrics(dev_labels, output, threshold=&#34;optimize&#34;)
             results[pretrained_model][&#34;dev&#34;] = dev_results
-            pprint(results)
 
             with open(f&#34;experiments/{config.name}/results.json&#34;, &#34;wt&#34;) as f:
                 json.dump(results, f, indent=4)
