@@ -31,4 +31,4 @@ jobs:
         black . --line-length 128
     - name: Test with unittest
       run: |
-        python -m unittest  discover -v -s .\a2t\tests
+        python -m unittest  discover -v -s a2t.tests
