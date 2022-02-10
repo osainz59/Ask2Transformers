@@ -31,19 +31,21 @@ class NamedEntityClassificationTask(UnaryTask):
         """Initialization of a NamedEntityClassificationTask task.
 
         Args:
-            name (str): [description]
-            labels (List[str]): [description]
-            required_variables (List[str], optional): [description]. Defaults to ["X"].
-            additional_variables (List[str], optional): [description]. Defaults to ["inst_type"].
-            templates (Dict[str, List[str]], optional): [description]. Defaults to None.
-            valid_conditions (Dict[str, List[str]], optional): [description]. Defaults to None.
-            hypothesis_template (str, optional): [description]. Defaults to "{X} is a {label}.".
-            features_class (type, optional): [description]. Defaults to NamedEntityClassificationFeatures.
-            multi_label (bool, optional): [description]. Defaults to True.
-            negative_label_id (int, optional): [description]. Defaults to 0.
+            name (str): A name for the task that may be used for to differentiate task when saving.
+            labels (List[str]): The labels for the task.
+            required_variables (List[str], optional): The variables required to perform the task and must be implemented by the `NamedEntityClassificationFeatures` class. Defaults to `["X", "Y"]`.
+            additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `NamedEntityClassificationFeatures` class. Defaults to ["inst_type"].
+            templates (Dict[str, List[str]], optional): The templates/verbalizations for the task. Defaults to None.
+            valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task. Defaults to None.
+            hypothesis_template (str, optional): A meta template to generate hypothesis templates, if `templates` is None,
+                then the templates will be the combinations of the `hypothesis_template` and the `labels`. It must contain the
+                '{label}' placeholder. Defaults to "{X} is a {label}.".
+            features_class (type, optional): The `Features` class related to the task. Defaults to NamedEntityClassificationFeatures.
+            multi_label (bool, optional): Whether the task must be treated as multi-label or not. Defaults to True.
+            negative_label_id (int, optional): The index of the negative label or -1 if no negative label exist. A negative label is for example the class `Other` on NER, that means that the specific token is not a named entity. Defaults to 0.
 
         Raises:
-            IncorrectHypothesisTemplateError: [description]
+            IncorrectHypothesisTemplateError: Raised when the `hypotesis_template` argument does not contain the '{label}' placeholder.
         """
 
         if not templates:

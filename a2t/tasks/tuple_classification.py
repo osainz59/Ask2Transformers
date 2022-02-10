@@ -28,15 +28,15 @@ class RelationClassificationTask(BinaryTask):
         """Initialization of a RelationClassificationTask task.
 
         Args:
-            name (str): A name for the task that may be used for to differentiate task when saving. Defaults to None.
-            labels (List[str]): The labels for the task. Defaults to empty list.
+            name (str): A name for the task that may be used for to differentiate task when saving.
+            labels (List[str]): The labels for the task.
             required_variables (List[str], optional): The variables required to perform the task and must be implemented by the `RelationClassificationFeatures` class. Defaults to `["X", "Y"]`.
             additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `RelationClassificationFeatures` class. Defaults to ["inst_type"].
             templates (Dict[str, List[str]], optional): The templates/verbalizations for the task. Defaults to None.
             valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task. Defaults to None.
             features_class (type, optional): The `Features` class related to the task. Defaults to RelationClassificationFeatures.
             multi_label (bool, optional): Whether the task must be treated as multi-label or not. Defaults to True.
-            negative_label_id (int, optional): The index of the negative label or -1 if no negative label exist. A negative label is for example the class `Other` on NER, that means that the specific token is not a named entity. Defaults to -1.
+            negative_label_id (int, optional): The index of the negative label or -1 if no negative label exist. A negative label is for example the class `Other` on NER, that means that the specific token is not a named entity. Defaults to 0.
         """
         super().__init__(
             *args,

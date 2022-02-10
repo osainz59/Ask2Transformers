@@ -92,6 +92,8 @@ __all__ = [
     &#34;BinaryFeatures&#34;,
     &#34;TopicClassificationFeatures&#34;,
     &#34;TopicClassificationTask&#34;,
+    &#34;NamedEntityClassificationFeatures&#34;,
+    &#34;NamedEntityClassificationTask&#34;,
     &#34;TACREDFeatures&#34;,
     &#34;TACREDRelationClassificationTask&#34;,
     &#34;PREDEFINED_TASKS&#34;,
@@ -1503,6 +1505,137 @@ then the templates will be the combinations of the <code>hypothesis_template</co
 <li>a2t.tasks.base.Task</li>
 </ul>
 </dd>
+<dt id="a2t.tasks.NamedEntityClassificationFeatures"><code class="flex name class">
+<span>class <span class="ident">NamedEntityClassificationFeatures</span></span>
+<span>(</span><span>context: str, label: str = None, inst_type: str = None, X: str = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A class handler for the Named Entity Classification features. It inherits from <code><a title="a2t.tasks.UnaryFeatures" href="#a2t.tasks.UnaryFeatures">UnaryFeatures</a></code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class NamedEntityClassificationFeatures(UnaryFeatures):
+    &#34;&#34;&#34;A class handler for the Named Entity Classification features. It inherits from `UnaryFeatures`.&#34;&#34;&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>a2t.tasks.base.UnaryFeatures</li>
+<li>a2t.tasks.base.Features</li>
+</ul>
+</dd>
+<dt id="a2t.tasks.NamedEntityClassificationTask"><code class="flex name class">
+<span>class <span class="ident">NamedEntityClassificationTask</span></span>
+<span>(</span><span>name: str, labels: List[str], *args, required_variables: List[str] = ['X'], additional_variables: List[str] = ['inst_type'], templates: Dict[str, List[str]] = None, valid_conditions: Dict[str, List[str]] = None, hypothesis_template: str = '{X} is a {label}.', features_class: type = a2t.tasks.span_classification.NamedEntityClassificationFeatures, multi_label: bool = True, negative_label_id: int = 0, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A class handler for Named Entity Classification task. It inherits from <code><a title="a2t.tasks.UnaryTask" href="#a2t.tasks.UnaryTask">UnaryTask</a></code> class.</p>
+<p>Initialization of a NamedEntityClassificationTask task.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>A name for the task that may be used for to differentiate task when saving.</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>List[str]</code></dt>
+<dd>The labels for the task.</dd>
+<dt><strong><code>required_variables</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
+<dd>The variables required to perform the task and must be implemented by the <code><a title="a2t.tasks.NamedEntityClassificationFeatures" href="#a2t.tasks.NamedEntityClassificationFeatures">NamedEntityClassificationFeatures</a></code> class. Defaults to <code>["X", "Y"]</code>.</dd>
+<dt><strong><code>additional_variables</code></strong> :&ensp;<code>List[str]</code>, optional</dt>
+<dd>The variables not required to perform the task and must be implemented by the <code><a title="a2t.tasks.NamedEntityClassificationFeatures" href="#a2t.tasks.NamedEntityClassificationFeatures">NamedEntityClassificationFeatures</a></code> class. Defaults to ["inst_type"].</dd>
+<dt><strong><code>templates</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
+<dd>The templates/verbalizations for the task. Defaults to None.</dd>
+<dt><strong><code>valid_conditions</code></strong> :&ensp;<code>Dict[str, List[str]]</code>, optional</dt>
+<dd>The valid conditions or constraints for the task. Defaults to None.</dd>
+<dt><strong><code>hypothesis_template</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>A meta template to generate hypothesis templates, if <code>templates</code> is None,
+then the templates will be the combinations of the <code>hypothesis_template</code> and the <code>labels</code>. It must contain the
+'{label}' placeholder. Defaults to "{X} is a {label}.".</dd>
+<dt><strong><code>features_class</code></strong> :&ensp;<code>type</code>, optional</dt>
+<dd>The <code><a title="a2t.tasks.Features" href="#a2t.tasks.Features">Features</a></code> class related to the task. Defaults to NamedEntityClassificationFeatures.</dd>
+<dt><strong><code>multi_label</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Whether the task must be treated as multi-label or not. Defaults to True.</dd>
+<dt><strong><code>negative_label_id</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>The index of the negative label or -1 if no negative label exist. A negative label is for example the class <code>Other</code> on NER, that means that the specific token is not a named entity. Defaults to 0.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>IncorrectHypothesisTemplateError</code></dt>
+<dd>Raised when the <code>hypotesis_template</code> argument does not contain the '{label}' placeholder.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class NamedEntityClassificationTask(UnaryTask):
+    &#34;&#34;&#34;A class handler for Named Entity Classification task. It inherits from `UnaryTask` class.&#34;&#34;&#34;
+
+    def __init__(
+        self,
+        name: str,
+        labels: List[str],
+        *args,
+        required_variables: List[str] = [&#34;X&#34;],
+        additional_variables: List[str] = [&#34;inst_type&#34;],
+        templates: Dict[str, List[str]] = None,
+        valid_conditions: Dict[str, List[str]] = None,
+        hypothesis_template: str = &#34;{X} is a {label}.&#34;,
+        features_class: type = NamedEntityClassificationFeatures,
+        multi_label: bool = True,
+        negative_label_id: int = 0,
+        **kwargs
+    ) -&gt; None:
+        &#34;&#34;&#34;Initialization of a NamedEntityClassificationTask task.
+
+        Args:
+            name (str): A name for the task that may be used for to differentiate task when saving.
+            labels (List[str]): The labels for the task.
+            required_variables (List[str], optional): The variables required to perform the task and must be implemented by the `NamedEntityClassificationFeatures` class. Defaults to `[&#34;X&#34;, &#34;Y&#34;]`.
+            additional_variables (List[str], optional): The variables not required to perform the task and must be implemented by the `NamedEntityClassificationFeatures` class. Defaults to [&#34;inst_type&#34;].
+            templates (Dict[str, List[str]], optional): The templates/verbalizations for the task. Defaults to None.
+            valid_conditions (Dict[str, List[str]], optional): The valid conditions or constraints for the task. Defaults to None.
+            hypothesis_template (str, optional): A meta template to generate hypothesis templates, if `templates` is None,
+                then the templates will be the combinations of the `hypothesis_template` and the `labels`. It must contain the
+                &#39;{label}&#39; placeholder. Defaults to &#34;{X} is a {label}.&#34;.
+            features_class (type, optional): The `Features` class related to the task. Defaults to NamedEntityClassificationFeatures.
+            multi_label (bool, optional): Whether the task must be treated as multi-label or not. Defaults to True.
+            negative_label_id (int, optional): The index of the negative label or -1 if no negative label exist. A negative label is for example the class `Other` on NER, that means that the specific token is not a named entity. Defaults to 0.
+
+        Raises:
+            IncorrectHypothesisTemplateError: Raised when the `hypotesis_template` argument does not contain the &#39;{label}&#39; placeholder.
+        &#34;&#34;&#34;
+
+        if not templates:
+            if &#34;{label}&#34; not in hypothesis_template:
+                raise IncorrectHypothesisTemplateError(
+                    &#34;The hypothesis_template argument must contain the &#39;{label}&#39; placeholder.&#34;
+                )
+
+            templates = {
+                label: [hypothesis_template.replace(&#34;{label}&#34;, label)]
+                for i, label in enumerate(labels)
+                if i != negative_label_id
+            }
+
+        super().__init__(
+            *args,
+            name=name,
+            required_variables=required_variables,
+            additional_variables=additional_variables,
+            labels=labels,
+            templates=templates,
+            valid_conditions=valid_conditions,
+            features_class=features_class,
+            multi_label=multi_label,
+            negative_label_id=negative_label_id,
+            **kwargs
+        )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>a2t.tasks.base.UnaryTask</li>
+<li>a2t.tasks.base.Task</li>
+</ul>
+</dd>
 <dt id="a2t.tasks.TACREDFeatures"><code class="flex name class">
 <span>class <span class="ident">TACREDFeatures</span></span>
 <span>(</span><span>context: str, label: str = None, inst_type: str = None, subj: str = None, obj: str = None)</span>
@@ -1643,6 +1776,12 @@ class TACREDFeatures(Features):
 </li>
 <li>
 <h4><code><a title="a2t.tasks.TopicClassificationTask" href="#a2t.tasks.TopicClassificationTask">TopicClassificationTask</a></code></h4>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.NamedEntityClassificationFeatures" href="#a2t.tasks.NamedEntityClassificationFeatures">NamedEntityClassificationFeatures</a></code></h4>
+</li>
+<li>
+<h4><code><a title="a2t.tasks.NamedEntityClassificationTask" href="#a2t.tasks.NamedEntityClassificationTask">NamedEntityClassificationTask</a></code></h4>
 </li>
 <li>
 <h4><code><a title="a2t.tasks.TACREDFeatures" href="#a2t.tasks.TACREDFeatures">TACREDFeatures</a></code></h4>

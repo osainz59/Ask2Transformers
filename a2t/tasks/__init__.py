@@ -50,6 +50,8 @@ __all__ = [
     "BinaryFeatures",
     "TopicClassificationFeatures",
     "TopicClassificationTask",
+    "NamedEntityClassificationFeatures",
+    "NamedEntityClassificationTask",
     "TACREDFeatures",
     "TACREDRelationClassificationTask",
     "PREDEFINED_TASKS",
