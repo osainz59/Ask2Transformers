@@ -26,4 +26,4 @@ class TestEntailmentModel(unittest.TestCase):
 
         preds = nlp(task=task, features=features, negative_threshold=0.0, return_confidences=True, return_labels=True, topk=3)
 
-        self.assertEqual(preds, [[("medicine", 0.8547821), ("biology", 0.036895804), ("business", 0.032091234)]])
+        self.assertAlmostEqual(preds, [[("medicine", 0.8547821), ("biology", 0.036895804), ("business", 0.032091234)]])
