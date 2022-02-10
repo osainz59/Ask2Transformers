@@ -2,7 +2,7 @@ from typing import Dict, List
 from dataclasses import dataclass
 
 from .text_classification import IncorrectHypothesisTemplateError
-from .base import UnaryTask, UnaryFeatures, Features
+from .base import UnaryTask, UnaryFeatures
 
 
 @dataclass

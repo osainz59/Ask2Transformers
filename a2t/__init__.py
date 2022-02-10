@@ -3,6 +3,26 @@ such as Topic Labelling or Relation Extraction. It is built on top of 🤗 Huggi
 library, so you are free to choose among hundreds of models. You can either, use a dataset specific classifier or define one 
 yourself with just labels descriptions or templates!
 
+## Installation
+
+By using Pip (check the last release)
+
+```shell
+pip install a2t
+```
+
+Or by clonning the repository from 
+<img 
+    src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/github-icon.svg" 
+    width="25" height="25" href="https://github.com/osainz59/Ask2Transformers" /> 
+[GitHub](https://github.com/osainz59/Ask2Transformers):
+
+```shell
+git clone https://github.com/osainz59/Ask2Transformers.git
+cd Ask2Transformers
+python -m pip install .
+```
+
 ## Getting Started
 
 The framework is organized to differentiate **three** main components: the **data**, **task** and **inference**. 

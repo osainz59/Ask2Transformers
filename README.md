@@ -20,7 +20,7 @@ Collados and Navigli, 2017)  dataset.
 To get started with the repository consider reading the **new** [documentation](https://osainz59.github.io/Ask2Transformers)!
 
 
-## Instalation
+## Installation
 
 By using Pip (check the last release)
 
@@ -36,7 +36,7 @@ cd Ask2Transformers
 python -m pip install .
 ```
 
-[//]: <img src="./imgs/RE_NLI.svg" style="background-color: white; border-radius: 15px">
+<!-- [//]: <img src="./imgs/RE_NLI.svg" style="background-color: white; border-radius: 15px"> -->
 
 
 ## Available models

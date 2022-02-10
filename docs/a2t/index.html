@@ -27,6 +27,19 @@ such as Topic Labelling or Relation …" />
 such as Topic Labelling or Relation Extraction. It is built on top of 🤗 HuggingFace <a href="https://github.com/huggingface/transformers">Transformers</a>
 library, so you are free to choose among hundreds of models. You can either, use a dataset specific classifier or define one
 yourself with just labels descriptions or templates!</p>
+<h2 id="installation">Installation</h2>
+<p>By using Pip (check the last release)</p>
+<pre><code class="language-shell">pip install a2t
+</code></pre>
+<p>Or by clonning the repository from
+<img
+src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/github-icon.svg"
+width="25" height="25" href="https://github.com/osainz59/Ask2Transformers" />
+<a href="https://github.com/osainz59/Ask2Transformers">GitHub</a>:</p>
+<pre><code class="language-shell">git clone https://github.com/osainz59/Ask2Transformers.git
+cd Ask2Transformers
+python -m pip install .
+</code></pre>
 <h2 id="getting-started">Getting Started</h2>
 <p>The framework is organized to differentiate <strong>three</strong> main components: the <strong>data</strong>, <strong>task</strong> and <strong>inference</strong>.
 Let's define a Topic Classifier that will classify sentences into the following topics: Politics, Culture, Economy,
@@ -183,6 +196,26 @@ nlp(task=task, features=test_examples, return_labels=True, return_confidences=Tr
 such as Topic Labelling or Relation Extraction. It is built on top of 🤗 HuggingFace [Transformers](https://github.com/huggingface/transformers) 
 library, so you are free to choose among hundreds of models. You can either, use a dataset specific classifier or define one 
 yourself with just labels descriptions or templates!
+
+## Installation
+
+By using Pip (check the last release)
+
+```shell
+pip install a2t
+```
+
+Or by clonning the repository from 
+&lt;img 
+    src=&#34;https://raw.githubusercontent.com/gilbarbara/logos/master/logos/github-icon.svg&#34; 
+    width=&#34;25&#34; height=&#34;25&#34; href=&#34;https://github.com/osainz59/Ask2Transformers&#34; /&gt; 
+[GitHub](https://github.com/osainz59/Ask2Transformers):
+
+```shell
+git clone https://github.com/osainz59/Ask2Transformers.git
+cd Ask2Transformers
+python -m pip install .
+```
 
 ## Getting Started
 
@@ -426,6 +459,7 @@ __pdoc__ = {
 <h1>Index</h1>
 <div class="toc">
 <ul>
+<li><a href="#installation">Installation</a></li>
 <li><a href="#getting-started">Getting Started</a><ul>
 <li><a href="#defining-the-dataset">Defining the dataset</a></li>
 <li><a href="#defining-the-task">Defining the Task</a></li>
