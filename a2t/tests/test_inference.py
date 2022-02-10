@@ -31,6 +31,3 @@ class TestEntailmentModel(unittest.TestCase):
         ):
             self.assertEqual(pred_label, gold_label)
             self.assertAlmostEqual(pred_prob, gold_prob, places=2)
-
-    def test_branch_protections(self):
-        raise Exception("This is an intended error.")
