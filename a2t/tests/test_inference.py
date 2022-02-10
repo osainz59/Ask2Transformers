@@ -30,4 +30,4 @@ class TestEntailmentModel(unittest.TestCase):
             preds[0], [("medicine", 0.8547821), ("biology", 0.036895804), ("business", 0.032091234)]
         ):
             self.assertEqual(pred_label, gold_label)
-            self.assertAlmostEqual(pred_prob, gold_prob)
+            self.assertAlmostEqual(pred_prob, gold_prob, places=2)
