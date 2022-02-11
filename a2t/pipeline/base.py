@@ -20,7 +20,7 @@ class Pipeline(list):
     ) -> None:
 
         # Check whether the pipeline is well defined or not
-        result_dict = ["initial_features"]
+        result_dict = ["input_features"]
         for _, input_name, output_name in elements:
             if input_name not in result_dict:
                 raise WronglyDefinedPipelineException(f"Input features {input_name} referenced before assignment.")
@@ -36,9 +36,11 @@ class Pipeline(list):
         super().__init__(elements)
 
     def __call__(self, input_features: List[Features]) -> Dict[str, List[Features]]:
-        result_dict = {"initial_features": input_features}
+        result_dict = {"input_features": input_features}
 
         for elem, input_name, output_name in self:
+            if input_name is None:
+                input_name = "input_features"
             features = result_dict[input_name]
             if isinstance(elem, CandidateGenerator):
                 features = elem(features)
@@ -57,6 +59,6 @@ class Pipeline(list):
             # Add the predictions to the output dict
             result_dict[output_name] = features
 
-        result_dict.pop("initial_features")
+        result_dict.pop("input_features")
 
         return result_dict

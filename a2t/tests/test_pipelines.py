@@ -54,7 +54,7 @@ class TestPipelines(unittest.TestCase):
         }
 
         pipe = Pipeline(
-            (NamedEntityClassificationTask("NER", labels=ner_labels), "initial_features", "ner_features"),
+            (NamedEntityClassificationTask("NER", labels=ner_labels), "input_features", "ner_features"),
             (
                 UnaryToBinaryCandidateGenerator(NamedEntityClassificationFeatures, RelationClassificationFeatures),
                 "ner_features",
@@ -75,7 +75,7 @@ class TestPipelines(unittest.TestCase):
             threshold=0.5,
             NER_model="ynie/roberta-large-snli_mnli_fever_anli_R1_R2_R3-nli",
             RE_threshold=0.9,
-            use_tqdm=False
+            use_tqdm=False,
         )
 
         features = [
@@ -100,6 +100,6 @@ class TestPipelines(unittest.TestCase):
         ]
 
         result = pipe(features)
-        
+
         self.assertListEqual(["Person", "Location"], [feature.label for feature in result["ner_features"]])
         self.assertListEqual(["per:city_of_death"], [feature.label for feature in result["re_features"]])

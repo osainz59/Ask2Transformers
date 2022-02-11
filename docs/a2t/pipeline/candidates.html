@@ -28,6 +28,7 @@
 </summary>
 <pre><code class="python">from typing import Iterable, List, Union
 from itertools import product
+from collections import defaultdict
 
 from a2t.tasks import Features, UnaryFeatures, BinaryFeatures
 
@@ -44,6 +45,26 @@ class CandidateGenerator:
     def __call__(self, input_features: List[Features]) -&gt; Iterable[Features]:
         raise NotImplementedError(&#34;The method `__call__()` must be overrided.&#34;)
 
+    @staticmethod
+    def group_features(features: List[Features], by: str = &#34;context&#34;) -&gt; Iterable[List[Features]]:
+        &#34;&#34;&#34;Groups features by some specific attribute. This function can be used to group features that shares
+        the same instance or sentence.
+
+        Args:
+            features (List[Features]): The complete list of features.
+            by (str, optional): The attribute by which the features are grouped. Defaults to &#34;context&#34;.
+
+        Returns:
+            Iterable[List[Features]]: An iterable of the features groups.
+        &#34;&#34;&#34;
+        assert all(hasattr(feature, by) for feature in features)
+
+        group_dict = defaultdict(list)
+        for feature in features:
+            group_dict[getattr(feature, by)].append(feature)
+
+        return group_dict.values()
+
 
 class UnaryToBinaryCandidateGenerator(CandidateGenerator):
     &#34;&#34;&#34;A BinaryFeatures generator from UnaryFeatures.
@@ -53,7 +74,15 @@ class UnaryToBinaryCandidateGenerator(CandidateGenerator):
     &#34;&#34;&#34;
 
     def __init__(self, unary_feature_class: type = UnaryFeatures, binary_feature_class: type = BinaryFeatures) -&gt; None:
+        &#34;&#34;&#34;Initialization of `UnaryToBinaryCandidateGenerator` class.
+
+        Args:
+            unary_feature_class (type, optional): The input features class, must inherit from `UnaryFeatures`. Defaults to UnaryFeatures.
+            binary_feature_class (type, optional): The output features class, must inherit from `UnaryFeatures`. Defaults to BinaryFeatures.
+        &#34;&#34;&#34;
         super().__init__()
+
+        assert issubclass(unary_feature_class, UnaryFeatures) and issubclass(binary_feature_class, BinaryFeatures)
 
         self._input_features_class = unary_feature_class
         self._output_features_class = binary_feature_class
@@ -64,18 +93,24 @@ class UnaryToBinaryCandidateGenerator(CandidateGenerator):
     def get_output_features_class(self) -&gt; type:
         return self._output_features_class
 
-    def __call__(self, input_features: List[UnaryFeatures]) -&gt; Iterable[BinaryFeatures]:
+    def __call__(self, input_features: List[UnaryFeatures]) -&gt; List[BinaryFeatures]:
         candidates = [
             features
             for features in input_features
             if isinstance(features, self.get_input_features_class()) and features.label is not None
         ]
 
-        for c1, c2 in product(candidates, candidates):
-            if c1 != c2 and c1.context == c2.context:
-                yield self.get_output_features_class()(
-                    context=c1.context, X=c1.X, Y=c2.X, inst_type=f&#34;{c1.label}:{c2.label}&#34;, label=None
-                )</code></pre>
+        return_list = []
+        for group in self.group_features(candidates, by=&#34;context&#34;):
+            for c1, c2 in product(group, group):
+                if c1 != c2 and c1.context == c2.context:
+                    return_list.append(
+                        self.get_output_features_class()(
+                            context=c1.context, X=c1.X, Y=c2.X, inst_type=f&#34;{c1.label}:{c2.label}&#34;, label=None
+                        )
+                    )
+
+        return return_list</code></pre>
 </details>
 </section>
 <section>
@@ -106,12 +141,78 @@ class UnaryToBinaryCandidateGenerator(CandidateGenerator):
         raise NotImplementedError(&#34;The method `get_output_features_class()` must be overrided.&#34;)
 
     def __call__(self, input_features: List[Features]) -&gt; Iterable[Features]:
-        raise NotImplementedError(&#34;The method `__call__()` must be overrided.&#34;)</code></pre>
+        raise NotImplementedError(&#34;The method `__call__()` must be overrided.&#34;)
+
+    @staticmethod
+    def group_features(features: List[Features], by: str = &#34;context&#34;) -&gt; Iterable[List[Features]]:
+        &#34;&#34;&#34;Groups features by some specific attribute. This function can be used to group features that shares
+        the same instance or sentence.
+
+        Args:
+            features (List[Features]): The complete list of features.
+            by (str, optional): The attribute by which the features are grouped. Defaults to &#34;context&#34;.
+
+        Returns:
+            Iterable[List[Features]]: An iterable of the features groups.
+        &#34;&#34;&#34;
+        assert all(hasattr(feature, by) for feature in features)
+
+        group_dict = defaultdict(list)
+        for feature in features:
+            group_dict[getattr(feature, by)].append(feature)
+
+        return group_dict.values()</code></pre>
 </details>
 <h3>Subclasses</h3>
 <ul class="hlist">
 <li><a title="a2t.pipeline.candidates.UnaryToBinaryCandidateGenerator" href="#a2t.pipeline.candidates.UnaryToBinaryCandidateGenerator">UnaryToBinaryCandidateGenerator</a></li>
 </ul>
+<h3>Static methods</h3>
+<dl>
+<dt id="a2t.pipeline.candidates.CandidateGenerator.group_features"><code class="name flex">
+<span>def <span class="ident">group_features</span></span>(<span>features: List[a2t.tasks.base.Features], by: str = 'context') ‑> Iterable[List[a2t.tasks.base.Features]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Groups features by some specific attribute. This function can be used to group features that shares
+the same instance or sentence.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>features</code></strong> :&ensp;<code>List[Features]</code></dt>
+<dd>The complete list of features.</dd>
+<dt><strong><code>by</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>The attribute by which the features are grouped. Defaults to "context".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Iterable[List[Features]]</code></dt>
+<dd>An iterable of the features groups.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def group_features(features: List[Features], by: str = &#34;context&#34;) -&gt; Iterable[List[Features]]:
+    &#34;&#34;&#34;Groups features by some specific attribute. This function can be used to group features that shares
+    the same instance or sentence.
+
+    Args:
+        features (List[Features]): The complete list of features.
+        by (str, optional): The attribute by which the features are grouped. Defaults to &#34;context&#34;.
+
+    Returns:
+        Iterable[List[Features]]: An iterable of the features groups.
+    &#34;&#34;&#34;
+    assert all(hasattr(feature, by) for feature in features)
+
+    group_dict = defaultdict(list)
+    for feature in features:
+        group_dict[getattr(feature, by)].append(feature)
+
+    return group_dict.values()</code></pre>
+</details>
+</dd>
+</dl>
 <h3>Methods</h3>
 <dl>
 <dt id="a2t.pipeline.candidates.CandidateGenerator.get_input_features_class"><code class="name flex">
@@ -149,7 +250,15 @@ class UnaryToBinaryCandidateGenerator(CandidateGenerator):
 <dd>
 <div class="desc"><p>A BinaryFeatures generator from UnaryFeatures.</p>
 <p>The model generates all possible combinations given a set of <code>UnaryFeatures</code>. Only candidates
-that has already the label assigned and share the same context are considered.</p></div>
+that has already the label assigned and share the same context are considered.</p>
+<p>Initialization of <code><a title="a2t.pipeline.candidates.UnaryToBinaryCandidateGenerator" href="#a2t.pipeline.candidates.UnaryToBinaryCandidateGenerator">UnaryToBinaryCandidateGenerator</a></code> class.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>unary_feature_class</code></strong> :&ensp;<code>type</code>, optional</dt>
+<dd>The input features class, must inherit from <code>UnaryFeatures</code>. Defaults to UnaryFeatures.</dd>
+<dt><strong><code>binary_feature_class</code></strong> :&ensp;<code>type</code>, optional</dt>
+<dd>The output features class, must inherit from <code>UnaryFeatures</code>. Defaults to BinaryFeatures.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -162,7 +271,15 @@ that has already the label assigned and share the same context are considered.</
     &#34;&#34;&#34;
 
     def __init__(self, unary_feature_class: type = UnaryFeatures, binary_feature_class: type = BinaryFeatures) -&gt; None:
+        &#34;&#34;&#34;Initialization of `UnaryToBinaryCandidateGenerator` class.
+
+        Args:
+            unary_feature_class (type, optional): The input features class, must inherit from `UnaryFeatures`. Defaults to UnaryFeatures.
+            binary_feature_class (type, optional): The output features class, must inherit from `UnaryFeatures`. Defaults to BinaryFeatures.
+        &#34;&#34;&#34;
         super().__init__()
+
+        assert issubclass(unary_feature_class, UnaryFeatures) and issubclass(binary_feature_class, BinaryFeatures)
 
         self._input_features_class = unary_feature_class
         self._output_features_class = binary_feature_class
@@ -173,18 +290,24 @@ that has already the label assigned and share the same context are considered.</
     def get_output_features_class(self) -&gt; type:
         return self._output_features_class
 
-    def __call__(self, input_features: List[UnaryFeatures]) -&gt; Iterable[BinaryFeatures]:
+    def __call__(self, input_features: List[UnaryFeatures]) -&gt; List[BinaryFeatures]:
         candidates = [
             features
             for features in input_features
             if isinstance(features, self.get_input_features_class()) and features.label is not None
         ]
 
-        for c1, c2 in product(candidates, candidates):
-            if c1 != c2 and c1.context == c2.context:
-                yield self.get_output_features_class()(
-                    context=c1.context, X=c1.X, Y=c2.X, inst_type=f&#34;{c1.label}:{c2.label}&#34;, label=None
-                )</code></pre>
+        return_list = []
+        for group in self.group_features(candidates, by=&#34;context&#34;):
+            for c1, c2 in product(group, group):
+                if c1 != c2 and c1.context == c2.context:
+                    return_list.append(
+                        self.get_output_features_class()(
+                            context=c1.context, X=c1.X, Y=c2.X, inst_type=f&#34;{c1.label}:{c2.label}&#34;, label=None
+                        )
+                    )
+
+        return return_list</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -219,6 +342,14 @@ that has already the label assigned and share the same context are considered.</
 </details>
 </dd>
 </dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="a2t.pipeline.candidates.CandidateGenerator" href="#a2t.pipeline.candidates.CandidateGenerator">CandidateGenerator</a></b></code>:
+<ul class="hlist">
+<li><code><a title="a2t.pipeline.candidates.CandidateGenerator.group_features" href="#a2t.pipeline.candidates.CandidateGenerator.group_features">group_features</a></code></li>
+</ul>
+</li>
+</ul>
 </dd>
 </dl>
 </section>
@@ -239,6 +370,7 @@ that has already the label assigned and share the same context are considered.</
 <li>
 <h4><code><a title="a2t.pipeline.candidates.CandidateGenerator" href="#a2t.pipeline.candidates.CandidateGenerator">CandidateGenerator</a></code></h4>
 <ul class="">
+<li><code><a title="a2t.pipeline.candidates.CandidateGenerator.group_features" href="#a2t.pipeline.candidates.CandidateGenerator.group_features">group_features</a></code></li>
 <li><code><a title="a2t.pipeline.candidates.CandidateGenerator.get_input_features_class" href="#a2t.pipeline.candidates.CandidateGenerator.get_input_features_class">get_input_features_class</a></code></li>
 <li><code><a title="a2t.pipeline.candidates.CandidateGenerator.get_output_features_class" href="#a2t.pipeline.candidates.CandidateGenerator.get_output_features_class">get_output_features_class</a></code></li>
 </ul>

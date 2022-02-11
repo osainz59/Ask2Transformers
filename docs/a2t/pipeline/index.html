@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>a2t.pipeline API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="The pipelines are callable objects that executes `a2t.tasks.Task` instances sequentially. They are very
+useful when the tasks to accomplish need to be …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -22,15 +23,316 @@
 <h1 class="title">Module <code>a2t.pipeline</code></h1>
 </header>
 <section id="section-intro">
+<p>The pipelines are callable objects that executes <code><a title="a2t.tasks.Task" href="../tasks/index.html#a2t.tasks.Task">Task</a></code> instances sequentially. They are very
+useful when the tasks to accomplish need to be executed on a sequential fashion. The Figure 1
+shows an example of a Information Extraction pipeline.</p>
+<figure>
+<center>
+<img
+src="./../../../imgs/pipeline.svg"
+height="80%" width="80%" />
+<figcaption align="center"><b>Figure 1:</b> An example of Information Extraction pipeline.</figcaption>
+</center>
+</figure>
+<p>This module contains the code to implement pipelines composed by <code><a title="a2t.tasks.Task" href="../tasks/index.html#a2t.tasks.Task">Task</a></code>s, <code><a title="a2t.pipeline.filters.Filter" href="filters.html#a2t.pipeline.filters.Filter">Filter</a></code>s and <code><a title="a2t.pipeline.candidates.CandidateGenerator" href="candidates.html#a2t.pipeline.candidates.CandidateGenerator">CandidateGenerator</a></code>s.</p>
+<h2 id="creating-a-ner-relation-extraction-pipeline">Creating a NER + Relation Extraction pipeline</h2>
+<p>Let's create a simple pipeline that consist in two <code><a title="a2t.tasks.Task" href="../tasks/index.html#a2t.tasks.Task">Task</a></code>s, NER and Relation Extraction, a <code><a title="a2t.pipeline.candidates.CandidateGenerator" href="candidates.html#a2t.pipeline.candidates.CandidateGenerator">CandidateGenerator</a></code> to
+generate Relation Extraction candidates from NER output and a <code><a title="a2t.pipeline.filters.Filter" href="filters.html#a2t.pipeline.filters.Filter">Filter</a></code> to remove the negative predictions.</p>
+<p>First, we import the dependencies:</p>
+<pre><code class="language-python">from a2t.pipeline import Pipeline 
+from a2t.pipeline.candidates import UnaryToBinaryCandidateGenerator
+from a2t.pipeline.filters import NegativeInstanceFilter
+from a2t.tasks import (
+    NamedEntityClassificationTask, 
+    NamedEntityClassificationFeatures, 
+    RelationClassificationTask,
+    RelationClassificationFeatures
+)
+</code></pre>
+<p>Now we define the schema for NER and RE tasks. We are going to create a NER system that classifies text spans
+into Person, Location and Organization labels and a Relation Extraction system that extracts the <code>per:city_of_death</code>
+and <code>org:founded_by</code> relations.</p>
+<pre><code class="language-python">ner_labels = [&quot;O&quot;, &quot;Person&quot;, &quot;Location&quot;, &quot;Organization&quot;]
+
+re_labels = [&quot;no_relation&quot;, &quot;per:city_of_death&quot;, &quot;org:founded_by&quot;]
+re_templates = {
+    &quot;per:city_of_death&quot;: [&quot;{X} died in {Y}.&quot;],
+    &quot;org:founded_by&quot;: [&quot;{X} was founded by {Y}.&quot;, &quot;{Y} founded {X}.&quot;],
+}
+re_valid_conditions = {
+    &quot;per:city_of_death&quot;: [&quot;Person:Location&quot;],
+    &quot;org:founded_by&quot;: [&quot;Organization:Person&quot;],
+}
+</code></pre>
+<p>To define the pipeline, we just need to pass as arguments all the components that composes the pipeline. <strong>Caution</strong>:
+the order matters! Along with the components, we should specify which will be the input and the output. Finally,
+we can specify default values for all tasks such as the <code>threshold</code> or the entailment <code>model</code>, or use specific values
+for each task by adding the name of the task + '_' before the value name. For example: <code>NER_model</code>. The input features
+should be referenced as <code>"input_features"</code> or <code>None</code>.</p>
+<pre><code class="language-python">pipe = Pipeline(
+    (
+        NamedEntityClassificationTask(&quot;NER&quot;, labels=ner_labels), 
+        &quot;input_features&quot;, 
+        &quot;ner_features&quot;
+    ),
+    (
+        UnaryToBinaryCandidateGenerator(
+            NamedEntityClassificationFeatures, 
+            RelationClassificationFeatures
+        ),
+        &quot;ner_features&quot;,
+        &quot;re_features&quot;,
+    ),
+    (NegativeInstanceFilter(&quot;O&quot;), &quot;ner_features&quot;, &quot;ner_features&quot;),
+    (
+        RelationClassificationTask(
+            &quot;RE&quot;,
+            labels=re_labels,
+            templates=re_templates,
+            valid_conditions=re_valid_conditions,
+        ),
+        &quot;re_features&quot;,
+        &quot;re_features&quot;,
+    ),
+    (NegativeInstanceFilter(&quot;no_relation&quot;), &quot;re_features&quot;, &quot;re_features&quot;),
+    threshold=0.5,
+    NER_model=&quot;ynie/roberta-large-snli_mnli_fever_anli_R1_R2_R3-nli&quot;,
+    RE_threshold=0.9,
+    use_tqdm=False,
+)
+</code></pre>
+<p>The pipeline shown above uses a default threshold of <code>0.5</code> with a specific threshold for the Relation Extraction
+task of <code>0.9</code>. Also it uses the <code>"roberta-large-mnli"</code> checkpoint as default while for the NER task the
+<code>"ynie/roberta-large-snli_mnli_fever_anli_R1_R2_R3-nli"</code> is used.</p>
+<p>Let's define some features to test de pipeline:</p>
+<pre><code class="language-python">features = [
+    NamedEntityClassificationFeatures(
+        context=&quot;Billy Mays, the bearded, boisterous pitchman who, &quot;
+        &quot;as the undisputed king of TV yell and sell, became an &quot;
+        &quot;unlikely pop culture icon, died at his home in Tampa, Fla, on Sunday&quot;,
+        label=None,
+        inst_type=&quot;NNP&quot;,
+        X=&quot;Billy Mays&quot;,
+    ),
+    NamedEntityClassificationFeatures(
+        context=&quot;Billy Mays, the bearded, boisterous pitchman who, &quot;
+        &quot;as the undisputed king of TV yell and sell, became an &quot;
+        &quot;unlikely pop culture icon, died at his home in Tampa, Fla, on Sunday&quot;,
+        label=None,
+        inst_type=&quot;NNP&quot;,
+        X=&quot;Tampa&quot;,
+    ),
+    NamedEntityClassificationFeatures(
+        context=&quot;Billy Mays, the bearded, boisterous pitchman who, &quot;
+        &quot;as the undisputed king of TV yell and sell, became an &quot;
+        &quot;unlikely pop culture icon, died at his home in Tampa, Fla, on Sunday&quot;,
+        label=None,
+        inst_type=&quot;NNP&quot;,
+        X=&quot;Sunday&quot;,
+    ),
+]
+</code></pre>
+<p>And, to run the pipeline we could simply run:</p>
+<pre><code class="language-python">result = pipe(features)
+</code></pre>
+<p>The obtained results should look something similar to:</p>
+<pre><code class="language-python">{
+    'ner_features': [
+        NamedEntityClassificationFeatures(
+            context='Billy Mays, the bearded,' ... ' Fla, on Sunday', 
+            label='Person', inst_type='NNP', X='Billy Mays'
+        ),
+        NamedEntityClassificationFeatures(
+            context='Billy Mays, the bearded,' ... ' Fla, on Sunday', 
+            label='Location', inst_type='NNP', X='Tampa')
+    ],
+    're_features': [
+        RelationClassificationFeatures(
+            context='Billy Mays, the bearded,' ... ' Fla, on Sunday', 
+            label='per:city_of_death', 
+            inst_type='Person:Location', 
+            X='Billy Mays', 
+            Y='Tampa')
+    ]
+}
+</code></pre>
+<p>Remember that we did not defined the Date label, and therefore it was
+not able to classify <code>"Sunday"</code> as a Date.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;The pipelines are callable objects that executes `a2t.tasks.Task` instances sequentially. They are very
+useful when the tasks to accomplish need to be executed on a sequential fashion. The Figure 1
+shows an example of a Information Extraction pipeline.
+
+&lt;figure&gt;
+    &lt;center&gt;
+        &lt;img 
+        src=&#34;./../../../imgs/pipeline.svg&#34; 
+        height=&#34;80%&#34; width=&#34;80%&#34; /&gt; 
+        &lt;figcaption align=&#34;center&#34;&gt;&lt;b&gt;Figure 1:&lt;/b&gt; An example of Information Extraction pipeline.&lt;/figcaption&gt;
+    &lt;/center&gt;
+&lt;/figure&gt;
+
+This module contains the code to implement pipelines composed by `a2t.tasks.Task`s, `a2t.pipeline.filters.Filter`s and `a2t.pipeline.candidates.CandidateGenerator`s.
+
+## Creating a NER + Relation Extraction pipeline
+
+Let&#39;s create a simple pipeline that consist in two `a2t.tasks.Task`s, NER and Relation Extraction, a `a2t.pipeline.candidates.CandidateGenerator` to 
+generate Relation Extraction candidates from NER output and a `a2t.pipeline.filters.Filter` to remove the negative predictions.
+
+First, we import the dependencies:
+
+```python
+from a2t.pipeline import Pipeline 
+from a2t.pipeline.candidates import UnaryToBinaryCandidateGenerator
+from a2t.pipeline.filters import NegativeInstanceFilter
+from a2t.tasks import (
+    NamedEntityClassificationTask, 
+    NamedEntityClassificationFeatures, 
+    RelationClassificationTask,
+    RelationClassificationFeatures
+)
+```
+
+Now we define the schema for NER and RE tasks. We are going to create a NER system that classifies text spans
+into Person, Location and Organization labels and a Relation Extraction system that extracts the `per:city_of_death`
+and `org:founded_by` relations.
+```python
+ner_labels = [&#34;O&#34;, &#34;Person&#34;, &#34;Location&#34;, &#34;Organization&#34;]
+
+re_labels = [&#34;no_relation&#34;, &#34;per:city_of_death&#34;, &#34;org:founded_by&#34;]
+re_templates = {
+    &#34;per:city_of_death&#34;: [&#34;{X} died in {Y}.&#34;],
+    &#34;org:founded_by&#34;: [&#34;{X} was founded by {Y}.&#34;, &#34;{Y} founded {X}.&#34;],
+}
+re_valid_conditions = {
+    &#34;per:city_of_death&#34;: [&#34;Person:Location&#34;],
+    &#34;org:founded_by&#34;: [&#34;Organization:Person&#34;],
+}
+```
+
+To define the pipeline, we just need to pass as arguments all the components that composes the pipeline. **Caution**: 
+the order matters! Along with the components, we should specify which will be the input and the output. Finally, 
+we can specify default values for all tasks such as the `threshold` or the entailment `model`, or use specific values
+for each task by adding the name of the task + &#39;_&#39; before the value name. For example: `NER_model`. The input features
+should be referenced as `&#34;input_features&#34;` or `None`.
+
+```python
+pipe = Pipeline(
+    (
+        NamedEntityClassificationTask(&#34;NER&#34;, labels=ner_labels), 
+        &#34;input_features&#34;, 
+        &#34;ner_features&#34;
+    ),
+    (
+        UnaryToBinaryCandidateGenerator(
+            NamedEntityClassificationFeatures, 
+            RelationClassificationFeatures
+        ),
+        &#34;ner_features&#34;,
+        &#34;re_features&#34;,
+    ),
+    (NegativeInstanceFilter(&#34;O&#34;), &#34;ner_features&#34;, &#34;ner_features&#34;),
+    (
+        RelationClassificationTask(
+            &#34;RE&#34;,
+            labels=re_labels,
+            templates=re_templates,
+            valid_conditions=re_valid_conditions,
+        ),
+        &#34;re_features&#34;,
+        &#34;re_features&#34;,
+    ),
+    (NegativeInstanceFilter(&#34;no_relation&#34;), &#34;re_features&#34;, &#34;re_features&#34;),
+    threshold=0.5,
+    NER_model=&#34;ynie/roberta-large-snli_mnli_fever_anli_R1_R2_R3-nli&#34;,
+    RE_threshold=0.9,
+    use_tqdm=False,
+)
+```
+The pipeline shown above uses a default threshold of `0.5` with a specific threshold for the Relation Extraction
+task of `0.9`. Also it uses the `&#34;roberta-large-mnli&#34;` checkpoint as default while for the NER task the 
+`&#34;ynie/roberta-large-snli_mnli_fever_anli_R1_R2_R3-nli&#34;` is used.
+
+Let&#39;s define some features to test de pipeline:
+```python
+features = [
+    NamedEntityClassificationFeatures(
+        context=&#34;Billy Mays, the bearded, boisterous pitchman who, &#34;
+        &#34;as the undisputed king of TV yell and sell, became an &#34;
+        &#34;unlikely pop culture icon, died at his home in Tampa, Fla, on Sunday&#34;,
+        label=None,
+        inst_type=&#34;NNP&#34;,
+        X=&#34;Billy Mays&#34;,
+    ),
+    NamedEntityClassificationFeatures(
+        context=&#34;Billy Mays, the bearded, boisterous pitchman who, &#34;
+        &#34;as the undisputed king of TV yell and sell, became an &#34;
+        &#34;unlikely pop culture icon, died at his home in Tampa, Fla, on Sunday&#34;,
+        label=None,
+        inst_type=&#34;NNP&#34;,
+        X=&#34;Tampa&#34;,
+    ),
+    NamedEntityClassificationFeatures(
+        context=&#34;Billy Mays, the bearded, boisterous pitchman who, &#34;
+        &#34;as the undisputed king of TV yell and sell, became an &#34;
+        &#34;unlikely pop culture icon, died at his home in Tampa, Fla, on Sunday&#34;,
+        label=None,
+        inst_type=&#34;NNP&#34;,
+        X=&#34;Sunday&#34;,
+    ),
+]
+```
+And, to run the pipeline we could simply run:
+```python
+result = pipe(features)
+```
+The obtained results should look something similar to:
+```python
+{
+    &#39;ner_features&#39;: [
+        NamedEntityClassificationFeatures(
+            context=&#39;Billy Mays, the bearded,&#39; ... &#39; Fla, on Sunday&#39;, 
+            label=&#39;Person&#39;, inst_type=&#39;NNP&#39;, X=&#39;Billy Mays&#39;
+        ),
+        NamedEntityClassificationFeatures(
+            context=&#39;Billy Mays, the bearded,&#39; ... &#39; Fla, on Sunday&#39;, 
+            label=&#39;Location&#39;, inst_type=&#39;NNP&#39;, X=&#39;Tampa&#39;)
+    ],
+    &#39;re_features&#39;: [
+        RelationClassificationFeatures(
+            context=&#39;Billy Mays, the bearded,&#39; ... &#39; Fla, on Sunday&#39;, 
+            label=&#39;per:city_of_death&#39;, 
+            inst_type=&#39;Person:Location&#39;, 
+            X=&#39;Billy Mays&#39;, 
+            Y=&#39;Tampa&#39;)
+    ]
+}
+```
+Remember that we did not defined the Date label, and therefore it was
+not able to classify `&#34;Sunday&#34;` as a Date.
+
+&#34;&#34;&#34;
+
+from .base import Pipeline
+
+__all__ = [&#34;Pipeline&#34;]
+
+__pdoc__ = {
+    &#34;base&#34;: False,
+}</code></pre>
+</details>
 </section>
 <section>
 <h2 class="section-title" id="header-submodules">Sub-modules</h2>
 <dl>
-<dt><code class="name"><a title="a2t.pipeline.base" href="base.html">a2t.pipeline.base</a></code></dt>
+<dt><code class="name"><a title="a2t.pipeline.candidates" href="candidates.html">a2t.pipeline.candidates</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt><code class="name"><a title="a2t.pipeline.candidates" href="candidates.html">a2t.pipeline.candidates</a></code></dt>
+<dt><code class="name"><a title="a2t.pipeline.filters" href="filters.html">a2t.pipeline.filters</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -41,12 +343,87 @@
 <section>
 </section>
 <section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="a2t.pipeline.Pipeline"><code class="flex name class">
+<span>class <span class="ident">Pipeline</span></span>
+<span>(</span><span>*elements: List[Tuple[Union[<a title="a2t.pipeline.candidates.CandidateGenerator" href="candidates.html#a2t.pipeline.candidates.CandidateGenerator">CandidateGenerator</a>, a2t.tasks.base.Task], str, str]], model: Union[str, <a title="a2t.base.EntailmentClassifier" href="../base.html#a2t.base.EntailmentClassifier">EntailmentClassifier</a>] = 'roberta-large-mnli', threshold: float = 0.5, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Built-in mutable sequence.</p>
+<p>If no argument is given, the constructor creates a new empty list.
+The argument must be an iterable if specified.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Pipeline(list):
+    def __init__(
+        self,
+        *elements: List[Tuple[Union[CandidateGenerator, Task], str, str]],
+        model: Union[str, EntailmentClassifier] = &#34;roberta-large-mnli&#34;,
+        threshold: float = 0.5,
+        **kwargs,
+    ) -&gt; None:
+
+        # Check whether the pipeline is well defined or not
+        result_dict = [&#34;input_features&#34;]
+        for _, input_name, output_name in elements:
+            if input_name not in result_dict:
+                raise WronglyDefinedPipelineException(f&#34;Input features {input_name} referenced before assignment.&#34;)
+            result_dict.append(output_name)
+
+        if not isinstance(model, EntailmentClassifier):
+            model = EntailmentClassifier(model, **kwargs)
+
+        self.model = model
+        self.threshold = threshold
+        self.config = kwargs
+
+        super().__init__(elements)
+
+    def __call__(self, input_features: List[Features]) -&gt; Dict[str, List[Features]]:
+        result_dict = {&#34;input_features&#34;: input_features}
+
+        for elem, input_name, output_name in self:
+            if input_name is None:
+                input_name = &#34;input_features&#34;
+            features = result_dict[input_name]
+            if isinstance(elem, CandidateGenerator):
+                features = elem(features)
+            if isinstance(elem, Filter):
+                features = elem(features)
+            if isinstance(elem, Task):
+                nlp = self.config.get(f&#34;{elem.name}_model&#34;, self.model)
+                if isinstance(nlp, str):
+                    nlp = EntailmentClassifier(nlp, **self.config)
+                threshold = self.config.get(f&#34;{elem.name}_negative_threshold&#34;, self.threshold)
+                predictions = nlp(task=elem, features=features, negative_threshold=threshold, return_labels=True)
+
+                for feature, label in zip(features, predictions):
+                    feature.label = label
+
+            # Add the predictions to the output dict
+            result_dict[output_name] = features
+
+        result_dict.pop(&#34;input_features&#34;)
+
+        return result_dict</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.list</li>
+</ul>
+</dd>
+</dl>
 </section>
 </article>
 <nav id="sidebar">
 <h1>Index</h1>
 <div class="toc">
-<ul></ul>
+<ul>
+<li><a href="#creating-a-ner-relation-extraction-pipeline">Creating a NER + Relation Extraction pipeline</a></li>
+</ul>
 </div>
 <ul id="index">
 <li><h3>Super-module</h3>
@@ -56,8 +433,15 @@
 </li>
 <li><h3><a href="#header-submodules">Sub-modules</a></h3>
 <ul>
-<li><code><a title="a2t.pipeline.base" href="base.html">a2t.pipeline.base</a></code></li>
 <li><code><a title="a2t.pipeline.candidates" href="candidates.html">a2t.pipeline.candidates</a></code></li>
+<li><code><a title="a2t.pipeline.filters" href="filters.html">a2t.pipeline.filters</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="a2t.pipeline.Pipeline" href="#a2t.pipeline.Pipeline">Pipeline</a></code></h4>
+</li>
 </ul>
 </li>
 </ul>

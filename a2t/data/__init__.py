@@ -7,3 +7,5 @@ from .base import Dataset
 PREDEFINED_DATASETS = {"tacred": TACREDRelationClassificationDataset, "babeldomains": BabelDomainsTopicClassificationDataset}
 
 __all__ = ["Dataset", "TACREDRelationClassificationDataset", "BabelDomainsTopicClassificationDataset"]
+
+__pdoc__ = {"base": False, "tacred": False, "babeldomains": False}
