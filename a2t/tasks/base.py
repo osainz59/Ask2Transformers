@@ -9,7 +9,6 @@ import os
 
 import numpy as np
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
-from torch import negative
 
 from a2t.utils import find_optimal_threshold, apply_threshold
 

@@ -1,9 +1,12 @@
+from pprint import pprint
+import warnings
 from a2t.base import EntailmentClassifier
-from a2t.pipeline.filters import Filter
 from a2t.tasks import Task, Features
-from a2t.pipeline.candidates import CandidateGenerator
+from .filters import Filter
+from .candidates import CandidateGenerator
+from .utils import PipelineElement
 
-from typing import Dict, List, Tuple, Union
+from typing import Dict, Iterable, List, Tuple, Union
 
 
 class WronglyDefinedPipelineException(Exception):
@@ -13,18 +16,11 @@ class WronglyDefinedPipelineException(Exception):
 class Pipeline(list):
     def __init__(
         self,
-        *elements: List[Tuple[Union[CandidateGenerator, Task], str, str]],
+        *elements: List[Tuple[Union[CandidateGenerator, Task, Filter], str, str]],
         model: Union[str, EntailmentClassifier] = "roberta-large-mnli",
         threshold: float = 0.5,
         **kwargs,
     ) -> None:
-
-        # Check whether the pipeline is well defined or not
-        result_dict = ["input_features"]
-        for _, input_name, output_name in elements:
-            if input_name not in result_dict:
-                raise WronglyDefinedPipelineException(f"Input features {input_name} referenced before assignment.")
-            result_dict.append(output_name)
 
         if not isinstance(model, EntailmentClassifier):
             model = EntailmentClassifier(model, **kwargs)
@@ -33,7 +29,28 @@ class Pipeline(list):
         self.threshold = threshold
         self.config = kwargs
 
-        super().__init__(elements)
+        super().__init__(self._verify_pipeline_elements(*elements))
+
+    @staticmethod
+    def _verify_pipeline_elements(*elements) -> Iterable[Union[Task, PipelineElement]]:
+        result_dict = ["input_features"]
+        for element in elements:
+            if not (isinstance(element, tuple) and len(element) == 3):
+                warnings.warn(
+                    "{element} is not a tuple o (PipelineElement/Task, input_features, output_features) style. Ignored"
+                )
+                continue
+
+            pipeline_elem, input_name, output_name = element
+            if not (isinstance(pipeline_elem, Task) or isinstance(pipeline_elem, PipelineElement)):
+                warnings.warn(f"{pipeline_elem} is not a PipelineElement nor Task. Ignored.")
+                continue
+
+            if input_name not in result_dict:
+                raise WronglyDefinedPipelineException(f"Input features {input_name} referenced before assignment.")
+            result_dict.append(output_name)
+
+            yield element
 
     def __call__(self, input_features: List[Features]) -> Dict[str, List[Features]]:
         result_dict = {"input_features": input_features}
@@ -42,9 +59,7 @@ class Pipeline(list):
             if input_name is None:
                 input_name = "input_features"
             features = result_dict[input_name]
-            if isinstance(elem, CandidateGenerator):
-                features = elem(features)
-            if isinstance(elem, Filter):
+            if isinstance(elem, PipelineElement):
                 features = elem(features)
             if isinstance(elem, Task):
                 nlp = self.config.get(f"{elem.name}_model", self.model)

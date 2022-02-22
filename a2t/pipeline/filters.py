@@ -2,9 +2,10 @@ from dataclasses import dataclass
 from typing import List
 
 from a2t.tasks.base import Features
+from .utils import PipelineElement
 
 
-class Filter:
+class Filter(PipelineElement):
     def __init__(self) -> None:
         raise NotImplementedError("This is an abstract class and cannot be intantiated.")
 

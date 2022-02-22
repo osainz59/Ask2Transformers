@@ -3,9 +3,10 @@ from itertools import product
 from collections import defaultdict
 
 from a2t.tasks import Features, UnaryFeatures, BinaryFeatures
+from .utils import PipelineElement
 
 
-class CandidateGenerator:
+class CandidateGenerator(PipelineElement):
     """A candidate generator. Maps `Features` from one task to another."""
 
     def get_input_features_class(self) -> Union[type, None]:

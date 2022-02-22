@@ -156,6 +156,4 @@ from .base import Pipeline
 
 __all__ = ["Pipeline"]
 
-__pdoc__ = {
-    "base": False,
-}
+__pdoc__ = {"base": False, "utils": False}
