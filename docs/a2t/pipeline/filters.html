@@ -30,9 +30,10 @@
 from typing import List
 
 from a2t.tasks.base import Features
+from .utils import PipelineElement
 
 
-class Filter:
+class Filter(PipelineElement):
     def __init__(self) -&gt; None:
         raise NotImplementedError(&#34;This is an abstract class and cannot be intantiated.&#34;)
 
@@ -61,18 +62,23 @@ class NegativeInstanceFilter(Filter):
 <span>class <span class="ident">Filter</span></span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>An abstract class to handle Pipeline custom elements.</p>
+<p>This class should be implemented and the <code>__call__</code> method overrided.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class Filter:
+<pre><code class="python">class Filter(PipelineElement):
     def __init__(self) -&gt; None:
         raise NotImplementedError(&#34;This is an abstract class and cannot be intantiated.&#34;)
 
     def __call__(self) -&gt; None:
         raise NotImplementedError(&#34;__call__ method must be implemented.&#34;)</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>a2t.pipeline.utils.PipelineElement</li>
+</ul>
 <h3>Subclasses</h3>
 <ul class="hlist">
 <li><a title="a2t.pipeline.filters.NegativeInstanceFilter" href="#a2t.pipeline.filters.NegativeInstanceFilter">NegativeInstanceFilter</a></li>
@@ -83,7 +89,8 @@ class NegativeInstanceFilter(Filter):
 <span>(</span><span>negative_label: str = 'O')</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>An abstract class to handle Pipeline custom elements.</p>
+<p>This class should be implemented and the <code>__call__</code> method overrided.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -98,6 +105,7 @@ class NegativeInstanceFilter(Filter):
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="a2t.pipeline.filters.Filter" href="#a2t.pipeline.filters.Filter">Filter</a></li>
+<li>a2t.pipeline.utils.PipelineElement</li>
 </ul>
 </dd>
 </dl>

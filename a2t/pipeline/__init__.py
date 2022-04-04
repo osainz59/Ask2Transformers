@@ -153,7 +153,8 @@ not able to classify `"Sunday"` as a Date.
 """
 
 from .base import Pipeline
+from .utils import PipelineElement
 
-__all__ = ["Pipeline"]
+__all__ = ["PipelineElement", "Pipeline"]
 
-__pdoc__ = {"base": False, "utils": False}
+__pdoc__ = {"base": False, "utils": False, "PipelineElement.__call__": True}

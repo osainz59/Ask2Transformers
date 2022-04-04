@@ -14,6 +14,8 @@ class WronglyDefinedPipelineException(Exception):
 
 
 class Pipeline(list):
+    """A `Pipeline` class that will execute all the tasks sequentially and handle tasks dependencies."""
+
     def __init__(
         self,
         *elements: List[Tuple[Union[CandidateGenerator, Task, Filter], str, str]],
@@ -21,6 +23,15 @@ class Pipeline(list):
         threshold: float = 0.5,
         **kwargs,
     ) -> None:
+        """Instantiation of the `Pipeline` class.
+
+        TODO: Explain custom **kwargs.
+
+        Args:
+            elements (List[Tuple[Union[CandidateGenerator, Task, Filter], str, str]]): A list with the pipeline elements.
+            model (Union[str, EntailmentClassifier], optional): The default entailment model. Defaults to "roberta-large-mnli".
+            threshold (float, optional): The default threshold. Defaults to 0.5.
+        """
 
         if not isinstance(model, EntailmentClassifier):
             model = EntailmentClassifier(model, **kwargs)

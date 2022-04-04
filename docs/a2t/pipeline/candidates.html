@@ -31,9 +31,10 @@ from itertools import product
 from collections import defaultdict
 
 from a2t.tasks import Features, UnaryFeatures, BinaryFeatures
+from .utils import PipelineElement
 
 
-class CandidateGenerator:
+class CandidateGenerator(PipelineElement):
     &#34;&#34;&#34;A candidate generator. Maps `Features` from one task to another.&#34;&#34;&#34;
 
     def get_input_features_class(self) -&gt; Union[type, None]:
@@ -131,7 +132,7 @@ class UnaryToBinaryCandidateGenerator(CandidateGenerator):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class CandidateGenerator:
+<pre><code class="python">class CandidateGenerator(PipelineElement):
     &#34;&#34;&#34;A candidate generator. Maps `Features` from one task to another.&#34;&#34;&#34;
 
     def get_input_features_class(self) -&gt; Union[type, None]:
@@ -163,6 +164,10 @@ class UnaryToBinaryCandidateGenerator(CandidateGenerator):
 
         return group_dict.values()</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>a2t.pipeline.utils.PipelineElement</li>
+</ul>
 <h3>Subclasses</h3>
 <ul class="hlist">
 <li><a title="a2t.pipeline.candidates.UnaryToBinaryCandidateGenerator" href="#a2t.pipeline.candidates.UnaryToBinaryCandidateGenerator">UnaryToBinaryCandidateGenerator</a></li>
@@ -312,6 +317,7 @@ that has already the label assigned and share the same context are considered.</
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="a2t.pipeline.candidates.CandidateGenerator" href="#a2t.pipeline.candidates.CandidateGenerator">CandidateGenerator</a></li>
+<li>a2t.pipeline.utils.PipelineElement</li>
 </ul>
 <h3>Methods</h3>
 <dl>

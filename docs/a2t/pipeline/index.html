@@ -29,7 +29,7 @@ shows an example of a Information Extraction pipeline.</p>
 <figure>
 <center>
 <img
-src="./../../../imgs/pipeline.svg"
+src="https://raw.githubusercontent.com/osainz59/Ask2Transformers/Pipelines/imgs/pipeline.svg"
 height="80%" width="80%" />
 <figcaption align="center"><b>Figure 1:</b> An example of Information Extraction pipeline.</figcaption>
 </center>
@@ -169,7 +169,7 @@ shows an example of a Information Extraction pipeline.
 &lt;figure&gt;
     &lt;center&gt;
         &lt;img 
-        src=&#34;./../../../imgs/pipeline.svg&#34; 
+        src=&#34;https://raw.githubusercontent.com/osainz59/Ask2Transformers/Pipelines/imgs/pipeline.svg&#34; 
         height=&#34;80%&#34; width=&#34;80%&#34; /&gt; 
         &lt;figcaption align=&#34;center&#34;&gt;&lt;b&gt;Figure 1:&lt;/b&gt; An example of Information Extraction pipeline.&lt;/figcaption&gt;
     &lt;/center&gt;
@@ -317,12 +317,11 @@ not able to classify `&#34;Sunday&#34;` as a Date.
 &#34;&#34;&#34;
 
 from .base import Pipeline
+from .utils import PipelineElement
 
-__all__ = [&#34;Pipeline&#34;]
+__all__ = [&#34;PipelineElement&#34;, &#34;Pipeline&#34;]
 
-__pdoc__ = {
-    &#34;base&#34;: False,
-}</code></pre>
+__pdoc__ = {&#34;base&#34;: False, &#34;utils&#34;: False, &#34;PipelineElement.__call__&#34;: True}</code></pre>
 </details>
 </section>
 <section>
@@ -345,33 +344,124 @@ __pdoc__ = {
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="a2t.pipeline.Pipeline"><code class="flex name class">
-<span>class <span class="ident">Pipeline</span></span>
-<span>(</span><span>*elements: List[Tuple[Union[<a title="a2t.pipeline.candidates.CandidateGenerator" href="candidates.html#a2t.pipeline.candidates.CandidateGenerator">CandidateGenerator</a>, a2t.tasks.base.Task], str, str]], model: Union[str, <a title="a2t.base.EntailmentClassifier" href="../base.html#a2t.base.EntailmentClassifier">EntailmentClassifier</a>] = 'roberta-large-mnli', threshold: float = 0.5, **kwargs)</span>
+<dt id="a2t.pipeline.PipelineElement"><code class="flex name class">
+<span>class <span class="ident">PipelineElement</span></span>
 </code></dt>
 <dd>
-<div class="desc"><p>Built-in mutable sequence.</p>
-<p>If no argument is given, the constructor creates a new empty list.
-The argument must be an iterable if specified.</p></div>
+<div class="desc"><p>An abstract class to handle Pipeline custom elements.</p>
+<p>This class should be implemented and the <code>__call__</code> method overrided.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PipelineElement:
+    &#34;&#34;&#34;An abstract class to handle Pipeline custom elements.
+
+    This class should be implemented and the `__call__` method overrided.
+    &#34;&#34;&#34;
+
+    def __call__(self, input_features: List[Features]) -&gt; List[Features]:
+        &#34;&#34;&#34;A method that will convert/filter/generate new list of `a2t.tasks.Features` from others.
+
+        Args:
+            input_features (List[Features]): The list of old `a2t.tasks.Features`.
+
+        Raises:
+            NotImplementedError: Raised when the method is not overrided from the child class.
+
+        Returns:
+            List[Features]: The new list of `a2t.tasks.Features`.
+        &#34;&#34;&#34;
+        raise NotImplementedError(f&#34;{self.__class__} is an abstract class that must be overrided.&#34;)</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="a2t.pipeline.candidates.CandidateGenerator" href="candidates.html#a2t.pipeline.candidates.CandidateGenerator">CandidateGenerator</a></li>
+<li><a title="a2t.pipeline.filters.Filter" href="filters.html#a2t.pipeline.filters.Filter">Filter</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="a2t.pipeline.PipelineElement.__call__"><code class="name flex">
+<span>def <span class="ident">__call__</span></span>(<span>self, input_features: List[a2t.tasks.base.Features]) ‑> List[a2t.tasks.base.Features]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A method that will convert/filter/generate new list of <code><a title="a2t.tasks.Features" href="../tasks/index.html#a2t.tasks.Features">Features</a></code> from others.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>input_features</code></strong> :&ensp;<code>List[Features]</code></dt>
+<dd>The list of old <code><a title="a2t.tasks.Features" href="../tasks/index.html#a2t.tasks.Features">Features</a></code>.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>NotImplementedError</code></dt>
+<dd>Raised when the method is not overrided from the child class.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>List[Features]</code></dt>
+<dd>The new list of <code><a title="a2t.tasks.Features" href="../tasks/index.html#a2t.tasks.Features">Features</a></code>.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __call__(self, input_features: List[Features]) -&gt; List[Features]:
+    &#34;&#34;&#34;A method that will convert/filter/generate new list of `a2t.tasks.Features` from others.
+
+    Args:
+        input_features (List[Features]): The list of old `a2t.tasks.Features`.
+
+    Raises:
+        NotImplementedError: Raised when the method is not overrided from the child class.
+
+    Returns:
+        List[Features]: The new list of `a2t.tasks.Features`.
+    &#34;&#34;&#34;
+    raise NotImplementedError(f&#34;{self.__class__} is an abstract class that must be overrided.&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="a2t.pipeline.Pipeline"><code class="flex name class">
+<span>class <span class="ident">Pipeline</span></span>
+<span>(</span><span>*elements: List[Tuple[Union[<a title="a2t.pipeline.candidates.CandidateGenerator" href="candidates.html#a2t.pipeline.candidates.CandidateGenerator">CandidateGenerator</a>, a2t.tasks.base.Task, <a title="a2t.pipeline.filters.Filter" href="filters.html#a2t.pipeline.filters.Filter">Filter</a>], str, str]], model: Union[str, <a title="a2t.base.EntailmentClassifier" href="../base.html#a2t.base.EntailmentClassifier">EntailmentClassifier</a>] = 'roberta-large-mnli', threshold: float = 0.5, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A <code><a title="a2t.pipeline.Pipeline" href="#a2t.pipeline.Pipeline">Pipeline</a></code> class that will execute all the tasks sequentially and handle tasks dependencies.</p>
+<p>Instantiation of the <code><a title="a2t.pipeline.Pipeline" href="#a2t.pipeline.Pipeline">Pipeline</a></code> class.</p>
+<p>TODO: Explain custom **kwargs.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>elements</code></strong> :&ensp;<code>List[Tuple[Union[CandidateGenerator, Task, Filter], str, str]]</code></dt>
+<dd>A list with the pipeline elements.</dd>
+<dt><strong><code>model</code></strong> :&ensp;<code>Union[str, EntailmentClassifier]</code>, optional</dt>
+<dd>The default entailment model. Defaults to "roberta-large-mnli".</dd>
+<dt><strong><code>threshold</code></strong> :&ensp;<code>float</code>, optional</dt>
+<dd>The default threshold. Defaults to 0.5.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Pipeline(list):
+    &#34;&#34;&#34;A `Pipeline` class that will execute all the tasks sequentially and handle tasks dependencies.&#34;&#34;&#34;
+
     def __init__(
         self,
-        *elements: List[Tuple[Union[CandidateGenerator, Task], str, str]],
+        *elements: List[Tuple[Union[CandidateGenerator, Task, Filter], str, str]],
         model: Union[str, EntailmentClassifier] = &#34;roberta-large-mnli&#34;,
         threshold: float = 0.5,
         **kwargs,
     ) -&gt; None:
+        &#34;&#34;&#34;Instantiation of the `Pipeline` class.
 
-        # Check whether the pipeline is well defined or not
-        result_dict = [&#34;input_features&#34;]
-        for _, input_name, output_name in elements:
-            if input_name not in result_dict:
-                raise WronglyDefinedPipelineException(f&#34;Input features {input_name} referenced before assignment.&#34;)
-            result_dict.append(output_name)
+        TODO: Explain custom **kwargs.
+
+        Args:
+            elements (List[Tuple[Union[CandidateGenerator, Task, Filter], str, str]]): A list with the pipeline elements.
+            model (Union[str, EntailmentClassifier], optional): The default entailment model. Defaults to &#34;roberta-large-mnli&#34;.
+            threshold (float, optional): The default threshold. Defaults to 0.5.
+        &#34;&#34;&#34;
 
         if not isinstance(model, EntailmentClassifier):
             model = EntailmentClassifier(model, **kwargs)
@@ -380,7 +470,28 @@ The argument must be an iterable if specified.</p></div>
         self.threshold = threshold
         self.config = kwargs
 
-        super().__init__(elements)
+        super().__init__(self._verify_pipeline_elements(*elements))
+
+    @staticmethod
+    def _verify_pipeline_elements(*elements) -&gt; Iterable[Union[Task, PipelineElement]]:
+        result_dict = [&#34;input_features&#34;]
+        for element in elements:
+            if not (isinstance(element, tuple) and len(element) == 3):
+                warnings.warn(
+                    &#34;{element} is not a tuple o (PipelineElement/Task, input_features, output_features) style. Ignored&#34;
+                )
+                continue
+
+            pipeline_elem, input_name, output_name = element
+            if not (isinstance(pipeline_elem, Task) or isinstance(pipeline_elem, PipelineElement)):
+                warnings.warn(f&#34;{pipeline_elem} is not a PipelineElement nor Task. Ignored.&#34;)
+                continue
+
+            if input_name not in result_dict:
+                raise WronglyDefinedPipelineException(f&#34;Input features {input_name} referenced before assignment.&#34;)
+            result_dict.append(output_name)
+
+            yield element
 
     def __call__(self, input_features: List[Features]) -&gt; Dict[str, List[Features]]:
         result_dict = {&#34;input_features&#34;: input_features}
@@ -389,9 +500,7 @@ The argument must be an iterable if specified.</p></div>
             if input_name is None:
                 input_name = &#34;input_features&#34;
             features = result_dict[input_name]
-            if isinstance(elem, CandidateGenerator):
-                features = elem(features)
-            if isinstance(elem, Filter):
+            if isinstance(elem, PipelineElement):
                 features = elem(features)
             if isinstance(elem, Task):
                 nlp = self.config.get(f&#34;{elem.name}_model&#34;, self.model)
@@ -439,6 +548,12 @@ The argument must be an iterable if specified.</p></div>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
+<li>
+<h4><code><a title="a2t.pipeline.PipelineElement" href="#a2t.pipeline.PipelineElement">PipelineElement</a></code></h4>
+<ul class="">
+<li><code><a title="a2t.pipeline.PipelineElement.__call__" href="#a2t.pipeline.PipelineElement.__call__">__call__</a></code></li>
+</ul>
+</li>
 <li>
 <h4><code><a title="a2t.pipeline.Pipeline" href="#a2t.pipeline.Pipeline">Pipeline</a></code></h4>
 </li>
