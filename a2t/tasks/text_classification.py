@@ -1,8 +1,11 @@
 from typing import Dict, List, Callable
 
+from dataclasses import dataclass
+
 from .base import ZeroaryTask, Features
 
 
+@dataclass
 class TopicClassificationFeatures(Features):
     """A class handler for the Topic Classification features. It inherits from `Features`."""
 

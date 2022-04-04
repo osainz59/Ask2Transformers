@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from .base import BinaryTask, BinaryFeatures, Features
 
 
+@dataclass
 class RelationClassificationFeatures(BinaryFeatures):
     """A class handler for the Relation Classification features. It inherits from `BinaryFeatures`."""
 
