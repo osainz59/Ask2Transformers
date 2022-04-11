@@ -23,6 +23,8 @@ from .span_classification import NamedEntityClassificationFeatures, NamedEntityC
 from .tuple_classification import (
     RelationClassificationFeatures,
     RelationClassificationTask,
+    EventArgumentClassificationFeatures,
+    EventArgumentClassificationTask,
     TACREDRelationClassificationTask,
     TACREDFeatures,
 )
@@ -35,6 +37,7 @@ PREDEFINED_TASKS = {
     "topic-classification": (TopicClassificationTask, TopicClassificationFeatures),
     "named-entity-classification": (NamedEntityClassificationTask, NamedEntityClassificationFeatures),
     "relation-classification": (RelationClassificationTask, RelationClassificationFeatures),
+    "event-argument-classification": (EventArgumentClassificationTask, EventArgumentClassificationFeatures),
     "tacred": (TACREDRelationClassificationTask, TACREDFeatures),
 }
 
@@ -52,6 +55,10 @@ __all__ = [
     "TopicClassificationTask",
     "NamedEntityClassificationFeatures",
     "NamedEntityClassificationTask",
+    "RelationClassificationFeatures",
+    "RelationClassificationTask",
+    "EventArgumentClassificationFeatures",
+    "EventArgumentClassificationTask",
     "TACREDFeatures",
     "TACREDRelationClassificationTask",
     "PREDEFINED_TASKS",
