@@ -17,3 +17,10 @@ __all__ = [
     "BabelDomainsTopicClassificationDataset",
     "WikiEventsArgumentClassificationDataset",
 ]
+
+__pdoc__ = {
+    "base": False,
+    "babeldomains": False,
+    "tacred": False,
+    "wikievents": False,
+}

@@ -1,5 +1,4 @@
 from copy import deepcopy
-from pprint import pprint
 from typing import Iterable, List
 from collections import Counter, defaultdict
 import json
@@ -8,12 +7,13 @@ from tqdm import tqdm
 
 from .base import Dataset
 from a2t.tasks.span_classification import NamedEntityClassificationFeatures
-
-# from a2t.tasks.text_classification import TextClassificationFeatures
+from a2t.tasks.text_classification import TextClassificationFeatures
 from a2t.tasks.tuple_classification import EventArgumentClassificationFeatures
 
 
-class WikiEventsDataset(Dataset):
+class _WikiEventsDataset(Dataset):
+    """A class to handle WikiEvents datasets."""
+
     def __init__(self, input_path: str, labels: List[str], *args, **kwargs) -> None:
         super().__init__(labels, *args, **kwargs)
         self._nlp = None
@@ -30,14 +30,10 @@ class WikiEventsDataset(Dataset):
     @staticmethod
     def _find_subsentence(offset, sentences):
         sentences_ = sentences.copy() + [(sentences[-1][0] + len(sentences[-1][1]) + 1, "")]
-        # if len(sentences) == 1:
-        #     return 0 if offset >= sentences[0][0] and offset < sentences[0][0] + len(sentences[0][1]) else -1
-        return next((i - 1 for i, (idx, sent) in enumerate(sentences_) if offset < idx), -1)
+        return next((i - 1 for i, (idx, _) in enumerate(sentences_) if offset < idx), -1)
 
     def _load(self, input_path: str) -> Iterable[dict]:
-        """TODO: Finish
-        - Convert WikiEvents into a sentence level dataset?
-        """
+        """A function that loads and converts the WikiEvents dataset into sentence level."""
         with open(input_path, "rt") as data_f:
             for data_line in tqdm(data_f):
                 instance = json.loads(data_line)
@@ -135,21 +131,33 @@ class WikiEventsDataset(Dataset):
                         yield info
 
 
-# class WikiEventsEventExtractionDataset(WikiEventsDataset):
-#     def __init__(self, input_path: str, labels: List[str], *args, **kwargs) -> None:
-#         super().__init__(input_path, labels, *args, **kwargs)
-
-#         for instance in self._load(input_path):
-#             self.append(
-#                 TextClassificationFeatures(
-#                     context=instance["text"],
-#                     label=[".".join(event["event_type"].split(".")[:-1]) for event in instance["event_mentions"]],
-#                 )
-#             )
-
-
-class WikiEventsEntityClassificationDataset(WikiEventsDataset):
+class WikiEventsEventExtractionDataset(_WikiEventsDataset):
     def __init__(self, input_path: str, labels: List[str], *args, **kwargs) -> None:
+        """This class converts WikiEvents data files into a list of `a2t.tasks.TextClassificationFeatures`.
+
+        Args:
+            input_path (str): The path to the input file.
+            labels (List[str]): The possible label set of the dataset.
+        """
+        super().__init__(input_path, labels, *args, **kwargs)
+
+        for instance in self._load(input_path):
+            self.append(
+                TextClassificationFeatures(
+                    context=instance["text"],
+                    label=[".".join(event["event_type"].split(".")[:-1]) for event in instance["event_mentions"]],
+                )
+            )
+
+
+class WikiEventsEntityClassificationDataset(_WikiEventsDataset):
+    def __init__(self, input_path: str, labels: List[str], *args, **kwargs) -> None:
+        """This class converts WikiEvents data files into a list of `a2t.tasks.NamedEntityClassificationFeatures`.
+
+        Args:
+            input_path (str): The path to the input file.
+            labels (List[str]): The possible label set of the dataset.
+        """
         super().__init__(input_path, labels, *args, **kwargs)
 
         if not self._nlp:
@@ -178,8 +186,14 @@ class WikiEventsEntityClassificationDataset(WikiEventsDataset):
                 self.append(NamedEntityClassificationFeatures(context=text, label=chunk[-1] if chunk[-1] else "O", X=chunk[2]))
 
 
-class WikiEventsArgumentClassificationDataset(WikiEventsDataset):
+class WikiEventsArgumentClassificationDataset(_WikiEventsDataset):
     def __init__(self, input_path: str, labels: List[str], *args, mark_trigger: bool = False, **kwargs) -> None:
+        """This class converts WikiEvents data files into a list of `a2t.tasks.EventArgumentClassificationFeatures`.
+
+        Args:
+            input_path (str): The path to the input file.
+            labels (List[str]): The possible label set of the dataset.
+        """
         super().__init__(input_path, labels, *args, **kwargs)
 
         for instance in self._load(input_path):
@@ -234,17 +248,3 @@ class WikiEventsArgumentClassificationDataset(WikiEventsDataset):
                             label="no_relation",
                         )
                     )
-
-
-if __name__ == "__main__":
-    # dataset = WikiEventsDataset("data/wikievents/train.jsonl", [])._load("data/wikievents/train.jsonl")
-    # with open(".ignore/wikievents.sentence.train.jsonl", "wt") as f:
-    #     for instance in dataset:
-    #         f.write(f"{json.dumps(instance)}\n")
-
-    with open("experiments/WikiEvents_arguments/config.json") as f:
-        config = json.load(f)
-
-    labels = list()
-
-    dataset = WikiEventsArgumentClassificationDataset(config["dev_path"], config["labels"])

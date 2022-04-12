@@ -8,7 +8,7 @@ from .base import Dataset
 class TACREDRelationClassificationDataset(Dataset):
     """A class to handle TACRED datasets.
 
-    This class converts TACRED data files into a list of `TACREDFeatures`.
+    This class converts TACRED data files into a list of `a2t.tasks.TACREDFeatures`.
     """
 
     def __init__(self, input_path: str, labels: List[str], *args, **kwargs) -> None:

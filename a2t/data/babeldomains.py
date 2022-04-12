@@ -7,7 +7,7 @@ from .base import Dataset
 class BabelDomainsTopicClassificationDataset(Dataset):
     """A class to handle BabelDomains datasets.
 
-    This class converts BabelDomains data files into a list of `TopicClassificationFeatures`.
+    This class converts BabelDomains data files into a list of `a2t.tasks.TopicClassificationFeatures`.
     """
 
     def __init__(self, input_path: str, labels: List[str], *args, **kwargs) -> None:
