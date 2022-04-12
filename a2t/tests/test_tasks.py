@@ -30,10 +30,10 @@ class TestTasks(unittest.TestCase):
         self.assertRaises(AssertionError, Task)
 
         # Check templates keys
-        self.assertRaises(AssertionError, Task, labels=["O"], templates={"B": []})
+        self.assertWarns(UserWarning, ZeroaryTask, labels=["O"], templates={"B": []})
 
         # Check valid conditions keys
-        self.assertRaises(AssertionError, Task, labels=["O"], templates={"O": []}, valid_conditions={"B": []})
+        self.assertWarns(UserWarning, ZeroaryTask, labels=["O"], templates={"O": []}, valid_conditions={"B": []})
 
         # Check negative label id to be smaller than the number of labels
         self.assertRaises(AssertionError, Task, labels=["O"], templates={"O": []}, negative_label_id=1)

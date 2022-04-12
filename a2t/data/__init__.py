@@ -2,8 +2,18 @@
 """
 from .tacred import TACREDRelationClassificationDataset
 from .babeldomains import BabelDomainsTopicClassificationDataset
+from .wikievents import WikiEventsArgumentClassificationDataset
 from .base import Dataset
 
-PREDEFINED_DATASETS = {"tacred": TACREDRelationClassificationDataset, "babeldomains": BabelDomainsTopicClassificationDataset}
+PREDEFINED_DATASETS = {
+    "tacred": TACREDRelationClassificationDataset,
+    "babeldomains": BabelDomainsTopicClassificationDataset,
+    "wikievents_arguments": WikiEventsArgumentClassificationDataset,
+}
 
-__all__ = ["Dataset", "TACREDRelationClassificationDataset", "BabelDomainsTopicClassificationDataset"]
+__all__ = [
+    "Dataset",
+    "TACREDRelationClassificationDataset",
+    "BabelDomainsTopicClassificationDataset",
+    "WikiEventsArgumentClassificationDataset",
+]
