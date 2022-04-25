@@ -3,12 +3,14 @@
 from .tacred import TACREDRelationClassificationDataset
 from .babeldomains import BabelDomainsTopicClassificationDataset
 from .wikievents import WikiEventsArgumentClassificationDataset
+from .ace import ACEEventArgumentClassificationDataset
 from .base import Dataset
 
 PREDEFINED_DATASETS = {
     "tacred": TACREDRelationClassificationDataset,
     "babeldomains": BabelDomainsTopicClassificationDataset,
     "wikievents_arguments": WikiEventsArgumentClassificationDataset,
+    "ace_arguments": ACEEventArgumentClassificationDataset,
 }
 
 __all__ = [

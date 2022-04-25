@@ -68,3 +68,11 @@ class TestTACREDRelationClassificationDataset(unittest.TestCase):
         task = TACREDRelationClassificationTask(TACRED_LABELS, {"per:title": ["{subj} is also known as {obj}"]}, None)
 
         task.assert_features_class(dataset)
+
+
+class TestWikiEventsDatasets(unittest.TestCase):
+    """TODO: Implement test cases"""
+
+
+class TestACEDatasets(unittest.TestCase):
+    """TODO: implement test cases"""

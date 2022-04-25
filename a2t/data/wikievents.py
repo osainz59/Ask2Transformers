@@ -1,6 +1,6 @@
 from copy import deepcopy
 from typing import Iterable, List
-from collections import Counter, defaultdict
+from collections import defaultdict
 import json
 
 from tqdm import tqdm
@@ -14,7 +14,7 @@ from a2t.tasks.tuple_classification import EventArgumentClassificationFeatures
 class _WikiEventsDataset(Dataset):
     """A class to handle WikiEvents datasets."""
 
-    def __init__(self, input_path: str, labels: List[str], *args, **kwargs) -> None:
+    def __init__(self, labels: List[str], *args, **kwargs) -> None:
         super().__init__(labels, *args, **kwargs)
         self._nlp = None
 
@@ -131,7 +131,7 @@ class _WikiEventsDataset(Dataset):
                         yield info
 
 
-class WikiEventsEventExtractionDataset(_WikiEventsDataset):
+class WikiEventsEventClassificationDataset(_WikiEventsDataset):
     def __init__(self, input_path: str, labels: List[str], *args, **kwargs) -> None:
         """This class converts WikiEvents data files into a list of `a2t.tasks.TextClassificationFeatures`.
 
@@ -139,7 +139,7 @@ class WikiEventsEventExtractionDataset(_WikiEventsDataset):
             input_path (str): The path to the input file.
             labels (List[str]): The possible label set of the dataset.
         """
-        super().__init__(input_path, labels, *args, **kwargs)
+        super().__init__(labels, *args, **kwargs)
 
         for instance in self._load(input_path):
             self.append(
@@ -158,7 +158,7 @@ class WikiEventsEntityClassificationDataset(_WikiEventsDataset):
             input_path (str): The path to the input file.
             labels (List[str]): The possible label set of the dataset.
         """
-        super().__init__(input_path, labels, *args, **kwargs)
+        super().__init__(labels, *args, **kwargs)
 
         if not self._nlp:
             import spacy
@@ -194,7 +194,7 @@ class WikiEventsArgumentClassificationDataset(_WikiEventsDataset):
             input_path (str): The path to the input file.
             labels (List[str]): The possible label set of the dataset.
         """
-        super().__init__(input_path, labels, *args, **kwargs)
+        super().__init__(labels, *args, **kwargs)
 
         for instance in self._load(input_path):
 
