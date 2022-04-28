@@ -18,7 +18,12 @@ will also be used to instantiate the task data instances.
 """
 
 from .base import Task, ZeroaryTask, UnaryTask, BinaryTask, Features, ZeroaryFeatures, UnaryFeatures, BinaryFeatures
-from .text_classification import TopicClassificationFeatures, TopicClassificationTask
+from .text_classification import (
+    TopicClassificationFeatures,
+    TopicClassificationTask,
+    TextClassificationFeatures,
+    TextClassificationTask,
+)
 from .span_classification import NamedEntityClassificationFeatures, NamedEntityClassificationTask
 from .tuple_classification import (
     RelationClassificationFeatures,
@@ -53,6 +58,8 @@ __all__ = [
     "BinaryFeatures",
     "TopicClassificationFeatures",
     "TopicClassificationTask",
+    "TextClassificationFeatures",
+    "TextClassificationTask",
     "NamedEntityClassificationFeatures",
     "NamedEntityClassificationTask",
     "RelationClassificationFeatures",

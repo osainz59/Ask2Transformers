@@ -14,6 +14,8 @@ from a2t.tasks.text_classification import TextClassificationFeatures
 
 
 class _ACEDataset(Dataset):
+    """A class to handle ACE datasets."""
+
     def __init__(self, labels: List[str], *args, **kwargs) -> None:
         super().__init__(labels, *args, **kwargs)
         self._nlp = None
@@ -36,6 +38,12 @@ class _ACEDataset(Dataset):
 
 class ACEEventClassificationDataset(_ACEDataset):
     def __init__(self, input_path: str, labels: List[str], *args, **kwargs) -> None:
+        """This class converts ACE data files into a list of `a2t.tasks.TextClassificationFeatures`.
+
+        Args:
+            input_path (str): The path to the input file.
+            labels (List[str]): The possible label set of the dataset.
+        """
         super().__init__(input_path, labels, *args, **kwargs)
 
         for instance in self._load(input_path):
@@ -48,6 +56,12 @@ class ACEEventClassificationDataset(_ACEDataset):
 
 class ACEEntityClassificationDataset(_ACEDataset):
     def __init__(self, input_path: str, labels: List[str], *args, **kwargs) -> None:
+        """This class converts ACE data files into a list of `a2t.tasks.NamedEntityClassificationFeatures`.
+
+        Args:
+            input_path (str): The path to the input file.
+            labels (List[str]): The possible label set of the dataset.
+        """
         super().__init__(labels, *args, **kwargs)
 
         if not self._nlp:
@@ -81,7 +95,7 @@ class ACEEntityClassificationDataset(_ACEDataset):
                 self.append(NamedEntityClassificationFeatures(context=text, label=chunk[-1] if chunk[-1] else "O", X=chunk[2]))
 
 
-class ACEEventArgumentClassificationDataset(_ACEDataset):
+class ACEArgumentClassificationDataset(_ACEDataset):
 
     label_mapping = {
         "Life:Die|Person": "Victim",
@@ -91,6 +105,12 @@ class ACEEventArgumentClassificationDataset(_ACEDataset):
     }
 
     def __init__(self, input_path: str, labels: List[str], *args, mark_trigger: bool = True, **kwargs) -> None:
+        """This class converts ACE data files into a list of `a2t.tasks.EventArgumentClassificationFeatures`.
+
+        Args:
+            input_path (str): The path to the input file.
+            labels (List[str]): The possible label set of the dataset.
+        """
         super().__init__(labels, *args, **kwargs)
 
         for instance in self._load(input_path):
@@ -149,12 +169,3 @@ class ACEEventArgumentClassificationDataset(_ACEDataset):
                             label="no_relation",
                         )
                     )
-
-
-if __name__ == "__main__":
-    labels = ["Life.Die"]
-    dataset = ACEEventArgumentClassificationDataset("data/ace/dev.oneie.json", labels=labels)
-    for i, inst in enumerate(inst for inst in dataset if inst.label != "no_relation"):
-        if i > 3:
-            break
-        print(inst)

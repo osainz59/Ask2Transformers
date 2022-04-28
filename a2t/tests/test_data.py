@@ -1,7 +1,16 @@
 import unittest
 
-from a2t.data.tacred import TACREDRelationClassificationDataset
-from a2t.tasks.tuple_classification import TACREDRelationClassificationTask, TACREDFeatures
+from a2t.data import (
+    TACREDRelationClassificationDataset,
+    WikiEventsArgumentClassificationDataset,
+    ACEArgumentClassificationDataset,
+)
+from a2t.tasks.tuple_classification import (
+    TACREDRelationClassificationTask,
+    TACREDFeatures,
+    EventArgumentClassificationTask,
+    EventArgumentClassificationFeatures,
+)
 
 import os
 
@@ -73,6 +82,48 @@ class TestTACREDRelationClassificationDataset(unittest.TestCase):
 class TestWikiEventsDatasets(unittest.TestCase):
     """TODO: Implement test cases"""
 
+    @unittest.skipIf(not os.path.exists("data/wikievents/dev.jsonl"), "No WikiEvents data available at data/wikievents/")
+    def test_data_loader(self):
+
+        WikiEvents_LABELS = ["Victim", "no_relation"]
+
+        # Test class creation without errors
+        dataset = WikiEventsArgumentClassificationDataset("data/wikievents/dev.jsonl", labels=WikiEvents_LABELS)
+
+        # Test instance class is the correct
+        self.assertTrue(isinstance(dataset[0], EventArgumentClassificationFeatures))
+
+        # Test that instances are loaded correctly
+        self.assertTrue(dataset[0].label == "Victim")
+
+        # Test that above is true for all the instances
+        task = EventArgumentClassificationTask(
+            "WikiEvents EAE", labels=WikiEvents_LABELS, templates={"Victim": ["{arg} is a victim."]}
+        )
+
+        task.assert_features_class(dataset)
+
 
 class TestACEDatasets(unittest.TestCase):
     """TODO: implement test cases"""
+
+    @unittest.skipIf(not os.path.exists("data/ace/dev.oneie.json"), "No WikiEvents data available at data/ace/")
+    def test_data_loader(self):
+
+        ACE_LABELS = ["Artifact", "no_relation"]
+
+        # Test class creation without errors
+        dataset = ACEArgumentClassificationDataset("data/ace/dev.oneie.json", labels=ACE_LABELS)
+
+        # Test instance class is the correct
+        self.assertTrue(isinstance(dataset[0], EventArgumentClassificationFeatures))
+
+        # Test that instances are loaded correctly
+        self.assertTrue(dataset[0].label == "Artifact")
+
+        # Test that above is true for all the instances
+        task = EventArgumentClassificationTask(
+            "WikiEvents EAE", labels=ACE_LABELS, templates={"Artifact": ["{arg} is an artifact."]}
+        )
+
+        task.assert_features_class(dataset)

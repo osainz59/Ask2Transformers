@@ -32,12 +32,14 @@
 from .tacred import TACREDRelationClassificationDataset
 from .babeldomains import BabelDomainsTopicClassificationDataset
 from .wikievents import WikiEventsArgumentClassificationDataset
+from .ace import ACEArgumentClassificationDataset
 from .base import Dataset
 
 PREDEFINED_DATASETS = {
     &#34;tacred&#34;: TACREDRelationClassificationDataset,
     &#34;babeldomains&#34;: BabelDomainsTopicClassificationDataset,
     &#34;wikievents_arguments&#34;: WikiEventsArgumentClassificationDataset,
+    &#34;ace_arguments&#34;: ACEArgumentClassificationDataset,
 }
 
 __all__ = [
@@ -45,14 +47,10 @@ __all__ = [
     &#34;TACREDRelationClassificationDataset&#34;,
     &#34;BabelDomainsTopicClassificationDataset&#34;,
     &#34;WikiEventsArgumentClassificationDataset&#34;,
+    &#34;ACEArgumentClassificationDataset&#34;,
 ]
 
-__pdoc__ = {
-    &#34;base&#34;: False,
-    &#34;babeldomains&#34;: False,
-    &#34;tacred&#34;: False,
-    &#34;wikievents&#34;: False,
-}</code></pre>
+__pdoc__ = {&#34;base&#34;: False, &#34;babeldomains&#34;: False, &#34;tacred&#34;: False, &#34;wikievents&#34;: False, &#34;ace&#34;: False}</code></pre>
 </details>
 </section>
 <section>
@@ -109,6 +107,7 @@ __pdoc__ = {
 </ul>
 <h3>Subclasses</h3>
 <ul class="hlist">
+<li>a2t.data.ace._ACEDataset</li>
 <li>a2t.data.babeldomains.BabelDomainsTopicClassificationDataset</li>
 <li>a2t.data.tacred.TACREDRelationClassificationDataset</li>
 <li>a2t.data.wikievents._WikiEventsDataset</li>
@@ -263,7 +262,7 @@ def labels(self):
             input_path (str): The path to the input file.
             labels (List[str]): The possible label set of the dataset.
         &#34;&#34;&#34;
-        super().__init__(input_path, labels, *args, **kwargs)
+        super().__init__(labels, *args, **kwargs)
 
         for instance in self._load(input_path):
 
@@ -325,6 +324,113 @@ def labels(self):
 <li>builtins.list</li>
 </ul>
 </dd>
+<dt id="a2t.data.ACEArgumentClassificationDataset"><code class="flex name class">
+<span>class <span class="ident">ACEArgumentClassificationDataset</span></span>
+<span>(</span><span>input_path: str, labels: List[str], *args, mark_trigger: bool = True, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A class to handle ACE datasets.</p>
+<p>This class converts ACE data files into a list of <code><a title="a2t.tasks.EventArgumentClassificationFeatures" href="../tasks/index.html#a2t.tasks.EventArgumentClassificationFeatures">EventArgumentClassificationFeatures</a></code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>input_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>The path to the input file.</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>List[str]</code></dt>
+<dd>The possible label set of the dataset.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ACEArgumentClassificationDataset(_ACEDataset):
+
+    label_mapping = {
+        &#34;Life:Die|Person&#34;: &#34;Victim&#34;,
+        &#34;Movement:Transport|Place&#34;: &#34;Destination&#34;,
+        &#34;Conflict:Attack|Victim&#34;: &#34;Target&#34;,
+        &#34;Justice:Appeal|Plantiff&#34;: &#34;Defendant&#34;,
+    }
+
+    def __init__(self, input_path: str, labels: List[str], *args, mark_trigger: bool = True, **kwargs) -&gt; None:
+        &#34;&#34;&#34;This class converts ACE data files into a list of `a2t.tasks.EventArgumentClassificationFeatures`.
+
+        Args:
+            input_path (str): The path to the input file.
+            labels (List[str]): The possible label set of the dataset.
+        &#34;&#34;&#34;
+        super().__init__(labels, *args, **kwargs)
+
+        for instance in self._load(input_path):
+            tokens = instance[&#34;tokens&#34;]
+            id2ent = {ent[&#34;id&#34;]: ent for ent in instance[&#34;entity_mentions&#34;]}
+            for event in instance[&#34;event_mentions&#34;]:
+                event_type = event[&#34;event_type&#34;].replace(&#34;:&#34;, &#34;.&#34;).split(&#34;.&#34;)  # [:-1]
+                trigger_type, trigger_subtype = event_type
+                event_type = &#34;.&#34;.join(event_type)
+
+                entities = {ent[&#34;id&#34;] for ent in instance[&#34;entity_mentions&#34;]}
+
+                if mark_trigger:
+                    context = &#34; &#34;.join(
+                        tokens[: event[&#34;trigger&#34;][&#34;start&#34;]]
+                        + [&#34;[[&#34;]
+                        + tokens[event[&#34;trigger&#34;][&#34;start&#34;] : event[&#34;trigger&#34;][&#34;end&#34;]]
+                        + [&#34;]]&#34;]
+                        + tokens[event[&#34;trigger&#34;][&#34;end&#34;] :]
+                    )
+                else:
+                    context = &#34; &#34;.join(tokens)
+
+                for argument in event[&#34;arguments&#34;]:
+                    # Apply label mapping to sattisfy guidelines constraints
+                    role = self.label_mapping.get(f&#39;{event[&#34;event_type&#34;]}|{argument[&#34;role&#34;]}&#39;, argument[&#34;role&#34;])
+
+                    # Skip annotation errors
+                    if argument[&#34;entity_id&#34;] not in entities:
+                        continue
+
+                    self.append(
+                        EventArgumentClassificationFeatures(
+                            context=context,
+                            trg=event[&#34;trigger&#34;][&#34;text&#34;],
+                            trg_type=trigger_type,
+                            trg_subtype=trigger_subtype,
+                            inst_type=f&#34;{event_type}:{id2ent[argument[&#39;entity_id&#39;]][&#39;entity_type&#39;]}&#34;,
+                            arg=id2ent[argument[&#34;entity_id&#34;]][&#34;text&#34;],
+                            label=role,
+                        )
+                    )
+
+                    entities.remove(argument[&#34;entity_id&#34;])
+
+                # Generate negative examples
+                for entity in entities:
+                    self.append(
+                        EventArgumentClassificationFeatures(
+                            context=context,
+                            trg=event[&#34;trigger&#34;][&#34;text&#34;],
+                            trg_type=trigger_type,
+                            trg_subtype=trigger_subtype,
+                            inst_type=f&#34;{event_type}:{id2ent[entity][&#39;entity_type&#39;]}&#34;,
+                            arg=id2ent[entity][&#34;text&#34;],
+                            label=&#34;no_relation&#34;,
+                        )
+                    )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>a2t.data.ace._ACEDataset</li>
+<li>a2t.data.base.Dataset</li>
+<li>builtins.list</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="a2t.data.ACEArgumentClassificationDataset.label_mapping"><code class="name">var <span class="ident">label_mapping</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
 </dl>
 </section>
 </article>
@@ -355,6 +461,12 @@ def labels(self):
 </li>
 <li>
 <h4><code><a title="a2t.data.WikiEventsArgumentClassificationDataset" href="#a2t.data.WikiEventsArgumentClassificationDataset">WikiEventsArgumentClassificationDataset</a></code></h4>
+</li>
+<li>
+<h4><code><a title="a2t.data.ACEArgumentClassificationDataset" href="#a2t.data.ACEArgumentClassificationDataset">ACEArgumentClassificationDataset</a></code></h4>
+<ul class="">
+<li><code><a title="a2t.data.ACEArgumentClassificationDataset.label_mapping" href="#a2t.data.ACEArgumentClassificationDataset.label_mapping">label_mapping</a></code></li>
+</ul>
 </li>
 </ul>
 </li>

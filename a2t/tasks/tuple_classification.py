@@ -16,7 +16,7 @@ class RelationClassificationTask(BinaryTask):
         self,
         name: str,
         labels: List[str],
-        *args,
+        # *args,
         required_variables: List[str] = ["X", "Y"],
         additional_variables: List[str] = ["inst_type"],
         templates: Dict[str, List[str]] = None,
@@ -40,7 +40,7 @@ class RelationClassificationTask(BinaryTask):
             negative_label_id (int, optional): The index of the negative label or -1 if no negative label exist. A negative label is for example the class `Other` on NER, that means that the specific token is not a named entity. Defaults to 0.
         """
         super().__init__(
-            *args,
+            # *args,
             name=name,
             required_variables=required_variables,
             additional_variables=additional_variables,
@@ -71,7 +71,6 @@ class EventArgumentClassificationTask(BinaryTask):
         self,
         name: str,
         labels: List[str],
-        *args,
         required_variables: List[str] = ["trg", "arg"],
         additional_variables: List[str] = ["inst_type", "trg_type", "trg_subtype"],
         templates: Dict[str, List[str]] = None,
@@ -95,7 +94,6 @@ class EventArgumentClassificationTask(BinaryTask):
             negative_label_id (int, optional): The index of the negative label or -1 if no negative label exist. A negative label is for example the class `Other` on NER, that means that the specific token is not a named entity. Defaults to 0.
         """
         super().__init__(
-            *args,
             name=name,
             required_variables=required_variables,
             additional_variables=additional_variables,
