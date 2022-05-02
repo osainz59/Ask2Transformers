@@ -238,7 +238,7 @@ def labels(self):
 </dd>
 <dt id="a2t.data.WikiEventsArgumentClassificationDataset"><code class="flex name class">
 <span>class <span class="ident">WikiEventsArgumentClassificationDataset</span></span>
-<span>(</span><span>input_path: str, labels: List[str], *args, mark_trigger: bool = False, **kwargs)</span>
+<span>(</span><span>input_path: str, labels: List[str], *args, mark_trigger: bool = True, **kwargs)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>A class to handle WikiEvents datasets.</p>
@@ -255,7 +255,7 @@ def labels(self):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class WikiEventsArgumentClassificationDataset(_WikiEventsDataset):
-    def __init__(self, input_path: str, labels: List[str], *args, mark_trigger: bool = False, **kwargs) -&gt; None:
+    def __init__(self, input_path: str, labels: List[str], *args, mark_trigger: bool = True, **kwargs) -&gt; None:
         &#34;&#34;&#34;This class converts WikiEvents data files into a list of `a2t.tasks.EventArgumentClassificationFeatures`.
 
         Args:
@@ -300,6 +300,7 @@ def labels(self):
                             label=argument[&#34;role&#34;] if not &#34;OOR&#34; in argument[&#34;role&#34;] else &#34;OOR&#34;,
                         )
                     )
+                    self[-1].docid = instance[&#34;doc_id&#34;]
 
                     entities.remove(argument[&#34;entity_id&#34;])
 
@@ -315,7 +316,8 @@ def labels(self):
                             arg=id2ent[entity][&#34;text&#34;],
                             label=&#34;no_relation&#34;,
                         )
-                    )</code></pre>
+                    )
+                    self[-1].docid = instance[&#34;doc_id&#34;]</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
