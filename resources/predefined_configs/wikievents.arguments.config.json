@@ -3,12 +3,14 @@
     "task_name": "event-argument-classification",
     "features_class": "a2t.tasks.tuple_classification.EventArgumentClassificationFeatures",
     "dataset": "wikievents_arguments",
-    "dev_path": "data/wikievents/dev.json",
-    "test_path": "data/wikievents/test.json",
+    "dev_path": "data/wikievents/dev.jsonl",
+    "test_path": "data/wikievents/test.jsonl",
     "use_cuda": true,
     "half": true,
+    "mark_trigger": true,
     "nli_models": [
-        "roberta-large-mnli"
+        "HiTZ/A2T_RoBERTa_SMFA_WikiEvents-arg",
+        "HiTZ/A2T_RoBERTa_SMFA_ACE-arg_WikiEvents-arg"
     ],
     "labels": [
         "no_relation",

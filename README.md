@@ -10,6 +10,7 @@ This repository contains the code for out of the box ready to use zero-shot clas
 
 - 📄 [Ask2Transformers - Zero Shot Domain Labelling with Pretrained Transformers](https://aclanthology.org/2021.gwc-1.6/) accepted in [GWC2021](http://globalwordnet.org/global-wordnet-conferences-2/).
 - 📄 [Label Verbalization and Entailment for Effective Zero- and Few-Shot Relation Extraction](https://aclanthology.org/2021.emnlp-main.92/) accepted in [EMNLP2021](https://2021.emnlp.org/)
+- 📄 [Textual Entailment for Event Argument Extraction: Zero- and Few-Shot with Multi-Source Learning]() accepted as Findings in [NAACL2022]()
 
 <!-- ### Supported (and benchmarked) tasks:
 Follow the links to see some examples of how to use the library on each task.
@@ -20,7 +21,7 @@ Collados and Navigli, 2017)  dataset.
 To get started with the repository consider reading the **new** [documentation](https://osainz59.github.io/Ask2Transformers)!
 
 
-## Installation
+# Installation
 
 By using Pip (check the last release)
 
@@ -38,7 +39,11 @@ python -m pip install .
 
 <!-- [//]: <img src="./imgs/RE_NLI.svg" style="background-color: white; border-radius: 15px"> -->
 
+# Demo 🕹️
 
+We have realeased a demo on Zero-Shot Information Extraction using Textual Entailment ([ZS4IE: A toolkit for Zero-Shot Information Extraction with simple Verbalizations](https://arxiv.org/abs/2203.13602)) accepted in the [Demo Track of NAACL 2022](). The code is publicly availabe on its own GitHub repository: [ZS4IE](https://github.com/bbn-e/zs4ie).
+
+# Models 
 ## Available models
 By default, `roberta-large-mnli` checkpoint is used to perform the inference. You can try different models to perform the zero-shot classification, but they need to be finetuned on a NLI task and be compatible with the `AutoModelForSequenceClassification` class from Transformers. For example:
 
@@ -49,41 +54,75 @@ By default, `roberta-large-mnli` checkpoint is used to perform the inference. Yo
 
 **Coming soon:** `t5-large` like generative models support.
 
+## Pre-trained models 🆕
+
+We now provide (task specific) pre-trained entailment models to: (1) **reproduce** the results of the papers and (2) **reuse** them for new schemas of the same tasks. The models are publicly available on the 🤗 HuggingFace Models Hub.
+
+The model name describes the configuration used for training as follows:
+
+$$\text{HiTZ/A2T\_[pretrained\_model]\_[NLI\_datasets]\_[finetune\_datasets]}$$
+
+
+- `pretrained_model`: The checkpoint used for initialization. For example: RoBERTa<sub>large</sub>.
+- `NLI_datasets`: The NLI datasets used for pivot training.
+    - `S`: Standford Natural Language Inference (SNLI) dataset.
+    - `M`: Multi Natural Language Inference (MNLI) dataset.
+    - `F`: Fever-nli dataset.
+    - `A`: Adversarial Natural Language Inference (ANLI) dataset.
+- `finetune_datasets`: The datasets used for fine tuning the entailment model. Note that for more than 1 dataset the training was performed sequentially. For example: ACE-arg.
+
+Some models like `HiTZ/A2T_RoBERTa_SMFA_ACE-arg` have been trained marking some information between square brackets (`'[['` and `']]'`) like the event trigger span. Make sure you follow the same preprocessing in order to obtain the best results.
+
 ## Training your own models
 There is no special script for fine-tuning your own entailment based models. In our experiments, we have used the publicly available [run_glue.py](https://github.com/huggingface/transformers/blob/master/examples/pytorch/text-classification/run_glue.py) python script (from HuggingFace Transformers). To train your own model, first, you will need to convert your actual dataset in some sort of NLI data, we recommend you to have a look to [tacred2mnli.py](https://github.com/osainz59/Ask2Transformers/blob/master/scripts/tacred2mnli.py) script that serves as an example.
 
-## Results
+# Tutorials (Notebooks)
 
-To obtain the results reported here run the [`evaluation.py`](./a2t/evaluation.py) script with the corresponding configuration [files](./resources/predefined_configs/). 
+**Coming soon!**
 
-### Topic Labelling (BabelDomains)
+# Results and evaluation
 
-| Method | Precision | Recall | F1-Score |
-|:------:|:---------:|:------:|:--------:|
-| Distributional (Camacho-Collados et al. 2016) | 84.0 | 59.8 | 69.9 |
-| BabelDomains (Camacho-Collados et al. 2017)   | 81.7 | 68.7 | 74.6 |
-| | | | |
-| NLI <span style="font-size:75%">RoBERTa</span> | **92.14** | **92.14** | **92.14** |
+To obtain the results reported in the papers run the [`evaluation.py`](./a2t/evaluation.py) script with the corresponding configuration [files](./resources/predefined_configs/). A configuration file containing the task and evaluation information should look like this:
 
-### Relation Extraction (TACRED)
+```json
+{
+    "name": "BabelDomains",
+    "task_name": "topic-classification",
+    "features_class": "a2t.tasks.text_classification.TopicClassificationFeatures",
+    "hypothesis_template": "The domain of the sentence is about {label}.",
+    "nli_models": [
+        "roberta-large-mnli"
+    ],
+    "labels": [
+        "Animals",
+        "Art, architecture, and archaeology",
+        "Biology",
+        "Business, economics, and finance",
+        "Chemistry and mineralogy",
+        "Computing",
+        "Culture and society",
+        ...
+        "Royalty and nobility",
+        "Sport and recreation",
+        "Textile and clothing",
+        "Transport and travel",
+        "Warfare and defense"
+    ],
+    "preprocess_labels": true,
+    "dataset": "babeldomains",
+    "test_path": "data/babeldomains.domain.gloss.tsv",
+    "use_cuda": true,
+    "half": true
+}
+```
 
-The training (and development) splits can be found in the [resources](./resources/) directory.
+Consider reading the papers to access the results.
 
-| Method | 0% | 1% | 5% | 10% | 100% |
-|:------:|:----:|:---------:|:------:|:--------:|:----------:|
-| SpanBERT | - | 0.0±<small>0.0</small> | 28.8±<small>13.5</small> | 1.6±<small>20.7 | 70.8 |
-| RoBERTa | - | 7.7±<small>3.6</small> | 41.8±<small>3.3</small> | 55.1±<small>0.8</small> | 71.3 |
-| K-Adapter | - | 13.8±<small>3.4</small> | 45.1±<small>0.1</small> | 56.0±<small>1.3</small> | 72.0 |
-| LUKE | - | 17.0±<small>5.9</small> | 51.6±<small>0.4</small> | 60.6<small>0.4</small> | 72.7 |
-| | | | |
-| NLI <span style="font-size:75%">RoBERTa</span> | 55.6±<small>1.3</small> | 56.1±<small>0.0</small> | 64.1±<small>0.2</small> | 67.8±<small>0.2</small> | 71.0 |
-| NLI <span style="font-size:75%">DeBERTa</span> | **62.8**±<small>1.7</small> | **63.7**±<small>0.0</small> | **69.0**±<small>0.2</small> | **67.9**±<small>0.5</small> | **73.9** |
-
-## About legacy code
+# About legacy code
 
 The old code of this repository has been moved to [`a2t.legacy`](./a2t/legacy/) module and is only intended to be use for experimental reproducibility. Please, consider moving to the new code. If you need help read the new [documentation](https://osainz59.github.io/Ask2Transformers) or post an Issue on GitHub.
 
-## Citation
+# Citation
 Cite this paper if you want to cite stuff related to Relation Extraction, etc.
 ```bibtex
 @inproceedings{sainz-etal-2021-label,

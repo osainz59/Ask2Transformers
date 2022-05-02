@@ -7,8 +7,10 @@
     "test_path": "data/ace/test.oneie.json",
     "use_cuda": true,
     "half": true,
+    "mark_trigger": true,
     "nli_models": [
-        "roberta-large-mnli"
+        "HiTZ/A2T_RoBERTa_SMFA_ACE-arg",
+        "HiTZ/A2T_RoBERTa_SMFA_WikiEvents-arg_ACE-arg"
     ],
     "labels": [
         "no_relation",
@@ -379,6 +381,6 @@
             "Transaction.Transfer-Ownership:GPE",
             "Transaction.Transfer-Ownership:ORG",
             "Transaction.Transfer-Ownership:PER"
-        ]    
+        ]
     }
 }

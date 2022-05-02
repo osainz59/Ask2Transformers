@@ -187,7 +187,7 @@ class WikiEventsEntityClassificationDataset(_WikiEventsDataset):
 
 
 class WikiEventsArgumentClassificationDataset(_WikiEventsDataset):
-    def __init__(self, input_path: str, labels: List[str], *args, mark_trigger: bool = False, **kwargs) -> None:
+    def __init__(self, input_path: str, labels: List[str], *args, mark_trigger: bool = True, **kwargs) -> None:
         """This class converts WikiEvents data files into a list of `a2t.tasks.EventArgumentClassificationFeatures`.
 
         Args:
@@ -232,6 +232,7 @@ class WikiEventsArgumentClassificationDataset(_WikiEventsDataset):
                             label=argument["role"] if not "OOR" in argument["role"] else "OOR",
                         )
                     )
+                    self[-1].docid = instance['doc_id']
 
                     entities.remove(argument["entity_id"])
 
@@ -248,3 +249,15 @@ class WikiEventsArgumentClassificationDataset(_WikiEventsDataset):
                             label="no_relation",
                         )
                     )
+                    self[-1].docid = instance['doc_id']
+
+if __name__ == "__main__":
+    dataset = WikiEventsArgumentClassificationDataset('data/wikievents/dev.jsonl', labels=['no_relation'])
+    with open('.ignore/wikievents.dev.jsonl', 'wt') as f:
+        for inst in dataset:
+            docid = inst.docid
+            trg = inst.trg
+            del inst.docid
+            del inst.trg
+            out = {'docid': docid, 'trigger': trg, **inst.__dict__}
+            f.write(f"{json.dumps(out)}\n")
