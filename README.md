@@ -60,7 +60,9 @@ We now provide (task specific) pre-trained entailment models to: (1) **reproduce
 
 The model name describes the configuration used for training as follows:
 
-$$\text{HiTZ/A2T\_[pretrained\_model]\_[NLI\_datasets]\_[finetune\_datasets]}$$
+<!-- $$\text{HiTZ/A2T\_[pretrained\_model]\_[NLI\_datasets]\_[finetune\_datasets]}$$ -->
+
+<h3 align="center">HiTZ/A2T_[pretrained_model]_[NLI_datasets]_[finetune_datasets]</h3>
 
 
 - `pretrained_model`: The checkpoint used for initialization. For example: RoBERTa<sub>large</sub>.
