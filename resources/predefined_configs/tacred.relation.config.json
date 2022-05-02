@@ -8,7 +8,7 @@
     "use_cuda": true,
     "half": true,
     "nli_models": [
-        "E:/Models/A2T_RoBERTa_SMFA_TACRED-re"
+        "HiTZ/A2T_RoBERTa_SMFA_TACRED-re"
     ],
     "labels": [
         "no_relation",
