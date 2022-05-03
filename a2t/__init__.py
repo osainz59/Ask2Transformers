@@ -214,7 +214,7 @@ The output should look like:
 For more information consider reading the [Tasks](tasks/index.html) documentation. 
 """
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 __pdoc__ = {
     "legacy": False,
