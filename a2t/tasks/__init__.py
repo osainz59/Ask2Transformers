@@ -18,11 +18,18 @@ will also be used to instantiate the task data instances.
 """
 
 from .base import Task, ZeroaryTask, UnaryTask, BinaryTask, Features, ZeroaryFeatures, UnaryFeatures, BinaryFeatures
-from .text_classification import TopicClassificationFeatures, TopicClassificationTask
+from .text_classification import (
+    TopicClassificationFeatures,
+    TopicClassificationTask,
+    TextClassificationFeatures,
+    TextClassificationTask,
+)
 from .span_classification import NamedEntityClassificationFeatures, NamedEntityClassificationTask
 from .tuple_classification import (
     RelationClassificationFeatures,
     RelationClassificationTask,
+    EventArgumentClassificationFeatures,
+    EventArgumentClassificationTask,
     TACREDRelationClassificationTask,
     TACREDFeatures,
 )
@@ -35,6 +42,7 @@ PREDEFINED_TASKS = {
     "topic-classification": (TopicClassificationTask, TopicClassificationFeatures),
     "named-entity-classification": (NamedEntityClassificationTask, NamedEntityClassificationFeatures),
     "relation-classification": (RelationClassificationTask, RelationClassificationFeatures),
+    "event-argument-classification": (EventArgumentClassificationTask, EventArgumentClassificationFeatures),
     "tacred": (TACREDRelationClassificationTask, TACREDFeatures),
 }
 
@@ -50,8 +58,14 @@ __all__ = [
     "BinaryFeatures",
     "TopicClassificationFeatures",
     "TopicClassificationTask",
+    "TextClassificationFeatures",
+    "TextClassificationTask",
     "NamedEntityClassificationFeatures",
     "NamedEntityClassificationTask",
+    "RelationClassificationFeatures",
+    "RelationClassificationTask",
+    "EventArgumentClassificationFeatures",
+    "EventArgumentClassificationTask",
     "TACREDFeatures",
     "TACREDRelationClassificationTask",
     "PREDEFINED_TASKS",

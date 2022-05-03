@@ -226,8 +226,6 @@ __pdoc__ = {
     "tasks.tuple_classification": False,
     "base.np_softmax": False,
     "base.np_sigmoid": False,
-    "data.base": False,
-    "data.tacred": False,
     "utils": False,
     "base.Classifier": False,
 }
