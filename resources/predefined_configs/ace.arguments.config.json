@@ -1,0 +1,386 @@
+{
+    "name": "ACE-arg",
+    "task_name": "event-argument-classification",
+    "features_class": "a2t.tasks.tuple_classification.EventArgumentClassificationFeatures",
+    "dataset": "ace_arguments",
+    "dev_path": "data/ace/dev.oneie.json",
+    "test_path": "data/ace/test.oneie.json",
+    "use_cuda": true,
+    "half": true,
+    "mark_trigger": true,
+    "nli_models": [
+        "HiTZ/A2T_RoBERTa_SMFA_ACE-arg",
+        "HiTZ/A2T_RoBERTa_SMFA_WikiEvents-arg_ACE-arg"
+    ],
+    "labels": [
+        "no_relation",
+        "Artifact",
+        "Destination",
+        "Person",
+        "Entity",
+        "Place",
+        "Agent",
+        "Victim",
+        "Attacker",
+        "Origin",
+        "Instrument",
+        "Target",
+        "Vehicle",
+        "Beneficiary",
+        "Recipient",
+        "Giver",
+        "Plaintiff",
+        "Defendant",
+        "Prosecutor",
+        "Adjudicator",
+        "Org",
+        "Buyer",
+        "Seller",
+        "OOR"
+    ],
+    "templates": {
+        "Artifact": [
+            "Someone {trg} the {arg}",
+            "{arg} should be moved",
+            "Someone moved {arg}",
+            "Someone bought {arg}",
+            "Someone sold {arg}"
+        ],
+        "Destination": [
+            "Someone {trg_subtype} to {arg}"
+        ],
+        "Person": [
+            "{arg} was {trg}"
+        ],
+        "Entity": [
+            "{arg} attended the demonstration",
+            "{arg} met someone",
+            "{arg} hired someone",
+            "{arg} fired someone",
+            "{arg} voted in the elections",
+            "{arg} released the defendant",
+            "{arg} was ordered to pay"
+        ],
+        "Place": [
+            "{trg} occurred in {arg}"
+        ],
+        "Agent": [
+            "{arg} {trg} a person or organization"
+        ],
+        "Victim": [
+            "{arg} was {trg}"
+        ],
+        "Attacker": [
+            "{arg} {trg} a person or organization"
+        ],
+        "Origin": [
+            "Someone {trg_subtype} from {arg}"
+        ],
+        "Instrument": [
+            "Someone {trg_subtype} with {arg}"
+        ],
+        "Target": [
+            "{arg} was {trg_subtype}"
+        ],
+        "Vehicle": [
+            "{arg} was used as a vehicle"
+        ],
+        "Beneficiary": [
+            "The buyer bought to {arg} something"
+        ],
+        "Recipient": [
+            "{arg} received money from someone"
+        ],
+        "Giver": [
+            "{arg} gave something to someone"
+        ],
+        "Plaintiff": [
+            "{arg} filed suit against someone"
+        ],
+        "Defendant": [
+            "{arg} was the defendant"
+        ],
+        "Prosecutor": [
+            "{arg} indicted the defendant",
+            "{arg} charged the defendant"
+        ],
+        "Adjudicator": [
+            "{arg} convicted the defendant",
+            "{arg} sentenced the defendant",
+            "{arg} tried the defendant",
+            "{arg} released the defendant",
+            "{arg} acquitted the defendant"
+        ],
+        "Org": [
+            "{arg} organization was launched",
+            "{arg} organization was merged",
+            "{arg} organization declared bankruptcy",
+            "{arg} organization was dissolved"
+        ],
+        "Buyer": [
+            "{arg} bought something"
+        ],
+        "Seller": [
+            "{arg} sold something"
+        ]
+    },
+    "valid_conditions": {
+        "Artifact": [
+            "Movement.Transport:PER",
+            "Movement.Transport:VEH",
+            "Movement.Transport:WEA",
+            "Transaction.Transfer-Ownership:FAC",
+            "Transaction.Transfer-Ownership:ORG",
+            "Transaction.Transfer-Ownership:VEH",
+            "Transaction.Transfer-Ownership:WEA"
+        ],
+        "Destination": [
+            "Justice.Extradite:GPE",
+            "Movement.Transport:FAC",
+            "Movement.Transport:GPE",
+            "Movement.Transport:LOC"
+        ],
+        "Person": [
+            "Justice.Arrest-Jail:PER",
+            "Justice.Execute:PER",
+            "Justice.Release-Parole:PER",
+            "Justice.Extradite:PER",
+            "Life.Be-Born:PER",
+            "Life.Divorce:PER",
+            "Life.Marry:PER",
+            "Personnel.Elect:PER",
+            "Personnel.End-Position:PER",
+            "Personnel.Nominate:PER",
+            "Personnel.Start-Position:PER"
+        ],
+        "Entity": [
+            "Conflict.Demonstrate:ORG",
+            "Conflict.Demonstrate:PER",
+            "Contact.Meet:GPE",
+            "Contact.Meet:ORG",
+            "Contact.Meet:PER",
+            "Contact.Phone-Write:ORG",
+            "Contact.Phone-Write:PER",
+            "Justice.Fine:GPE",
+            "Justice.Fine:ORG",
+            "Justice.Fine:PER",
+            "Justice.Release-Parole:GPE",
+            "Justice.Release-Parole:ORG",
+            "Justice.Release-Parole:PER",
+            "Personnel.Elect:GPE",
+            "Personnel.Elect:ORG",
+            "Personnel.Elect:PER",
+            "Personnel.End-Position:GPE",
+            "Personnel.End-Position:ORG",
+            "Personnel.End-Position:PER",
+            "Personnel.Start-Position:GPE",
+            "Personnel.Start-Position:ORG"
+        ],
+        "Place": [
+            "Business.Declare-Bankruptcy:GPE",
+            "Business.End-Org:FAC",
+            "Business.End-Org:GPE",
+            "Business.Start-Org:FAC",
+            "Business.Start-Org:GPE",
+            "Conflict.Attack:FAC",
+            "Conflict.Attack:GPE",
+            "Conflict.Attack:LOC",
+            "Conflict.Demonstrate:FAC",
+            "Conflict.Demonstrate:GPE",
+            "Conflict.Demonstrate:LOC",
+            "Contact.Meet:FAC",
+            "Contact.Meet:GPE",
+            "Contact.Meet:LOC",
+            "Contact.Phone-Write:FAC",
+            "Contact.Phone-Write:GPE",
+            "Contact.Phone-Write:LOC",
+            "Justice.Appeal:FAC",
+            "Justice.Appeal:GPE",
+            "Justice.Arrest-Jail:FAC",
+            "Justice.Arrest-Jail:GPE",
+            "Justice.Arrest-Jail:LOC",
+            "Justice.Charge-Indict:FAC",
+            "Justice.Charge-Indict:GPE",
+            "Justice.Charge-Indict:LOC",
+            "Justice.Convict:FAC",
+            "Justice.Convict:GPE",
+            "Justice.Execute:FAC",
+            "Justice.Execute:GPE",
+            "Justice.Fine:FAC",
+            "Justice.Fine:GPE",
+            "Justice.Pardon:GPE",
+            "Justice.Release-Parole:FAC",
+            "Justice.Release-Parole:GPE",
+            "Justice.Sentence:FAC",
+            "Justice.Sentence:GPE",
+            "Justice.Sentence:LOC",
+            "Justice.Sue:GPE",
+            "Justice.Sue:LOC",
+            "Justice.Trial-Hearing:FAC",
+            "Justice.Trial-Hearing:GPE",
+            "Justice.Trial-Hearing:LOC",
+            "Life.Be-Born:FAC",
+            "Life.Be-Born:GPE",
+            "Life.Be-Born:LOC",
+            "Life.Die:FAC",
+            "Life.Die:GPE",
+            "Life.Die:LOC",
+            "Life.Divorce:GPE",
+            "Life.Injure:FAC",
+            "Life.Injure:GPE",
+            "Life.Injure:LOC",
+            "Life.Marry:FAC",
+            "Life.Marry:GPE",
+            "Personnel.Elect:GPE",
+            "Personnel.Elect:LOC",
+            "Personnel.End-Position:FAC",
+            "Personnel.End-Position:GPE",
+            "Personnel.Start-Position:FAC",
+            "Personnel.Start-Position:GPE",
+            "Transaction.Transfer-Money:GPE",
+            "Transaction.Transfer-Money:LOC",
+            "Transaction.Transfer-Ownership:FAC",
+            "Transaction.Transfer-Ownership:GPE",
+            "Transaction.Transfer-Ownership:LOC"
+        ],
+        "Agent": [
+            "Business.Start-Org:GPE",
+            "Business.Start-Org:ORG",
+            "Business.Start-Org:PER",
+            "Justice.Arrest-Jail:GPE",
+            "Justice.Arrest-Jail:ORG",
+            "Justice.Arrest-Jail:PER",
+            "Justice.Execute:GPE",
+            "Justice.Execute:ORG",
+            "Justice.Execute:PER",
+            "Justice.Extradite:ORG",
+            "Life.Die:GPE",
+            "Life.Die:ORG",
+            "Life.Die:PER",
+            "Life.Injure:GPE",
+            "Life.Injure:PER",
+            "Movement.Transport:GPE",
+            "Movement.Transport:ORG",
+            "Movement.Transport:PER",
+            "Personnel.Nominate:GPE",
+            "Personnel.Nominate:ORG",
+            "Personnel.Nominate:PER"
+        ],
+        "Victim": [
+            "Life.Die:PER",
+            "Life.Injure:PER"
+        ],
+        "Attacker": [
+            "Conflict.Attack:GPE",
+            "Conflict.Attack:ORG",
+            "Conflict.Attack:PER"
+        ],
+        "Origin": [
+            "Justice.Extradite:FAC",
+            "Justice.Extradite:GPE",
+            "Movement.Transport:FAC",
+            "Movement.Transport:GPE",
+            "Movement.Transport:LOC"
+        ],
+        "Instrument": [
+            "Conflict.Attack:VEH",
+            "Conflict.Attack:WEA",
+            "Life.Die:VEH",
+            "Life.Die:WEA",
+            "Life.Injure:VEH",
+            "Life.Injure:WEA"
+        ],
+        "Target": [
+            "Conflict.Attack:FAC",
+            "Conflict.Attack:LOC",
+            "Conflict.Attack:ORG",
+            "Conflict.Attack:PER",
+            "Conflict.Attack:VEH",
+            "Conflict.Attack:WEA"
+        ],
+        "Vehicle": [
+            "Movement.Transport:VEH"
+        ],
+        "Beneficiary": [
+            "Transaction.Transfer-Money:GPE",
+            "Transaction.Transfer-Money:ORG",
+            "Transaction.Transfer-Money:PER",
+            "Transaction.Transfer-Ownership:GPE",
+            "Transaction.Transfer-Ownership:PER"
+        ],
+        "Recipient": [
+            "Transaction.Transfer-Money:GPE",
+            "Transaction.Transfer-Money:ORG",
+            "Transaction.Transfer-Money:PER"
+        ],
+        "Giver": [
+            "Transaction.Transfer-Money:GPE",
+            "Transaction.Transfer-Money:ORG",
+            "Transaction.Transfer-Money:PER"
+        ],
+        "Plaintiff": [
+            "Justice.Sue:ORG",
+            "Justice.Sue:PER"
+        ],
+        "Defendant": [
+            "Justice.Acquit:PER",
+            "Justice.Charge-Indict:ORG",
+            "Justice.Charge-Indict:PER",
+            "Justice.Convict:ORG",
+            "Justice.Convict:PER",
+            "Justice.Pardon:PER",
+            "Justice.Sentence:ORG",
+            "Justice.Sentence:PER",
+            "Justice.Sue:GPE",
+            "Justice.Sue:ORG",
+            "Justice.Sue:PER",
+            "Justice.Trial-Hearing:ORG",
+            "Justice.Trial-Hearing:PER"
+        ],
+        "Prosecutor": [
+            "Justice.Charge-Indict:GPE",
+            "Justice.Charge-Indict:ORG",
+            "Justice.Charge-Indict:PER",
+            "Justice.Trial-Hearing:ORG",
+            "Justice.Trial-Hearing:PER"
+        ],
+        "Adjudicator": [
+            "Justice.Acquit:ORG",
+            "Justice.Acquit:PER",
+            "Justice.Appeal:ORG",
+            "Justice.Appeal:PER",
+            "Justice.Charge-Indict:ORG",
+            "Justice.Charge-Indict:PER",
+            "Justice.Convict:ORG",
+            "Justice.Convict:PER",
+            "Justice.Fine:ORG",
+            "Justice.Fine:PER",
+            "Justice.Pardon:ORG",
+            "Justice.Pardon:PER",
+            "Justice.Sentence:GPE",
+            "Justice.Sentence:ORG",
+            "Justice.Sentence:PER",
+            "Justice.Sue:ORG",
+            "Justice.Sue:PER",
+            "Justice.Trial-Hearing:ORG",
+            "Justice.Trial-Hearing:PER"
+        ],
+        "Org": [
+            "Business.Declare-Bankruptcy:ORG",
+            "Business.Declare-Bankruptcy:PER",
+            "Business.End-Org:ORG",
+            "Business.Merge-Org:ORG",
+            "Business.Start-Org:ORG"
+        ],
+        "Buyer": [
+            "Transaction.Transfer-Ownership:GPE",
+            "Transaction.Transfer-Ownership:ORG",
+            "Transaction.Transfer-Ownership:PER"
+        ],
+        "Seller": [
+            "Transaction.Transfer-Ownership:GPE",
+            "Transaction.Transfer-Ownership:ORG",
+            "Transaction.Transfer-Ownership:PER"
+        ]
+    }
+}

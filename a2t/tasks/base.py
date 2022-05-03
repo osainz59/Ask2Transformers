@@ -139,14 +139,22 @@ class Task:
                 [value for values in self.templates.values() for value in values]
             ), "`templates` parameter must not be None nor empty."
 
-        assert all(
-            key in self.labels for key in self.templates.keys()
-        ), "All the keys of templates dicts must be defined on labels."
+        # assert all(
+        #     key in self.labels for key in self.templates.keys()
+        # ), "All the keys of templates dicts must be defined on labels."
+        for key in list(self.templates.keys()):
+            if key not in self.labels:
+                warnings.warn(f"Label {key} not found among valid labels. Templates for label {key} not loaded.")
+                del self.templates[key]
 
         if self.valid_conditions:
-            assert all(
-                key in self.labels for key in self.valid_conditions.keys()
-            ), "All the keys of valid_conditions dict must be defined on labels."
+            # assert all(
+            #     key in self.labels for key in self.valid_conditions.keys()
+            # ), "All the keys of valid_conditions dict must be defined on labels."
+            for key in list(self.valid_conditions.keys()):
+                if key not in self.labels:
+                    warnings.warn(f"Label {key} not found among valid labels. Valid conditions for label {key} not loaded.")
+                    del self.valid_conditions[key]
 
         assert all(
             var in self.features_class.__dict__["__dataclass_fields__"]
