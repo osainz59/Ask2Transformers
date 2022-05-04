@@ -10,7 +10,7 @@ This repository contains the code for out of the box ready to use zero-shot clas
 
 - 📄 [Ask2Transformers - Zero Shot Domain Labelling with Pretrained Transformers](https://aclanthology.org/2021.gwc-1.6/) accepted in [GWC2021](http://globalwordnet.org/global-wordnet-conferences-2/).
 - 📄 [Label Verbalization and Entailment for Effective Zero- and Few-Shot Relation Extraction](https://aclanthology.org/2021.emnlp-main.92/) accepted in [EMNLP2021](https://2021.emnlp.org/)
-- 📄 [Textual Entailment for Event Argument Extraction: Zero- and Few-Shot with Multi-Source Learning]() accepted as Findings in [NAACL2022]()
+- 📄 [Textual Entailment for Event Argument Extraction: Zero- and Few-Shot with Multi-Source Learning](https://arxiv.org/abs/2205.01376) accepted as Findings in [NAACL2022](https://2022.naacl.org/)
 
 <!-- ### Supported (and benchmarked) tasks:
 Follow the links to see some examples of how to use the library on each task.
