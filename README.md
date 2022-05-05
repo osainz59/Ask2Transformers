@@ -29,12 +29,17 @@ By using Pip (check the last release)
 pip install a2t
 ```
 
-Or by clonning the repository
+By clonning the repository
 
 ```shell script
 git clone https://github.com/osainz59/Ask2Transformers.git
 cd Ask2Transformers
-python -m pip install .
+pip install .
+```
+
+Or directly by
+```shell script
+pip install git+https://github.com/osainz59/Ask2Transformers
 ```
 
 <!-- [//]: <img src="./imgs/RE_NLI.svg" style="background-color: white; border-radius: 15px"> -->
