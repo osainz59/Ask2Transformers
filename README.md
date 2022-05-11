@@ -130,6 +130,22 @@ Consider reading the papers to access the results.
 The old code of this repository has been moved to [`a2t.legacy`](./a2t/legacy/) module and is only intended to be use for experimental reproducibility. Please, consider moving to the new code. If you need help read the new [documentation](https://osainz59.github.io/Ask2Transformers) or post an Issue on GitHub.
 
 # Citation
+Cite this paper if you want to cite stuff related to Event Argument Extraction, multi-source learning, etc.
+(Provisional ArXiv bibtex, please consider citing the NAACL version.)
+```bibtex
+@inproceedings{sainz-etal-2022-textual,
+  doi = {10.48550/ARXIV.2205.01376},
+  url = {https://arxiv.org/abs/2205.01376},
+  author = {Sainz, Oscar and Gonzalez-Dios, Itziar and de Lacalle, Oier Lopez and Min, Bonan and Agirre, Eneko},
+  keywords = {Computation and Language (cs.CL), FOS: Computer and information sciences, FOS: Computer and information sciences}, 
+  title = {Textual Entailment for Event Argument Extraction: Zero- and Few-Shot with Multi-Source Learning},
+  publisher = {arXiv},
+  year = {2022},
+  copyright = {Creative Commons Attribution Share Alike 4.0 International}
+}
+
+```
+
 Cite this paper if you want to cite stuff related to Relation Extraction, etc.
 ```bibtex
 @inproceedings{sainz-etal-2021-label,
