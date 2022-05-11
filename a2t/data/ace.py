@@ -101,7 +101,7 @@ class ACEArgumentClassificationDataset(_ACEDataset):
         "Life:Die|Person": "Victim",
         "Movement:Transport|Place": "Destination",
         "Conflict:Attack|Victim": "Target",
-        "Justice:Appeal|Plantiff": "Defendant",
+        "Justice:Appeal|Plaintiff": "Defendant",
     }
 
     def __init__(self, input_path: str, labels: List[str], *args, mark_trigger: bool = True, **kwargs) -> None:
