@@ -20,6 +20,9 @@ Collados and Navigli, 2017)  dataset.
 
 To get started with the repository consider reading the **new** [documentation](https://osainz59.github.io/Ask2Transformers)!
 
+# Demo 🕹️
+
+We have realeased a demo on Zero-Shot Information Extraction using Textual Entailment ([ZS4IE: A toolkit for Zero-Shot Information Extraction with simple Verbalizations](https://arxiv.org/abs/2203.13602)) accepted in the [Demo Track of NAACL 2022](). The code is publicly availabe on its own GitHub repository: [ZS4IE](https://github.com/bbn-e/zs4ie).
 
 # Installation
 
@@ -43,10 +46,6 @@ pip install git+https://github.com/osainz59/Ask2Transformers
 ```
 
 <!-- [//]: <img src="./imgs/RE_NLI.svg" style="background-color: white; border-radius: 15px"> -->
-
-# Demo 🕹️
-
-We have realeased a demo on Zero-Shot Information Extraction using Textual Entailment ([ZS4IE: A toolkit for Zero-Shot Information Extraction with simple Verbalizations](https://arxiv.org/abs/2203.13602)) accepted in the [Demo Track of NAACL 2022](). The code is publicly availabe on its own GitHub repository: [ZS4IE](https://github.com/bbn-e/zs4ie).
 
 # Models 
 ## Available models
