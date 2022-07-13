@@ -129,8 +129,17 @@ Consider reading the papers to access the results.
 The old code of this repository has been moved to [`a2t.legacy`](./a2t/legacy/) module and is only intended to be use for experimental reproducibility. Please, consider moving to the new code. If you need help read the new [documentation](https://osainz59.github.io/Ask2Transformers) or post an Issue on GitHub.
 
 # Citation
-Cite this paper if you want to cite stuff related to Event Argument Extraction, multi-source learning, etc.
-(Provisional ArXiv bibtex, please consider citing the NAACL version.)
+If you use this work, please consider citing at least one of the following papers. You can find the bibtex files in their corresponding [aclanthology](https://aclanthology.org/) page.
+
+> Oscar Sainz, Haoling Qiu, Oier Lopez de Lacalle, Eneko Agirre, and Bonan Min. 2022. [ZS4IE: A toolkit for Zero-Shot Information Extraction with simple Verbalizations](https://aclanthology.org/2022.naacl-demo.4/). In Proceedings of the 2022 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies: System Demonstrations, pages 27–38, Hybrid: Seattle, Washington + Online. Association for Computational Linguistics.
+
+> Oscar Sainz, Itziar Gonzalez-Dios, Oier Lopez de Lacalle, Bonan Min, and Eneko Agirre. 2022. [Textual Entailment for Event Argument Extraction: Zero- and Few-Shot with Multi-Source Learning](https://aclanthology.org/2022.findings-naacl.187/). In Findings of the Association for Computational Linguistics: NAACL 2022, pages 2439–2455, Seattle, United States. Association for Computational Linguistics.
+
+> Oscar Sainz, Oier Lopez de Lacalle, Gorka Labaka, Ander Barrena, and Eneko Agirre. 2021. [Label Verbalization and Entailment for Effective Zero and Few-Shot Relation Extraction](https://aclanthology.org/2021.emnlp-main.92/). In Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing, pages 1199–1212, Online and Punta Cana, Dominican Republic. Association for Computational Linguistics.
+
+> Oscar Sainz and German Rigau. 2021. [Ask2Transformers: Zero-Shot Domain labelling with Pretrained Language Models](https://aclanthology.org/2021.gwc-1.6/). In Proceedings of the 11th Global Wordnet Conference, pages 44–52, University of South Africa (UNISA). Global Wordnet Association.
+
+<!--
 ```bibtex
 @inproceedings{sainz-etal-2022-textual,
   doi = {10.48550/ARXIV.2205.01376},
@@ -181,3 +190,4 @@ Cite this paper if you want to cite stuff related with topic labelling (A2TDomai
     abstract = "In this paper we present a system that exploits different pre-trained Language Models for assigning domain labels to WordNet synsets without any kind of supervision. Furthermore, the system is not restricted to use a particular set of domain labels. We exploit the knowledge encoded within different off-the-shelf pre-trained Language Models and task formulations to infer the domain label of a particular WordNet definition. The proposed zero-shot system achieves a new state-of-the-art on the English dataset used in the evaluation.",
 }
 ```
+-->
