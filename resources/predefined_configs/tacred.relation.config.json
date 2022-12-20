@@ -59,7 +59,7 @@
             "{subj} is also known as {obj}."
         ],
         "per:date_of_birth": [
-            "{subj}\u00e2\u0080\u0099s birthday is on {obj}.",
+            "{subj}'s birthday is on {obj}.",
             "{subj} was born in {obj}."
         ],
         "per:age": [
@@ -90,7 +90,7 @@
             "{subj} died in {obj}."
         ],
         "per:cause_of_death": [
-            "{obj} is the cause of {subj}\u00e2\u0080\u0099s death."
+            "{obj} is the cause of {subj}'s death."
         ],
         "per:countries_of_residence": [
             "{subj} lives in {obj}.",
