@@ -2,11 +2,6 @@ from copy import deepcopy
 from typing import Any, Dict, Iterable, List
 import json
 
-try:
-    from rich import print
-except:
-    pass
-
 from .base import Dataset
 from a2t.tasks.span_classification import NamedEntityClassificationFeatures
 from a2t.tasks.tuple_classification import EventArgumentClassificationFeatures
@@ -25,7 +20,9 @@ class _ACEDataset(Dataset):
             for line in data_f:
                 yield json.loads(line.strip())
 
-    def _convert_token_ids_to_char_ids(self, instance: Dict[str, Any]) -> Dict[str, Any]:
+    def _convert_token_ids_to_char_ids(
+        self, instance: Dict[str, Any]
+    ) -> Dict[str, Any]:
         tokens = instance["tokens"]
         prev = 0
         char_ids = []
@@ -49,7 +46,8 @@ class ACEEventClassificationDataset(_ACEDataset):
         for instance in self._load(input_path):
             self.append(
                 TextClassificationFeatures(
-                    context=instance["sentence"], label=[event["event_type"] for event in instance["event_mentions"]]
+                    context=instance["sentence"],
+                    label=[event["event_type"] for event in instance["event_mentions"]],
                 )
             )
 
@@ -73,7 +71,12 @@ class ACEEntityClassificationDataset(_ACEDataset):
             instance = self._convert_token_ids_to_char_ids(instance)
 
             text = deepcopy(instance["sentence"])
-            chunks = sorted([[chunk.start_char, chunk.end_char, chunk.text, None] for chunk in self._nlp(text).noun_chunks])
+            chunks = sorted(
+                [
+                    [chunk.start_char, chunk.end_char, chunk.text, None]
+                    for chunk in self._nlp(text).noun_chunks
+                ]
+            )
             for entity in sorted(instance["entity_mentions"], key=lambda x: x["start"]):
                 start = instance["char_ids"][entity["start"]][0]
                 end = instance["char_ids"][entity["end"] - 1][1]
@@ -92,11 +95,14 @@ class ACEEntityClassificationDataset(_ACEDataset):
                         continue
 
             for chunk in chunks:
-                self.append(NamedEntityClassificationFeatures(context=text, label=chunk[-1] if chunk[-1] else "O", X=chunk[2]))
+                self.append(
+                    NamedEntityClassificationFeatures(
+                        context=text, label=chunk[-1] if chunk[-1] else "O", X=chunk[2]
+                    )
+                )
 
 
 class ACEArgumentClassificationDataset(_ACEDataset):
-
     label_mapping = {
         "Life:Die|Person": "Victim",
         "Movement:Transport|Place": "Destination",
@@ -104,7 +110,14 @@ class ACEArgumentClassificationDataset(_ACEDataset):
         "Justice:Appeal|Plaintiff": "Defendant",
     }
 
-    def __init__(self, input_path: str, labels: List[str], *args, mark_trigger: bool = True, **kwargs) -> None:
+    def __init__(
+        self,
+        input_path: str,
+        labels: List[str],
+        *args,
+        mark_trigger: bool = True,
+        **kwargs,
+    ) -> None:
         """This class converts ACE data files into a list of `a2t.tasks.EventArgumentClassificationFeatures`.
 
         Args:
@@ -136,7 +149,9 @@ class ACEArgumentClassificationDataset(_ACEDataset):
 
                 for argument in event["arguments"]:
                     # Apply label mapping to sattisfy guidelines constraints
-                    role = self.label_mapping.get(f'{event["event_type"]}|{argument["role"]}', argument["role"])
+                    role = self.label_mapping.get(
+                        f'{event["event_type"]}|{argument["role"]}', argument["role"]
+                    )
 
                     # Skip annotation errors
                     if argument["entity_id"] not in entities:

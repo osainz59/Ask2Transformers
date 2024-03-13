@@ -4,8 +4,8 @@ from sklearn.model_selection import StratifiedKFold
 from collections import defaultdict
 import json
 
-import sys, os
-from pprint import pprint
+import sys
+import os
 import random
 
 random.seed(0)
@@ -60,7 +60,7 @@ def main(args):
                 ]
             )
 
-    print(f"Dev %\tMAbsE\tMean F1")
+    print("Dev %\tMAbsE\tMean F1")
     for key in sorted([key for key in result_dict.keys() if key != "best"]):
         mean_error = np.mean([x[2] for x in result_dict[key]])
         mean_f1 = np.mean([x[1] for x in result_dict[key]])

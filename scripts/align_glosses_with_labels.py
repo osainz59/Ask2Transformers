@@ -1,5 +1,4 @@
 import gzip
-import sys
 from argparse import ArgumentParser
 
 parser = ArgumentParser()

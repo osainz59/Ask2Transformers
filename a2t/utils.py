@@ -25,7 +25,7 @@ def apply_threshold(output, threshold=0.0, ignore_negative_prediction=True, nega
     output_ = output.copy()
     if ignore_negative_prediction:
         output_[:, negative_label_id] = 0.0
-    activations = (output_ >= threshold).sum(-1).astype(np.int)
+    activations = (output_ >= threshold).sum(-1).astype(int)
     output_[activations == 0, negative_label_id] = 1.00
 
     return output_.argmax(-1)

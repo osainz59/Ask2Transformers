@@ -103,7 +103,7 @@ class _WikiEventsDataset(Dataset):
                     )
 
                     for argument in new_value["arguments"]:
-                        if not argument["entity_id"] in sent_entities:
+                        if argument["entity_id"] not in sent_entities:
                             argument["role"] = f"[OOR]_{argument['role']}"
 
                     assert (
@@ -229,7 +229,7 @@ class WikiEventsArgumentClassificationDataset(_WikiEventsDataset):
                             trg_subtype=trigger_subtype,
                             inst_type=f"{event_type}:{id2ent[argument['entity_id']]['entity_type']}",
                             arg=id2ent[argument["entity_id"]]["text"],
-                            label=argument["role"] if not "OOR" in argument["role"] else "OOR",
+                            label=argument["role"] if "OOR" not in argument["role"] else "OOR",
                         )
                     )
                     self[-1].docid = instance["doc_id"]

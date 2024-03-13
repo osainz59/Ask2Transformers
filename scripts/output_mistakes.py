@@ -59,7 +59,7 @@ def main(opt):
             f.write(f"Sense-id:\t{sense_id}\n")
             f.write(f"Gloss:\t\t{gloss}\n")
             f.write(f"Correct label:\t{l}\n")
-            f.write(f"Top-5 Predictions:\n")
+            f.write("Top-5 Predictions:\n")
             idxs = out.argsort()[::-1]
             for i in range(5):
                 f.write(f"   {out[idxs[i]]:.4f}\t{topics[idxs[i]]}\n")

@@ -53,7 +53,6 @@ A configuration file containing the task and evaluation information should look 
 import argparse
 import json
 import os
-from pprint import pprint
 from types import SimpleNamespace
 import numpy as np
 import torch

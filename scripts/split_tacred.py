@@ -4,7 +4,7 @@ import sys
 import json
 
 sys.path.append("./")
-from a2t.relation_classification.tacred import TACRED_LABEL_TEMPLATES, TACRED_LABELS
+from a2t.relation_classification.tacred import TACRED_LABELS
 
 from sklearn.model_selection import train_test_split
 

@@ -2,11 +2,10 @@ import argparse
 import json
 import os
 from pprint import pprint
-from collections import Counter
 import torch
 
 import numpy as np
-from sklearn.metrics import precision_recall_fscore_support, confusion_matrix
+from sklearn.metrics import precision_recall_fscore_support
 
 from .mnli import NLIRelationClassifierWithMappingHead, REInputFeatures
 from .tacred import *
@@ -92,7 +91,7 @@ for configuration in config:
         batch_size=configuration["batch_size"],
         multiclass=configuration["multiclass"],
     )
-    if not "use_threshold" in configuration or configuration["use_threshold"]:
+    if "use_threshold" not in configuration or configuration["use_threshold"]:
         optimal_threshold, _ = find_optimal_threshold(labels, output)
         output_ = apply_threshold(output, threshold=optimal_threshold)
     else:

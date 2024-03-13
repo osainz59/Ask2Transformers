@@ -1,11 +1,10 @@
 from argparse import ArgumentParser
 from dataclasses import dataclass
-from collections import defaultdict, Counter
-from typing import Dict, Any
+from collections import defaultdict
+from typing import Dict
 import numpy as np
 import json
 import sys
-from pprint import pprint
 import random
 
 random.seed(0)

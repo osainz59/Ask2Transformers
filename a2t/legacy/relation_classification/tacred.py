@@ -1,6 +1,4 @@
-from typing import List
 
-import numpy as np
 
 from a2t.legacy.relation_classification.mnli import (
     NLIRelationClassifierWithMappingHead,

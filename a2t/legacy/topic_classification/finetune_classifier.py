@@ -3,18 +3,16 @@ from transformers import (
     AutoTokenizer,
     AutoConfig,
 )
-from transformers.optimization import get_linear_schedule_with_warmup
 import argparse
 import json
 import gzip
 import torch
 from torch.utils.data import TensorDataset, DataLoader
-from torch.optim import SGD, AdamW, Adam
+from torch.optim import AdamW
 
 # from apex import amp
 from tqdm import tqdm
 import numpy as np
-from pprint import pprint
 import os
 
 try:

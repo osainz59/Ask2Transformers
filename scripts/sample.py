@@ -1,5 +1,4 @@
 import gzip
-import sys
 from argparse import ArgumentParser
 
 parser = ArgumentParser()
@@ -48,7 +47,7 @@ for label_file in args.labels:
 with gzip.open(args.glosses, "rt", encoding="utf-8") as f, gzip.open(args.output_file, "wt", encoding="utf-8") as wf:
 
     wf.write(
-        f"synset-id\tA2T_babeldomains\tA2T_babeldomains_score\tA2T_babeldomains_simple\tA2T_babeldomains_simple_score\tA2T_wndomains\tA2T_wndomains_score\tbabeldomains\tbabeldomains_score\tWNDomains\tWNDomains_score\tgloss\n"
+        "synset-id\tA2T_babeldomains\tA2T_babeldomains_score\tA2T_babeldomains_simple\tA2T_babeldomains_simple_score\tA2T_wndomains\tA2T_wndomains_score\tbabeldomains\tbabeldomains_score\tWNDomains\tWNDomains_score\tgloss\n"
     )
     for line in f:
         row = line.split()
