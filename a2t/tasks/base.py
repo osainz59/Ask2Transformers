@@ -217,7 +217,7 @@ class Task:
         outputs = np.hstack(
             [
                 collate_fn(template_probs[:, self.label2templateid[label]], axis=-1, keepdims=True)
-                if label in self.label2templateid
+                if label in self.label2templateid and len(self.label2templateid[label]) > 0
                 else np.zeros((template_probs.shape[0], 1))
                 for label in self.labels
             ]
