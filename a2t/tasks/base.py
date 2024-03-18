@@ -301,7 +301,7 @@ class Task:
         """
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
         with open(file_path, "wt") as f:
-            values = {key: value for key, value in vars(self).items()}
+            values = {key: value for key, value in vars(self).items() if not key.startswith("_")}
             values["features_class"] = values["features_class"].__module__ + "." + values["features_class"].__name__
             for key in ["label2id", "idx2label", "n_labels", "template2label", "label2templateid", "_valid_conditions"]:
                 del values[key]
